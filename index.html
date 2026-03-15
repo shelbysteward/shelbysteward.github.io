@@ -408,6 +408,43 @@
       margin-top: 0.25rem;
     }
 
+    .featured-project-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: stretch;
+      min-height: 420px;
+    }
+
+    .featured-project-media {
+      min-height: 100%;
+      background: #0f0f0f;
+      overflow: hidden;
+    }
+
+    .featured-project-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .featured-project-copy {
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .featured-project-copy h3 {
+      font-size: clamp(1.7rem, 2.8vw, 2.4rem);
+      margin-bottom: 0.8rem;
+    }
+
+    .featured-project-copy p {
+      color: var(--muted);
+      margin: 0;
+    }
+
     .lightbox {
       position: fixed;
       inset: 0;
@@ -501,6 +538,10 @@
     }
 
     @media (max-width: 900px) {
+      .featured-project-grid {
+        grid-template-columns: 1fr;
+      }
+
       .hero-grid,
       .grid-3,
       .grid-2,
@@ -658,7 +699,33 @@
         <div class="section-head">
           <div>
             <h2>Featured Projects</h2>
-            <p>These project cards are ready for you to swap in the final titles, images, links, and descriptions from your Canva portfolio.</p>
+            <p>Selected portfolio work demonstrating applied artificial intelligence, visual communication, and operations-focused problem solving.</p>
+          </div>
+        </div>
+
+        <div class="card featured-project" style="margin-bottom: 1.5rem; padding: 0; overflow: hidden;">
+          <div class="featured-project-grid">
+            <a class="featured-project-media" href="https://chatgpt.com/g/g-69ab3308c62881918dedee456e818ec8-transportation-operations-assistant" target="_blank" rel="noreferrer">alt="Transportation Operations Assistant featured preview" />
+            </a>
+            <div class="featured-project-copy">
+              <div class="meta">Featured Project</div>
+              <h3>Transportation Operations Assistant</h3>
+              <p>
+                A transportation-focused AI assistant concept designed to support dispatch and support-center workflows through
+                fast information access, workflow guidance, and structured operational decision support.
+              </p>
+              <div class="tag-wrap">
+                <span class="tag">AI Assistant</span>
+                <span class="tag">Operations</span>
+                <span class="tag">Workflow Design</span>
+                <span class="tag">Decision Support</span>
+              </div>
+              <div class="hero-actions" style="margin-top: 1.25rem; margin-bottom: 0;">
+                <a class="btn btn-primary" href="https://chatgpt.com/g/g-69ab3308c62881918dedee456e818ec8-transportation-operations-assistant" target="_blank" rel="noreferrer">Launch Transportation Assistant</a>
+                <a class="btn btn-secondary" href="#">Project Overview</a>
+              </div>
+              <div class="project-note" style="margin-top: 0.85rem;">Click the image or launch button to open the live Transportation Operations Assistant demo.</div>
+            </div>
           </div>
         </div>
 
@@ -685,25 +752,7 @@
             <div class="project-note">Click the image to open the full infographic gallery.</div>
           </article>
 
-          <article class="card project-card">
-            <div class="project-top project-clickable" data-lightbox="transportation-assistant-lightbox"><img src="artifact-2-chatbot.png" alt="Transportation Operations Assistant portfolio artifact" /></div>
-            <div>
-              <h3>AI Chatbot Concept</h3>
-              <p>
-                A transportation-focused assistant designed to support operations workflows, information access, and decision-making.
-                This artifact highlights how AI can support real operational environments through structured prompts and user-centered design.
-              </p>
-            </div>
-            <div class="tag-wrap">
-              <span class="tag">AI Assistant</span>
-              <span class="tag">Operations</span>
-              <span class="tag">Workflow Design</span>
-            </div>
-            <div class="project-links">
-              <a href="javascript:void(0)">Preview Gallery</a>
-            </div>
-            <div class="project-note">Click the image to open the Transportation Operations Assistant preview.</div>
-          </article>
+          
 
           <article class="card project-card">
             <div class="project-top"><img src="artifact-1-infographic.png" alt="Additional portfolio preview" /></div>
@@ -743,38 +792,7 @@
       </div>
     </div>
 
-    <div class="lightbox" id="transportation-assistant-lightbox" aria-hidden="true">
-      <div class="lightbox-content">
-        <div class="lightbox-top">
-          <h3>Transportation Operations Assistant</h3>
-          <button class="lightbox-close" type="button" aria-label="Close preview">×</button>
-        </div>
-
-        <div style="display:grid; gap:1.5rem;">
-
-          <div>
-            <img src="artifact-2-chatbot.png" alt="Transportation Operations Assistant interface preview" />
-          </div>
-
-          <div>
-            <h3 style="margin-bottom:.5rem;">What This Assistant Does</h3>
-            <p class="muted">
-              The Transportation Operations Assistant is designed to support dispatch and support-center operations by providing
-              fast answers to operational questions, workflow guidance, and transportation-related information. The assistant
-              demonstrates how conversational AI can reduce time spent searching for information and improve consistency in
-              operational decision-making.
-            </p>
-          </div>
-
-          <div>
-            <h3 style="margin-bottom:.5rem;">Example Prompts</h3>
-            <div class="tag-wrap">
-              <span class="tag">"How do I cover a trip with no drivers available?"</span>
-              <span class="tag">"Explain Import‑to‑Assign metrics"</span>
-              <span class="tag">"What steps should dispatch take during a service failure?"</span>
-              <span class="tag">"Create a coverage escalation workflow"</span>
-            </div>
-          </div>
+    
 
           <div>
             <h3 style="margin-bottom:.5rem;">Capabilities Demonstrated</h3>
