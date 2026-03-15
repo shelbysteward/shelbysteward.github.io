@@ -137,6 +137,71 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-exec-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.25rem;
+    }
+
+    .exec-item {
+      padding: 1rem 1.1rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      min-height: 88px;
+      justify-content: center;
+    }
+
+    .exec-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .exec-item strong {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .social-item {
+      justify-content: space-between;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .social-links a {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      transition: 0.25s ease;
+    }
+
+    .social-links a:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.1);
+    }
+
+    .social-links svg {
+      width: 20px;
+      height: 20px;
+      fill: #ffffff;
     }
 
     .btn {
@@ -358,9 +423,16 @@
     @media (max-width: 900px) {
       .hero-grid,
       .grid-3,
-      .grid-2 {
+      .grid-2,
+      .hero-exec-strip {
         grid-template-columns: 1fr;
       }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
 
       .section-head {
         align-items: start;
@@ -406,7 +478,29 @@
           </p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#projects">View Portfolio</a>
-            <a class="btn btn-secondary" href="https://github.com/shelbysteward/shelbysteward.github.io" target="_blank" rel="noreferrer">View GitHub</a>
+            <a class="btn btn-secondary" href="Shelby-Steward-Resume.pdf" target="_blank" rel="noreferrer">Download Resume</a>
+          </div>
+
+          <div class="hero-exec-strip">
+            <div class="exec-item">
+              <span class="exec-label">Current Focus</span>
+              <strong>Operations Leadership & AI Strategy</strong>
+            </div>
+            <div class="exec-item">
+              <span class="exec-label">Education</span>
+              <strong>MBA • MSAI Candidate</strong>
+            </div>
+            <div class="exec-item social-item">
+              <span class="exec-label">Connect</span>
+              <div class="social-links">
+                <a href="https://www.linkedin.com/in/shelby-steward/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.97 1.97 0 0 0 3.25 5c0 1.08.88 1.94 1.97 1.94h.03A1.96 1.96 0 1 0 5.25 3ZM20.75 12.88c0-3.47-1.85-5.08-4.32-5.08-1.99 0-2.88 1.09-3.38 1.86V8.5H9.68c.04.77 0 11.5 0 11.5h3.37v-6.42c0-.34.02-.68.12-.92.27-.68.89-1.39 1.93-1.39 1.36 0 1.91 1.05 1.91 2.58V20H20.4v-6.72Z"/></svg>
+                </a>
+                <a href="https://github.com/shelbysteward" target="_blank" rel="noreferrer" aria-label="GitHub">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.38 7.86 10.9.57.1.78-.25.78-.55v-2.14c-3.2.7-3.87-1.36-3.87-1.36-.52-1.34-1.27-1.69-1.27-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.75 1.18 1.75 1.18 1.02 1.75 2.68 1.24 3.33.95.1-.74.4-1.24.72-1.52-2.55-.29-5.24-1.27-5.24-5.66 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.47.11-3.06 0 0 .96-.31 3.15 1.18A10.9 10.9 0 0 1 12 6.32c.97 0 1.95.13 2.86.39 2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.77.11 3.06.73.8 1.18 1.83 1.18 3.08 0 4.4-2.69 5.36-5.25 5.65.41.35.78 1.05.78 2.12v3.14c0 .3.2.66.79.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -699,7 +793,7 @@
           </p>
           <div class="hero-actions" style="justify-content:center;">
             <a class="btn btn-primary" href="mailto:shelby.steward@outlook.com">Email Me</a>
-            <a class="btn btn-secondary" href="https://github.com/shelbysteward" target="_blank" rel="noreferrer">GitHub Profile</a>
+            <a class="btn btn-secondary" href="https://www.linkedin.com/in/shelby-steward/" target="_blank" rel="noreferrer">LinkedIn</a>
           </div>
         </div>
       </div>
