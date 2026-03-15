@@ -7,16 +7,16 @@
   <meta name="description" content="Operations leader specializing in logistics systems, data analytics, and AI-driven decision support." />
   <style>
     :root {
-      --bg: #0b1020;
-      --bg-soft: #121936;
-      --panel: rgba(255, 255, 255, 0.08);
-      --panel-strong: rgba(255, 255, 255, 0.12);
-      --text: #eef2ff;
-      --muted: #c7d2fe;
-      --accent: #8b5cf6;
-      --accent-2: #38bdf8;
-      --border: rgba(255, 255, 255, 0.14);
-      --shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+      --bg: #0a0a0a;
+      --bg-soft: #141414;
+      --panel: rgba(255, 255, 255, 0.04);
+      --panel-strong: rgba(255, 255, 255, 0.08);
+      --text: #f5f5f5;
+      --muted: #cfcfcf;
+      --accent: #ffffff;
+      --accent-2: #bdbdbd;
+      --border: rgba(255, 255, 255, 0.12);
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
       --max: 1160px;
       --radius: 24px;
     }
@@ -27,9 +27,9 @@
       margin: 0;
       font-family: Inter, Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 28%),
-        radial-gradient(circle at top right, rgba(139, 92, 246, 0.18), transparent 30%),
-        linear-gradient(180deg, #0b1020 0%, #121936 100%);
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.05), transparent 20%),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.04), transparent 22%),
+        linear-gradient(180deg, #050505 0%, #111111 100%);
       color: var(--text);
       line-height: 1.6;
     }
@@ -47,7 +47,7 @@
       top: 0;
       z-index: 1000;
       backdrop-filter: blur(14px);
-      background: rgba(11, 16, 32, 0.72);
+      background: rgba(8, 8, 8, 0.84);
       border-bottom: 1px solid var(--border);
     }
 
@@ -120,7 +120,7 @@
     }
 
     .gradient {
-      background: linear-gradient(90deg, #ffffff 0%, #a5b4fc 40%, #67e8f9 100%);
+      background: linear-gradient(90deg, #ffffff 0%, #e7e7e7 45%, #a9a9a9 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -152,8 +152,8 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: white;
+      background: linear-gradient(135deg, #ffffff, #cfcfcf);
+      color: #111111;
     }
 
     .btn-secondary {
@@ -178,7 +178,7 @@
     }
 
     .profile-block {
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
       border: 1px solid var(--border);
       border-radius: 24px;
       padding: 1.5rem;
@@ -188,16 +188,18 @@
       width: 100%;
       aspect-ratio: 4 / 5;
       border-radius: 20px;
-      background:
-        linear-gradient(145deg, rgba(139, 92, 246, 0.4), rgba(56, 189, 248, 0.28)),
-        rgba(255,255,255,0.08);
-      display: grid;
-      place-items: center;
-      font-size: 1rem;
-      color: var(--muted);
-      text-align: center;
-      padding: 1rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: #111111;
       margin-bottom: 1rem;
+    }
+
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 28%;
+      filter: grayscale(10%);
     }
 
     .stats {
@@ -295,10 +297,11 @@
     }
 
     .meta {
-      color: #a5b4fc;
+      color: #d6d6d6;
       font-size: 0.9rem;
       font-weight: 700;
       margin-bottom: 0.4rem;
+      letter-spacing: 0.02em;
     }
 
     .project-card {
@@ -308,18 +311,18 @@
     }
 
     .project-top {
-      min-height: 180px;
+      min-height: 220px;
       border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.08);
-      background:
-        linear-gradient(145deg, rgba(139, 92, 246, 0.24), rgba(56, 189, 248, 0.16)),
-        rgba(255,255,255,0.04);
-      display: grid;
-      place-items: center;
-      color: var(--muted);
-      text-align: center;
-      padding: 1rem;
-      font-weight: 700;
+      background: rgba(255,255,255,0.03);
+      overflow: hidden;
+    }
+
+    .project-top img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .project-links {
@@ -383,6 +386,7 @@
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
         <a href="#education">Education</a>
+        <a href="#resume">Resume</a>
         <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -408,25 +412,15 @@
 
         <aside class="hero-card">
           <div class="profile-block">
-            <div class="profile-photo">Add your headshot here<br />Replace this block with an image tag when ready.</div>
+            <div class="profile-photo"><img src="headshot-from-cover.png" alt="Shelby Steward headshot" /></div>
             <h3>Shelby Steward</h3>
             <p>Operations leader focused on service excellence, strategic problem solving, and data-informed decision-making.</p>
             <div class="stats">
               <div class="stat">
                 <strong>MBA</strong>
-                <span>Expected December completion</span>
               </div>
               <div class="stat">
                 <strong>MSAI</strong>
-                <span>Data analytics emphasis</span>
-              </div>
-              <div class="stat">
-                <strong>24/7 Ops</strong>
-                <span>Support center leadership</span>
-              </div>
-              <div class="stat">
-                <strong>Portfolio</strong>
-                <span>AI, strategy, and logistics work</span>
               </div>
             </div>
           </div>
@@ -439,7 +433,7 @@
         <div class="section-head">
           <div>
             <h2>About Me</h2>
-            <p>A portfolio website designed to showcase leadership, analytics, AI application, and operational strategy in one place.</p>
+            <p>A curated presentation of leadership, operational strategy, analytics, and applied artificial intelligence in a professional portfolio format.</p>
           </div>
         </div>
 
@@ -447,17 +441,17 @@
           <article class="card">
             <h3>Professional Focus</h3>
             <p>
-              My background centers on transportation support operations, cross-functional leadership, service performance,
-              and process improvement. I enjoy turning messy operational challenges into scalable systems with clear metrics,
-              better visibility, and stronger accountability.
+              My professional background is rooted in transportation support operations, cross-functional leadership, performance management,
+              and process improvement. I focus on strengthening service delivery through disciplined execution, data-informed decision-making,
+              and scalable operational structure.
             </p>
           </article>
           <article class="card">
             <h3>What This Portfolio Represents</h3>
             <p>
-              This site highlights the intersection of operations leadership and emerging technology. It is built to present
-              my experience, selected projects, academic work, and practical examples of how I apply analytics and AI concepts
-              to real-world business problems.
+              This portfolio reflects the intersection of executive leadership and emerging technology. It presents selected projects,
+              academic work, and operational examples that demonstrate how I apply strategy, analytics, and artificial intelligence to
+              solve complex business problems and improve organizational performance.
             </p>
           </article>
         </div>
@@ -478,9 +472,9 @@
             <div class="meta">Current Role</div>
             <h3>Assistant Director – Support Center Services</h3>
             <p>
-              Lead support center functions with emphasis on coverage, service quality, workforce accountability, operational
-              consistency, and performance indicators. Oversee complex, fast-moving workflows and use data to identify trends,
-              gaps, and improvement opportunities.
+              Oversee dispatch operations and the Driver Support Center, managing large-scale support functions in a high-volume,
+              time-sensitive transportation environment. Lead KPI monitoring, service quality review, workflow optimization,
+              and cross-functional problem solving to improve operational reliability and efficiency.
             </p>
           </article>
 
@@ -507,7 +501,7 @@
 
         <div class="grid-3">
           <article class="card project-card">
-            <div class="project-top">Artifact 1<br />Evolution of Artificial Intelligence</div>
+            <div class="project-top"><img src="artifact-1-infographic.png" alt="Evolution of Artificial Intelligence portfolio artifact" /></div>
             <div>
               <h3>AI Evolution Infographic</h3>
               <p>
@@ -527,7 +521,7 @@
           </article>
 
           <article class="card project-card">
-            <div class="project-top">Artifact 2<br />Transportation Operations Assistant</div>
+            <div class="project-top"><img src="artifact-2-chatbot.png" alt="Transportation Operations Assistant portfolio artifact" /></div>
             <div>
               <h3>AI Chatbot Concept</h3>
               <p>
@@ -547,12 +541,12 @@
           </article>
 
           <article class="card project-card">
-            <div class="project-top">Add Your Next Piece</div>
+            <div class="project-top"><img src="artifact-1-infographic.png" alt="Additional portfolio preview" /></div>
             <div>
               <h3>Portfolio Expansion Slot</h3>
               <p>
-                Use this space for another featured item such as an analytics dashboard, research project, leadership artifact,
-                or strategic operations initiative. The layout is already built so you can keep growing the site.
+                This space is available for future work such as analytics dashboards, strategic leadership projects, research,
+                or additional AI-enabled operational solutions as the portfolio grows.
               </p>
             </div>
             <div class="tag-wrap">
@@ -582,18 +576,77 @@
           <article class="card">
             <div class="meta">Indiana Wesleyan University</div>
             <h3>Master of Business Administration</h3>
-            <p>
-              Graduate study focused on strategic management, leadership, business analysis, and decision-making in complex organizations.
-            </p>
           </article>
 
           <article class="card">
             <div class="meta">Indiana Wesleyan University</div>
             <h3>Master of Science in Artificial Intelligence – Data Analytics</h3>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="resume">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Resume Highlights</h2>
+            <p>Embedded career highlights based on your current resume, including leadership scope, operational impact, and prior experience.</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="meta">Professional Transportation, Inc. | 2017 – Present</div>
+            <h3>Assistant Director</h3>
             <p>
-              Coursework and portfolio work centered on AI concepts, machine learning applications, analytics workflows,
-              and practical uses of intelligent systems in real organizations.
+              Lead dispatch operations and driver support functions for 110+ team members. Improved operational performance through
+              KPI development, training, workflow optimization, and analytics-driven decision-making. Reduced operational costs by
+              $750K through cross-functional process improvements and stronger resource alignment.
             </p>
+            <div class="tag-wrap">
+              <span class="tag">110+ Team Members</span>
+              <span class="tag">$750K Cost Reduction</span>
+              <span class="tag">KPI Leadership</span>
+            </div>
+          </article>
+
+          <article class="card">
+            <div class="meta">Earlier Experience</div>
+            <h3>Leadership Background</h3>
+            <p>
+              Previous roles include Store Manager at Metro by T-Mobile and Customer Service Representative at Koester's Call Center.
+              These positions strengthened customer service, frontline leadership, coaching, and performance management skills that now
+              support your executive growth in transportation operations.
+            </p>
+            <div class="tag-wrap">
+              <span class="tag">Team Management</span>
+              <span class="tag">Customer Experience</span>
+              <span class="tag">Coaching</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="grid-2" style="margin-top: 1.25rem;">
+          <article class="card">
+            <div class="meta">Leadership Involvement</div>
+            <h3>Committee & Organizational Service</h3>
+            <p>
+              PTI Quality Improvement Team - Co-Chair<br />
+              United Companies Engagement Team - Co Chair<br />
+              PTI Policy and Procedure Implementation Team, Liaison
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="meta">Resume File</div>
+            <h3>Download Resume</h3>
+            <p>
+              Access the current resume in PDF format for a complete overview of professional experience, education, and leadership background.
+            </p>
+            <div class="hero-actions" style="margin-top: 1rem;">
+              <a class="btn btn-primary" href="Shelby-Steward-Resume.pdf" target="_blank" rel="noreferrer">Download Resume</a>
+            </div>
           </article>
         </div>
       </div>
@@ -645,8 +698,8 @@
             resume link, and final project links below to make it fully launch-ready.
           </p>
           <div class="hero-actions" style="justify-content:center;">
-            <a class="btn btn-primary" href="mailto:youremail@example.com">Email Me</a>
-            <a class="btn btn-secondary" href="#">LinkedIn</a>
+            <a class="btn btn-primary" href="mailto:shelby.steward@outlook.com">Email Me</a>
+            <a class="btn btn-secondary" href="https://github.com/shelbysteward" target="_blank" rel="noreferrer">GitHub Profile</a>
           </div>
         </div>
       </div>
