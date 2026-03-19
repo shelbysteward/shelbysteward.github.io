@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Machine Learning Training Methods Coach | Shelby Steward</title>
+  <meta name="description" content="An interactive AI chatbot concept that teaches machine learning training methods in a clear, beginner-friendly way." />
+  <style>
+    :root {
+      --bg: #070707;
+      --bg-soft: #111111;
+      --panel: #151515;
+      --panel-2: #1b1b1b;
+      --border: rgba(255, 255, 255, 0.12);
+      --text: #f5f5f5;
+      --muted: #cfcfcf;
+      --muted-2: #a6a6a6;
+      --accent: #ffffff;
+      --radius: 22px;
+      --max: 1220px;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.32);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.05), transparent 18%),
+        linear-gradient(180deg, #050505 0%, #101010 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 2rem));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(8, 8, 8, 0.88);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 0;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      font-size: 1.02rem;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: 999px;
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .hero {
+      padding: 4.5rem 0 2rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 0.84rem;
+      margin-bottom: 1rem;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.15;
+      margin: 0 0 0.8rem;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 5vw, 4rem);
+      letter-spacing: -0.03em;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg, #ffffff, #c9c9c9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p,
+    .section-head p,
+    .panel p,
+    .card p {
+      color: var(--muted);
+    }
+
+    .hero p {
+      max-width: 70ch;
+      margin: 0;
+      font-size: 1.02rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 1.4rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.95rem 1.2rem;
+      border-radius: 15px;
+      border: 1px solid var(--border);
+      font-weight: 700;
+      transition: transform 0.2s ease, background 0.2s ease;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text);
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: #ffffff;
+      color: #111111;
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.03);
+      color: var(--text);
+    }
+
+    .section {
+      padding: 1.5rem 0 3rem;
+    }
+
+    .section-head {
+      margin-bottom: 1.4rem;
+    }
+
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .panel,
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      overflow: hidden;
+    }
+
+    .chat-top {
+      padding: 1.5rem 1.5rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .chat-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+    }
+
+    .badge {
+      padding: 0.45rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .chat-title {
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .quick-starters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
+    .starter {
+      padding: 0.75rem 0.95rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .starter:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    .chat-shell {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      min-height: 620px;
+    }
+
+    .messages {
+      padding: 1.2rem 1.2rem 0;
+      overflow-y: auto;
+      max-height: 640px;
+      scroll-behavior: smooth;
+    }
+
+    .message-row {
+      display: flex;
+      margin-bottom: 1rem;
+    }
+
+    .message-row.user {
+      justify-content: flex-end;
+    }
+
+    .message-row.assistant {
+      justify-content: flex-start;
+    }
+
+    .message {
+      max-width: 88%;
+      border-radius: 20px;
+      padding: 1rem 1rem 0.95rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.14);
+    }
+
+    .message.user {
+      background: #f5f5f5;
+      color: #111111;
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .message.assistant {
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+
+    .message-label {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.45rem;
+      opacity: 0.75;
+      font-weight: 700;
+    }
+
+    .message-body {
+      white-space: pre-wrap;
+      font-size: 0.96rem;
+      line-height: 1.7;
+    }
+
+    .chat-input-wrap {
+      padding: 1rem 1.2rem 1.2rem;
+      border-top: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .chat-input-row {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .chat-input {
+      flex: 1;
+      min-height: 56px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      padding: 1rem;
+      font: inherit;
+      resize: vertical;
+    }
+
+    .chat-input::placeholder {
+      color: var(--muted-2);
+    }
+
+    .send-btn {
+      min-width: 130px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: #111111;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 0 1rem;
+    }
+
+    .side-stack {
+      display: grid;
+      gap: 1.25rem;
+    }
+
+    .card {
+      padding: 1.35rem;
+    }
+
+    .meta {
+      color: var(--muted-2);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.45rem;
+    }
+
+    .topic-grid {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .topic-card {
+      padding: 1rem;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .topic-card:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-2px);
+    }
+
+    .topic-card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .topic-card p {
+      margin: 0;
+      font-size: 0.92rem;
+    }
+
+    .tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      padding: 0.45rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .feature-list {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .feature-item {
+      padding: 0.95rem 1rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted-2);
+      padding: 1rem 0 2.5rem;
+    }
+
+    @media (max-width: 980px) {
+      .grid-main {
+        grid-template-columns: 1fr;
+      }
+
+      .messages {
+        max-height: 500px;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero {
+        padding-top: 3.5rem;
+      }
+
+      .hero-actions,
+      .chat-input-row {
+        flex-direction: column;
+      }
+
+      .btn,
+      .send-btn {
+        width: 100%;
+      }
+
+      .message {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">Shelby Steward</a>
+      <nav class="nav-links">
+        <a href="index.html#projects">Back to Portfolio</a>
+        <a href="#coach">Chatbot</a>
+        <a href="#topics">Topics</a>
+        <a href="#about-artifact">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Artifact 3 • AI Chatbot • Machine Learning Education</div>
+        <h1>Machine Learning <span class="gradient">Training Methods Coach</span></h1>
+        <p>
+          This interactive chatbot artifact is designed to explain machine learning training methods in a practical, beginner-friendly way. It helps users explore concepts such as supervised learning, gradient descent, train/validation/test splits, overfitting, and hyperparameters through guided prompts and conversational responses.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#coach">Open Chatbot</a>
+          <a class="btn btn-secondary" href="index.html#projects">Return to Portfolio</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="coach">
+      <div class="container">
+        <div class="section-head">
+          <h2>Interactive Chatbot Experience</h2>
+          <p>Ask questions, explore topic cards, or use the starter prompts to learn core machine learning training concepts.</p>
+        </div>
+
+        <div class="grid-main">
+          <div class="panel">
+            <div class="chat-top">
+              <div class="chat-badges">
+                <span class="badge">AI Chatbot</span>
+                <span class="badge">Beginner-Friendly</span>
+                <span class="badge">Training Methods</span>
+              </div>
+              <div class="chat-title">Machine Learning Training Methods Coach</div>
+              <p>
+                Learn how models are trained, why validation matters, and how to compare training methods in clear, accessible language.
+              </p>
+
+              <div class="quick-starters">
+                <button class="starter" type="button">Explain supervised vs unsupervised learning in simple terms.</button>
+                <button class="starter" type="button">When should I use batch, mini-batch, or stochastic gradient descent?</button>
+                <button class="starter" type="button">What is overfitting, and how do I reduce it during training?</button>
+                <button class="starter" type="button">Teach me about train, validation, and test splits.</button>
+                <button class="starter" type="button">How do epochs, batch size, and learning rate work together?</button>
+                <button class="starter" type="button">Give me a beginner-friendly study plan for learning training methods.</button>
+              </div>
+            </div>
+
+            <div class="chat-shell">
+              <div class="messages" id="messages"></div>
+
+              <div class="chat-input-wrap">
+                <div class="chat-input-row">
+                  <textarea
+                    id="chatInput"
+                    class="chat-input"
+                    placeholder="Ask about gradient descent, validation, overfitting, hyperparameters, neural network training, or machine learning basics..."
+                    rows="2"
+                  ></textarea>
+                  <button id="sendBtn" class="send-btn" type="button">Send</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="side-stack">
+            <article class="card" id="topics">
+              <div class="meta">Topic Explorer</div>
+              <h2>Core Learning Topics</h2>
+              <p>Click any topic to send a guided question to the chatbot.</p>
+
+              <div class="topic-grid">
+                <button class="topic-card" type="button" data-prompt="Teach me about supervised learning.">
+                  <h3>Supervised Learning</h3>
+                  <p>Learn how labeled data helps models predict known outcomes.</p>
+                </button>
+
+                <button class="topic-card" type="button" data-prompt="Teach me about unsupervised learning.">
+                  <h3>Unsupervised Learning</h3>
+                  <p>Explore how models discover patterns without labeled answers.</p>
+                </button>
+
+                <button class="topic-card" type="button" data-prompt="Explain gradient descent and the difference between batch, mini-batch, and stochastic gradient descent.">
+                  <h3>Gradient Descent</h3>
+                  <p>Understand how models improve by reducing error over time.</p>
+                </button>
+
+                <button class="topic-card" type="button" data-prompt="Explain overfitting and how to reduce it during training.">
+                  <h3>Overfitting</h3>
+                  <p>Learn why strong training performance can still fail on new data.</p>
+                </button>
+
+                <button class="topic-card" type="button" data-prompt="Teach me about train, validation, and test splits.">
+                  <h3>Validation & Testing</h3>
+                  <p>See how proper dataset splits support honest evaluation.</p>
+                </button>
+
+                <button class="topic-card" type="button" data-prompt="Teach me about hyperparameters in machine learning.">
+                  <h3>Hyperparameters</h3>
+                  <p>Understand the settings that shape how a model learns.</p>
+                </button>
+              </div>
+            </article>
+
+            <article class="card" id="about-artifact">
+              <div class="meta">Artifact Overview</div>
+              <h2>What This Artifact Demonstrates</h2>
+              <p>
+                This artifact shows how AI can be used as an educational coaching tool. It translates technical machine learning training concepts into structured, conversational guidance that is easier for beginners to understand and apply.
+              </p>
+
+              <div class="tag-wrap">
+                <span class="tag">Machine Learning</span>
+                <span class="tag">Education</span>
+                <span class="tag">AI Chatbot</span>
+                <span class="tag">Training Methods</span>
+                <span class="tag">Interactive Learning</span>
+              </div>
+            </article>
+
+            <article class="card">
+              <div class="meta">Capabilities</div>
+              <h2>What the Coach Can Help With</h2>
+
+              <div class="feature-list">
+                <div class="feature-item">Explain machine learning training concepts in plain language.</div>
+                <div class="feature-item">Compare batch, mini-batch, and stochastic training methods.</div>
+                <div class="feature-item">Clarify overfitting, regularization, validation, and testing.</div>
+                <div class="feature-item">Support beginner learning through guided question prompts.</div>
+                <div class="feature-item">Connect technical ideas to practical examples and study habits.</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Shelby Steward. Built for GitHub Pages.</div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const messagesEl = document.getElementById('messages');
+    const inputEl = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const starterButtons = document.querySelectorAll('.starter');
+    const topicCards = document.querySelectorAll('.topic-card');
+
+    const starterMessage = "Hi — I’m your Machine Learning Training Methods Coach. I can explain training concepts, compare methods, and help turn technical ideas into clear, practical learning. Ask me about supervised learning, gradient descent, overfitting, validation, hyperparameters, or study strategies.";
+
+    function addMessage(role, content) {
+      const row = document.createElement('div');
+      row.className = `message-row ${role}`;
+
+      const bubble = document.createElement('div');
+      bubble.className = `message ${role}`;
+
+      const label = document.createElement('div');
+      label.className = 'message-label';
+      label.textContent = role === 'assistant' ? 'Coach' : 'You';
+
+      const body = document.createElement('div');
+      body.className = 'message-body';
+      body.textContent = content;
+
+      bubble.appendChild(label);
+      bubble.appendChild(body);
+      row.appendChild(bubble);
+      messagesEl.appendChild(row);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function buildCoachResponse(input) {
+      const q = input.toLowerCase();
+      const sections = [];
+
+      function addSection(title, text) {
+        sections.push({ title, text });
+      }
+
+      if (q.includes('supervised') || q.includes('unsupervised')) {
+        addSection(
+          'Core Idea',
+          'Supervised learning uses labeled data, meaning the model sees both the input and the correct answer during training. Unsupervised learning uses unlabeled data and looks for structure on its own, such as clusters or hidden patterns.'
+        );
+        addSection(
+          'Simple Example',
+          'A spam filter is supervised because it learns from emails already marked as spam or not spam. Customer segmentation is unsupervised because the model groups customers without being told the correct categories first.'
+        );
+        addSection(
+          'When to Use Each',
+          'Use supervised learning when you want to predict a known outcome. Use unsupervised learning when your goal is discovery, exploration, or pattern finding.'
+        );
+      }
+
+      if (q.includes('gradient descent') || q.includes('mini-batch') || q.includes('stochastic') || q.includes('batch')) {
+        addSection(
+          'What Gradient Descent Does',
+          'Gradient descent is the process of adjusting model parameters to reduce error. Think of it like taking repeated downhill steps toward a better answer.'
+        );
+        addSection(
+          'Training Method Comparison',
+          'Batch gradient descent uses the entire dataset for each update, which is stable but slower. Stochastic gradient descent updates after one example at a time, which is faster but noisier. Mini-batch gradient descent uses small groups of examples and is usually the most practical option because it balances speed, memory efficiency, and stability.'
+        );
+        addSection(
+          'Best Practical Advice',
+          'In modern machine learning, mini-batch training is often the default choice because it works well with larger datasets and common hardware environments.'
+        );
+      }
+
+      if (q.includes('overfitting') || q.includes('regularization') || q.includes('dropout') || q.includes('early stopping')) {
+        addSection(
+          'What Overfitting Means',
+          'Overfitting happens when a model learns the training data too specifically instead of learning general patterns. This usually shows up when training performance looks strong but validation or test performance is weaker.'
+        );
+        addSection(
+          'How to Reduce It',
+          'Common ways to reduce overfitting include using more data, simplifying the model, applying regularization, using dropout in neural networks, improving validation practices, and stopping training early when validation performance stops improving.'
+        );
+        addSection(
+          'What to Watch For',
+          'A growing gap between training performance and validation performance is often a warning sign that the model is memorizing instead of generalizing.'
+        );
+      }
+
+      if (q.includes('train') || q.includes('validation') || q.includes('test')) {
+        addSection(
+          'How the Splits Work',
+          'The training set teaches the model. The validation set helps you tune decisions such as model settings and training choices. The test set is saved for final evaluation so you can measure how the finished model performs on data it truly has not seen.'
+        );
+        addSection(
+          'Why This Matters',
+          'Keeping these roles separate helps prevent overly optimistic results. If you repeatedly use the test set during development, it stops being an honest final check.'
+        );
+        addSection(
+          'Rule of Thumb',
+          'Train on the training set, tune on the validation set, and judge final performance on the test set.'
+        );
+      }
+
+      if (q.includes('epoch') || q.includes('learning rate') || q.includes('batch size')) {
+        addSection(
+          'How They Work Together',
+          'An epoch is one full pass through the training data. Batch size tells you how many examples the model processes before updating itself. Learning rate controls how large each update step is.'
+        );
+        addSection(
+          'Why Balance Matters',
+          'If the learning rate is too high, training can become unstable and miss good solutions. If it is too low, training may be very slow. Batch size influences speed, stability, and memory use, so these settings often need to be tuned together.'
+        );
+      }
+
+      if (q.includes('hyperparameter')) {
+        addSection(
+          'What Hyperparameters Are',
+          'Hyperparameters are training settings chosen before or during model development. They are not learned automatically from the data. Examples include learning rate, batch size, number of epochs, model depth, and regularization strength.'
+        );
+        addSection(
+          'Why They Matter',
+          'Hyperparameters strongly shape model behavior. Even a well-designed model can perform poorly if the training settings are not chosen carefully.'
+        );
+      }
+
+      if (q.includes('study plan') || q.includes('beginner') || q.includes('learn')) {
+        addSection(
+          'Beginner Learning Path',
+          'A helpful order is: learn classification and regression first, then dataset splits, loss and error, gradient descent, overfitting, regularization, evaluation metrics, and finally neural networks and hyperparameter tuning.'
+        );
+        addSection(
+          'How to Practice',
+          'Use one small dataset at a time. Train a simple baseline model, check its performance, then change one setting at a time and compare what happens. That process teaches training behavior much faster than memorizing definitions alone.'
+        );
+        addSection(
+          'Coach Tip',
+          'The fastest way to understand training methods is to compare results after small changes, not just read about them.'
+        );
+      }
+
+      if (q.includes('neural network') || q.includes('backpropagation')) {
+        addSection(
+          'Neural Network Training Basics',
+          'Neural networks learn by making predictions, measuring how wrong they are, and then adjusting internal weights to reduce that error.'
+        );
+        addSection(
+          'Where Backpropagation Fits',
+          'Backpropagation is the method used to send error information backward through the network so the model knows which weights to update and by how much.'
+        );
+      }
+
+      if (sections.length === 0) {
+        addSection(
+          'Coaching Response',
+          'I can help explain machine learning training methods, compare approaches, define technical concepts in plain language, and guide you through study questions step by step.'
+        );
+        addSection(
+          'Try Asking',
+          'Try questions like: What is the difference between training and validation data? How do I choose a batch size? Why does overfitting happen? or What does learning rate actually control?'
+        );
+      }
+
+      return sections.map(section => `${section.title}\n${section.text}`).join('\n\n');
+    }
+
+    function sendMessage(text) {
+      const value = (text || inputEl.value).trim();
+      if (!value) return;
+
+      addMessage('user', value);
+      const response = buildCoachResponse(value);
+      addMessage('assistant', response);
+      inputEl.value = '';
+      inputEl.focus();
+    }
+
+    sendBtn.addEventListener('click', () => sendMessage());
+
+    inputEl.addEventListener('keydown', event => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+
+    starterButtons.forEach(button => {
+      button.addEventListener('click', () => sendMessage(button.textContent));
+    });
+
+    topicCards.forEach(card => {
+      card.addEventListener('click', () => {
+        sendMessage(card.getAttribute('data-prompt'));
+      });
+    });
+
+    addMessage('assistant', starterMessage);
+  </script>
+</body>
+</html>
