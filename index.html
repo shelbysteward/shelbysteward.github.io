@@ -294,66 +294,6 @@
       padding-left: 1.2rem;
     }
 
-    .featured-project {
-      padding: 0;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-    }
-
-    .featured-grid {
-      display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      min-height: 420px;
-    }
-
-    .featured-media {
-      display: block;
-      min-height: 100%;
-      background: #0f0f0f;
-    }
-
-    .featured-media img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .featured-copy {
-      padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .featured-copy h3 {
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-    }
-
-    .prompt-box {
-      margin-top: 1.1rem;
-      padding: 1rem;
-      border-radius: 18px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .prompt-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-      margin-top: 0.8rem;
-    }
-
-    .prompt-chip {
-      display: inline-block;
-      padding: 0.65rem 0.8rem;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,0.04);
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
     .project-card img {
       width: 100%;
       border-radius: 16px;
@@ -445,6 +385,31 @@
       margin-bottom: 1rem;
     }
 
+    .prompt-box {
+      margin-top: 1.1rem;
+      padding: 1rem;
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .prompt-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.8rem;
+    }
+
+    .prompt-chip {
+      display: inline-block;
+      padding: 0.65rem 0.8rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
     .contact {
       text-align: center;
     }
@@ -457,7 +422,6 @@
 
     @media (max-width: 920px) {
       .hero-grid,
-      .featured-grid,
       .grid-2,
       .grid-3,
       .hero-strip,
@@ -466,8 +430,10 @@
         grid-template-columns: 1fr;
       }
 
-      .featured-media img {
+      .project-card img,
+      .artifact-detail img {
         max-height: 420px;
+        object-fit: cover;
       }
     }
 
@@ -613,41 +579,6 @@
           <p>Selected portfolio work demonstrating applied artificial intelligence, visual communication, and operations-focused problem solving.</p>
         </div>
 
-        <div class="panel featured-project">
-          <div class="featured-grid">
-            <a class="featured-media" href="https://chatgpt.com/g/g-69ab3308c62881918dedee456e818ec8-transportation-operations-assistant" target="_blank" rel="noreferrer">
-              <img src="artifact-2-chatbot.png" alt="Transportation Operations Assistant featured preview" />
-            </a>
-            <div class="featured-copy">
-              <div class="meta">Featured Project</div>
-              <h3>Transportation Operations Assistant</h3>
-              <p>
-                A transportation-focused AI assistant concept designed to support dispatch and support-center workflows through
-                fast information access, workflow guidance, and structured operational decision support.
-              </p>
-              <div class="tag-wrap">
-                <span class="tag">AI Assistant</span>
-                <span class="tag">Operations</span>
-                <span class="tag">Workflow Design</span>
-                <span class="tag">Decision Support</span>
-              </div>
-              <div class="hero-actions">
-                <a class="btn btn-primary" href="https://chatgpt.com/g/g-69ab3308c62881918dedee456e818ec8-transportation-operations-assistant" target="_blank" rel="noreferrer">Launch Transportation Assistant</a>
-                <a class="btn btn-secondary" href="#assistant-prompts">Try Example Prompts</a>
-              </div>
-              <div class="prompt-box" id="assistant-prompts">
-                <strong>Try These Prompts</strong>
-                <div class="prompt-list">
-                  <span class="prompt-chip">How do I cover a trip with no drivers available?</span>
-                  <span class="prompt-chip">Explain Import-to-Assign metrics in simple terms.</span>
-                  <span class="prompt-chip">Create a dispatch escalation workflow for a service failure.</span>
-                  <span class="prompt-chip">What should a support center do when ETAs are unclear?</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="grid-3">
           <article class="card project-card project-clickable" data-lightbox="ai-evolution-lightbox">
             <img src="artifact-1-infographic-1.png" alt="Evolution of Artificial Intelligence portfolio artifact preview" />
@@ -663,20 +594,17 @@
             </div>
           </article>
 
-          <article class="card project-card">
+          <article class="card project-card project-clickable" data-lightbox="transportation-assistant-lightbox">
             <img src="artifact-2-chatbot.png" alt="Transportation Operations Assistant portfolio artifact preview" />
             <div class="meta">Artifact 2</div>
             <h3>Transportation Operations Assistant</h3>
             <p>
-              An operations-focused chatbot concept built to support transportation workflows, service guidance, and structured decision-making.
+              An operations-focused chatbot concept built to support transportation workflows, service guidance, and structured decision-making in a fast-paced service environment.
             </p>
             <div class="tag-wrap">
               <span class="tag">AI Assistant</span>
               <span class="tag">Transportation</span>
               <span class="tag">Operations</span>
-            </div>
-            <div class="hero-actions">
-              <a class="btn btn-secondary" href="https://chatgpt.com/g/g-69ab3308c62881918dedee456e818ec8-transportation-operations-assistant" target="_blank" rel="noreferrer">Launch</a>
             </div>
           </article>
 
@@ -708,6 +636,53 @@
           <img src="artifact-1-infographic-2.png" alt="AI infographic full image 2" />
           <img src="artifact-1-infographic-3.png" alt="AI infographic full image 3" />
           <img src="artifact-1-infographic-4.png" alt="AI infographic full image 4" />
+        </div>
+      </div>
+    </div>
+
+    <div class="lightbox" id="transportation-assistant-lightbox" aria-hidden="true">
+      <div class="lightbox-content">
+        <div class="lightbox-top">
+          <h3>Artifact 2 | Transportation Operations Assistant</h3>
+          <button class="lightbox-close" type="button" aria-label="Close artifact details">×</button>
+        </div>
+
+        <div class="artifact-detail">
+          <div>
+            <img src="artifact-2-chatbot.png" alt="Transportation Operations Assistant full preview" />
+          </div>
+
+          <div class="artifact-detail-copy">
+            <div class="meta">Interactive Operations Support Tool</div>
+            <h3>Transportation Operations Assistant</h3>
+            <p>
+              This artifact is an AI chatbot concept developed to support transportation operations by providing quick access to workflow guidance, service support, and structured operational decision assistance.
+            </p>
+            <p>
+              The assistant is designed around real operational needs in transportation environments, including service disruptions, trip coverage issues, ETA concerns, and dispatch-related questions. Its purpose is to simplify access to operational knowledge while supporting consistency, speed, and informed decision-making.
+            </p>
+
+            <div class="tag-wrap">
+              <span class="tag">Decision Support</span>
+              <span class="tag">Dispatch Workflows</span>
+              <span class="tag">Service Guidance</span>
+              <span class="tag">Operations Strategy</span>
+            </div>
+
+            <div class="prompt-box">
+              <strong>Try These Prompts</strong>
+              <div class="prompt-list">
+                <span class="prompt-chip">How do I cover a trip with no drivers available?</span>
+                <span class="prompt-chip">Explain Import-to-Assign metrics in simple terms.</span>
+                <span class="prompt-chip">Create a dispatch escalation workflow for a service failure.</span>
+                <span class="prompt-chip">What should a support center do when ETAs are unclear?</span>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://chatgpt.com/g/g-69ab3308c62881918dedee456e818ec8-transportation-operations-assistant" target="_blank" rel="noreferrer">Launch Artifact 2</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
