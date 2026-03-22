@@ -253,7 +253,7 @@
     }
 
     .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 
     .card {
       padding: 1.35rem;
@@ -420,10 +420,15 @@
       padding: 1rem 0 2.5rem;
     }
 
+    @media (max-width: 1100px) {
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     @media (max-width: 920px) {
       .hero-grid,
       .grid-2,
-      .grid-3,
       .hero-strip,
       .lightbox-grid,
       .artifact-detail {
@@ -453,6 +458,10 @@
 
       .btn {
         width: 100%;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -621,6 +630,20 @@
               <span class="tag">Education</span>
             </div>
           </article>
+
+          <article class="card project-card project-clickable" data-lightbox="data-challenge-lightbox">
+            <img src="artifact-4-data-challenge.png" alt="Data Challenge Scenarios Coach portfolio artifact preview" />
+            <div class="meta">Artifact 4</div>
+            <h3>Data Challenge Scenarios Coach</h3>
+            <p>
+              An AI chatbot built to simulate real-world data scenarios and guide users through analytical thinking, structured problem solving, and decision-making.
+            </p>
+            <div class="tag-wrap">
+              <span class="tag">AI Chatbot</span>
+              <span class="tag">Data Analytics</span>
+              <span class="tag">Scenarios</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -729,6 +752,53 @@
 
             <div class="hero-actions">
               <a class="btn btn-primary" href="https://chatgpt.com/g/g-69bc365ef7248191ab6b21b1143e5dc8-machine-learning-training-methods-coach" target="_blank" rel="noreferrer">Launch Artifact 3</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lightbox" id="data-challenge-lightbox" aria-hidden="true">
+      <div class="lightbox-content">
+        <div class="lightbox-top">
+          <h3>Artifact 4 | Data Challenge Scenarios Coach</h3>
+          <button class="lightbox-close" type="button" aria-label="Close artifact details">×</button>
+        </div>
+
+        <div class="artifact-detail">
+          <div>
+            <img src="artifact-4-data-challenge.png" alt="Data Challenge Scenarios Coach full preview" />
+          </div>
+
+          <div class="artifact-detail-copy">
+            <div class="meta">Interactive Data Analytics Learning Tool</div>
+            <h3>Data Challenge Scenarios Coach</h3>
+            <p>
+              This artifact is an AI chatbot concept designed to help users practice real-world data analysis through scenario-based learning. It guides users through realistic business problems that require interpretation, reasoning, and structured decision-making.
+            </p>
+            <p>
+              The chatbot is built to strengthen analytical thinking by simulating data challenges, asking users to work through possible approaches, and helping them understand how data can be used to support better business decisions.
+            </p>
+
+            <div class="tag-wrap">
+              <span class="tag">Scenario-Based Learning</span>
+              <span class="tag">Data Interpretation</span>
+              <span class="tag">Problem Solving</span>
+              <span class="tag">Decision Support</span>
+            </div>
+
+            <div class="prompt-box">
+              <strong>Try These Prompts</strong>
+              <div class="prompt-list">
+                <span class="prompt-chip">Give me a realistic data challenge to solve.</span>
+                <span class="prompt-chip">Walk me through how to analyze this business scenario.</span>
+                <span class="prompt-chip">Help me identify the right KPI for this problem.</span>
+                <span class="prompt-chip">Simulate a decision-making scenario using data.</span>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://chatgpt.com/g/g-69c00be53dc08191bbf5827a0daa97ca-data-challenge-scenarios-coach" target="_blank" rel="noreferrer">Launch Artifact 4</a>
             </div>
           </div>
         </div>
