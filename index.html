@@ -305,6 +305,30 @@
       cursor: pointer;
     }
 
+    .project-row {
+      margin-top: 1.2rem;
+    }
+
+    .project-horizontal {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 1.4rem;
+      align-items: center;
+    }
+
+    .project-horizontal img {
+      width: 100%;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      height: 220px;
+      object-fit: cover;
+      margin: 0;
+    }
+
+    .project-horizontal-copy p {
+      margin-bottom: 0;
+    }
+
     .lightbox {
       position: fixed;
       inset: 0;
@@ -430,14 +454,17 @@
       .grid-2,
       .hero-strip,
       .lightbox-grid,
-      .artifact-detail {
+      .artifact-detail,
+      .project-horizontal {
         grid-template-columns: 1fr;
       }
 
       .project-card img,
-      .artifact-detail img {
+      .artifact-detail img,
+      .project-horizontal img {
         max-height: 420px;
         object-fit: cover;
+        height: auto;
       }
     }
 
@@ -640,6 +667,25 @@
             </div>
           </article>
         </div>
+
+        <div class="project-row">
+          <article class="card project-clickable project-horizontal" data-lightbox="ai-ml-framework-lightbox">
+            <img src="artifact-5-ai-ml-framework.png" alt="Personal AI/ML Leadership Framework portfolio artifact preview" />
+            <div class="project-horizontal-copy">
+              <div class="meta">Artifact 5</div>
+              <h3>Personal AI/ML Leadership Framework</h3>
+              <p>
+                A polished executive-style framework outlining mission, values, strategic objectives, and action plans for leading artificial intelligence and machine learning initiatives with discipline, ethics, and operational accountability.
+              </p>
+              <div class="tag-wrap">
+                <span class="tag">Leadership</span>
+                <span class="tag">AI Strategy</span>
+                <span class="tag">Framework</span>
+                <span class="tag">Ethical AI</span>
+              </div>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -823,6 +869,46 @@
 
             <div class="hero-actions">
               <a class="btn btn-primary" href="https://chatgpt.com/g/g-69c00be53dc08191bbf5827a0daa97ca-data-challenge-scenarios-coach" target="_blank" rel="noreferrer">Launch Artifact 4</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lightbox" id="ai-ml-framework-lightbox" aria-hidden="true">
+      <div class="lightbox-content">
+        <div class="lightbox-top">
+          <h3>Artifact 5 | Personal AI/ML Leadership Framework</h3>
+          <button class="lightbox-close" type="button" aria-label="Close artifact details">×</button>
+        </div>
+
+        <div class="artifact-detail">
+          <div>
+            <img src="artifact-5-ai-ml-framework.png" alt="Personal AI/ML Leadership Framework full preview" />
+          </div>
+
+          <div class="artifact-detail-copy">
+            <div class="meta">Executive Leadership Document</div>
+            <h3>Personal AI/ML Leadership Framework</h3>
+
+            <p><strong>Objective:</strong> I created this artifact to define a clear, disciplined framework for how I intend to lead artificial intelligence and machine learning initiatives with integrity, accountability, and measurable operational impact.</p>
+
+            <p><strong>Process:</strong> I reflected on my leadership growth, identified the values and objectives that matter most to me, and structured those insights into a polished executive-style framework with mission, core values, action plans, and evaluation criteria.</p>
+
+            <p><strong>Tools:</strong> HTML/CSS design, leadership reflection, AI/ML course concepts, strategic planning, and written framework development.</p>
+
+            <p><strong>Value Proposition:</strong> This artifact demonstrates my ability to connect personal leadership philosophy with practical AI strategy, showing how I approach ethical implementation, operational accountability, and long-term transformation through technology.</p>
+
+            <div class="tag-wrap">
+              <span class="tag">Mission Statement</span>
+              <span class="tag">Core Values</span>
+              <span class="tag">Action Plans</span>
+              <span class="tag">Ethical AI</span>
+              <span class="tag">Executive Strategy</span>
+            </div>
+
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="ai_ml_leadership_framework(2).html" target="_blank" rel="noreferrer">Launch Artifact 5</a>
             </div>
           </div>
         </div>
