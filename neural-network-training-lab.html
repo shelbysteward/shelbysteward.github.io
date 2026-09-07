@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Neural Network Training Lab — a visual model-development case study by Shelby Steward." />
+  <title>Neural Network Training Lab | Shelby Steward</title>
+  <link rel="stylesheet" href="neural-network-training-lab.css" />
+</head>
+<body>
+  <main>
+    <section class="hero shell">
+      <p class="eyebrow">AIML 501 • MODEL DEVELOPMENT • INDIANA WESLEYAN UNIVERSITY</p>
+      <h1>Neural Network<br><span>Training Lab</span></h1>
+      <p class="hero-copy">
+        A visual case study built from TensorFlow Playground experiments showing how data quality,
+        network architecture, and pattern complexity change what a neural network learns.
+      </p>
+
+      <div class="hero-metrics">
+        <div class="metric"><strong>5</strong><span>Controlled Experiments</span></div>
+        <div class="metric"><strong>0.001 → 0.225</strong><span>Noise Impact on Test Loss</span></div>
+        <div class="metric"><strong>0.395 → 0.059</strong><span>Spiral Test Loss</span></div>
+      </div>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <p class="eyebrow">MODEL TRAINING RUNS</p>
+        <h2>One variable at a time.</h2>
+        <p>Each station shows how a targeted change affected model behavior, training loss, test loss, and the visible decision boundary.</p>
+      </div>
+
+      <div class="runline" id="runline">
+        <button class="run active" data-run="0">
+          <span class="run-no">01</span><span class="dot"></span>
+          <b>Baseline</b><small>Circle · 4 → 4</small><em>0.001</em><i>TEST LOSS</i>
+        </button>
+        <button class="run" data-run="1">
+          <span class="run-no">02</span><span class="dot"></span>
+          <b>Add Noise</b><small>Circle · Noise 40</small><em>0.225</em><i>TEST LOSS</i>
+        </button>
+        <button class="run" data-run="2">
+          <span class="run-no">03</span><span class="dot"></span>
+          <b>Reduce Capacity</b><small>Circle · 2 neurons</small><em>0.301</em><i>TEST LOSS</i>
+        </button>
+        <button class="run" data-run="3">
+          <span class="run-no">04</span><span class="dot"></span>
+          <b>Harder Data</b><small>Spiral · 4 → 4</small><em>0.395</em><i>TEST LOSS</i>
+        </button>
+        <button class="run" data-run="4">
+          <span class="run-no">05</span><span class="dot"></span>
+          <b>Add Capacity</b><small>Spiral · 6 → 6 → 6</small><em>0.059</em><i>TEST LOSS</i>
+        </button>
+      </div>
+
+      <article class="run-detail">
+        <div class="run-image-wrap">
+          <img id="run-image" src="artifact-7-experiment-1-baseline.png" alt="TensorFlow Playground baseline experiment">
+        </div>
+        <div class="run-copy">
+          <p id="run-kicker" class="eyebrow">EXPERIMENT 01</p>
+          <h3 id="run-title">Baseline: Clean Circular Data</h3>
+          <p id="run-text">
+            With two hidden layers and four neurons per layer, the model learned the clean circular
+            decision boundary almost perfectly.
+          </p>
+          <dl>
+            <div><dt>Epochs</dt><dd id="run-epochs">514</dd></div>
+            <div><dt>Training loss</dt><dd id="run-train">0.001</dd></div>
+            <div><dt>Test loss</dt><dd id="run-test">0.001</dd></div>
+          </dl>
+        </div>
+      </article>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <p class="eyebrow">INSIDE THE NETWORK</p>
+        <h2>Six components working together.</h2>
+      </div>
+
+      <div class="network-panel">
+        <div class="diagram">
+          <div class="diagram-label input-label">INPUT</div>
+          <div class="diagram-label hidden-label">HIDDEN LAYERS</div>
+          <div class="diagram-label output-label">OUTPUT</div>
+          <svg viewBox="0 0 900 360" role="img" aria-label="Simplified neural network diagram">
+            <g class="links">
+              <line x1="120" y1="120" x2="360" y2="80"/><line x1="120" y1="120" x2="360" y2="160"/>
+              <line x1="120" y1="120" x2="360" y2="240"/><line x1="120" y1="240" x2="360" y2="80"/>
+              <line x1="120" y1="240" x2="360" y2="160"/><line x1="120" y1="240" x2="360" y2="240"/>
+              <line x1="380" y1="80" x2="600" y2="100"/><line x1="380" y1="80" x2="600" y2="180"/>
+              <line x1="380" y1="160" x2="600" y2="100"/><line x1="380" y1="160" x2="600" y2="180"/>
+              <line x1="380" y1="240" x2="600" y2="100"/><line x1="380" y1="240" x2="600" y2="180"/>
+              <line x1="620" y1="100" x2="790" y2="160"/><line x1="620" y1="180" x2="790" y2="160"/>
+            </g>
+            <g class="nodes">
+              <circle cx="110" cy="120" r="18"/><circle cx="110" cy="240" r="18"/>
+              <circle cx="370" cy="80" r="18"/><circle cx="370" cy="160" r="18"/><circle cx="370" cy="240" r="18"/>
+              <circle cx="610" cy="100" r="18"/><circle cx="610" cy="180" r="18"/>
+              <circle cx="800" cy="160" r="24"/>
+            </g>
+            <text x="75" y="125">X₁</text><text x="75" y="245">X₂</text><text x="835" y="166">Prediction</text>
+          </svg>
+        </div>
+
+        <div class="component-grid">
+          <div class="component"><span>01</span><h3>Layers</h3><p>Stages where information is received, transformed, and passed forward.</p></div>
+          <div class="component"><span>02</span><h3>Neurons</h3><p>Individual processing units that combine incoming information.</p></div>
+          <div class="component"><span>03</span><h3>Weights</h3><p>Learned values that control the strength of connections.</p></div>
+          <div class="component"><span>04</span><h3>Activation</h3><p>Transforms neuron outputs and enables nonlinear learning.</p></div>
+          <div class="component"><span>05</span><h3>Loss</h3><p>Measures how far predictions are from the correct outputs.</p></div>
+          <div class="component"><span>06</span><h3>Optimization</h3><p>Updates weights to reduce loss across training epochs.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section comparison">
+      <div class="section-head">
+        <p class="eyebrow">01 / DATA QUALITY</p>
+        <h2>What happens when the data gets messy?</h2>
+      </div>
+
+      <div class="compare-grid">
+        <figure>
+          <figcaption><span>NOISE 0</span><strong>0.001</strong><small>TEST LOSS</small></figcaption>
+          <img src="artifact-7-experiment-1-baseline.png" alt="Clean circle dataset neural network">
+        </figure>
+        <div class="arrow-card"><span>→</span><strong>225×</strong><small>higher test loss</small></div>
+        <figure>
+          <figcaption><span>NOISE 40</span><strong>0.225</strong><small>TEST LOSS</small></figcaption>
+          <img src="artifact-7-experiment-2-noise.png" alt="Noisy circle dataset neural network">
+        </figure>
+      </div>
+      <p class="finding">Adding noise introduced overlapping observations, making the decision boundary less certain and sharply increasing classification error.</p>
+    </section>
+
+    <section class="shell section comparison">
+      <div class="section-head">
+        <p class="eyebrow">02 / NETWORK CAPACITY</p>
+        <h2>What happens when the network is too small?</h2>
+      </div>
+
+      <div class="capacity-layout">
+        <div class="capacity-stat">
+          <span>BASELINE</span><strong>4 → 4</strong><small>hidden neurons</small>
+          <b>0.001</b><i>TEST LOSS</i>
+        </div>
+        <div class="capacity-divider">VS</div>
+        <div class="capacity-stat warning">
+          <span>REDUCED</span><strong>2</strong><small>hidden neurons</small>
+          <b>0.301</b><i>TEST LOSS</i>
+        </div>
+        <img src="artifact-7-experiment-3-small-network.png" alt="Small network struggling with the circular classification problem">
+      </div>
+      <p class="finding">With only one hidden layer and two neurons, the network could not form the nonlinear circular boundary effectively.</p>
+    </section>
+
+    <section class="shell section spiral">
+      <div class="section-head">
+        <p class="eyebrow">03 / COMPLEX PATTERN</p>
+        <h2>Can a larger network solve the spiral?</h2>
+      </div>
+
+      <div class="spiral-grid">
+        <figure>
+          <div class="figure-top"><span>BEFORE</span><b>2 LAYERS × 4 NEURONS</b></div>
+          <img src="artifact-7-experiment-4-spiral-small.png" alt="Smaller network on spiral dataset">
+          <figcaption><strong>0.395</strong><small>TEST LOSS</small></figcaption>
+        </figure>
+
+        <div class="reduction">
+          <span>↓</span><strong>85.1%</strong><small>REDUCTION IN TEST LOSS</small>
+        </div>
+
+        <figure>
+          <div class="figure-top"><span>AFTER</span><b>3 LAYERS × 6 NEURONS</b></div>
+          <img src="artifact-7-experiment-5-spiral-large.png" alt="Larger network learning spiral dataset">
+          <figcaption><strong>0.059</strong><small>TEST LOSS</small></figcaption>
+        </figure>
+      </div>
+
+      <p class="finding">Increasing depth and width gave the model enough capacity to follow the intertwined nonlinear spiral much more closely.</p>
+    </section>
+
+    <section class="shell section takeaways">
+      <div class="section-head">
+        <p class="eyebrow">KEY TAKEAWAYS</p>
+        <h2>What the visual experiments made clear.</h2>
+      </div>
+      <div class="takeaway-grid">
+        <article><span>01</span><h3>Data matters.</h3><p>Noise can turn a nearly perfect classifier into a much less certain model.</p></article>
+        <article><span>02</span><h3>Architecture matters.</h3><p>A model needs enough representational capacity to match the complexity of the problem.</p></article>
+        <article><span>03</span><h3>Visualization matters.</h3><p>Watching decision boundaries change makes neural network learning easier to understand.</p></article>
+      </div>
+      <blockquote>“A successful neural network depends on data quality, data complexity, and an architecture with enough capacity to learn the pattern.”</blockquote>
+    </section>
+
+    <section class="shell artifact-footer">
+      <div>
+        <p class="eyebrow">ORIGINAL COURSE ARTIFACT</p>
+        <h2>Visualizing Neural Networks</h2>
+        <p>View the updated AIML 501 presentation containing the full experiment walkthrough and component explanations.</p>
+      </div>
+      <a class="cta" href="artifact-7-visualizing-neural-networks.pptx">View Presentation <span>↗</span></a>
+    </section>
+  </main>
+
+  <script src="neural-network-training-lab.js"></script>
+</body>
+</html>
