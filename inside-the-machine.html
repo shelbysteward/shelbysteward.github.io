@@ -1,1019 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Inside the Machine: an interactive exploration of the data, compute, energy, time, and cost behind training generative AI models." />
   <title>Inside the Machine | Shelby Steward</title>
-
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root{
+      --bg:#070914;
+      --bg2:#0d1020;
+      --panel:#11162b;
+      --panel2:#171d35;
+      --text:#f6f7fb;
+      --muted:#aab2ca;
+      --line:rgba(255,255,255,.11);
+      --accent:#ffb23e;
+      --accent2:#ffd17a;
+      --cool:#5d78ff;
+      --good:#78e4b1;
+      --max:1180px;
+      --shadow:0 28px 80px rgba(0,0,0,.35);
     }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #080b12;
-      color: #ffffff;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    .container {
-      width: min(1120px, 90%);
-      margin: auto;
-    }
-
-    /* NAVIGATION */
-
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 18px 0;
-      z-index: 1000;
-      background: rgba(8, 11, 18, 0.82);
-      backdrop-filter: blur(15px);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-
-    .nav-inner {
-      width: min(1120px, 90%);
-      margin: auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-weight: 800;
-      letter-spacing: .07em;
-    }
-
-    .back-link {
-      text-decoration: none;
-      color: #5eead4;
-      font-size: .9rem;
-    }
-
-    /* HERO */
-
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--text);
       background:
-        radial-gradient(circle at 15% 20%, rgba(45,212,191,.13), transparent 30%),
-        radial-gradient(circle at 85% 80%, rgba(59,130,246,.14), transparent 35%);
+        radial-gradient(circle at 82% 8%,rgba(93,120,255,.18),transparent 25%),
+        radial-gradient(circle at 15% 16%,rgba(255,178,62,.10),transparent 24%),
+        linear-gradient(180deg,#060813 0%,#090c18 42%,#070914 100%);
+      line-height:1.6;
+      overflow-x:hidden;
     }
-
-    .hero-content {
-      text-align: center;
-      max-width: 950px;
-      margin: auto;
-      padding-top: 80px;
-    }
-
-    .eyebrow {
-      color: #5eead4;
-      text-transform: uppercase;
-      letter-spacing: .25em;
-      font-size: .75rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-    }
-
-    h1 {
-      font-size: clamp(3rem, 8vw, 7rem);
-      line-height: .95;
-      margin-bottom: 28px;
-      background: linear-gradient(90deg, #ffffff, #99f6e4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero-sub {
-      color: #a7b0c0;
-      font-size: 1.15rem;
-      max-width: 740px;
-      margin: 0 auto 35px;
-    }
-
-    .hero-stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin: 45px auto;
-    }
-
-    .hero-stat {
-      padding: 22px;
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 16px;
-      background: rgba(255,255,255,.035);
-    }
-
-    .hero-stat strong {
-      display: block;
-      font-size: 1.7rem;
-      color: #5eead4;
-    }
-
-    .hero-stat span {
-      color: #929caf;
-      font-size: .8rem;
-    }
-
-    .start-button {
-      display: inline-block;
-      padding: 15px 28px;
-      background: #14b8a6;
-      color: #031412;
-      text-decoration: none;
-      border-radius: 9px;
-      font-weight: 800;
-      letter-spacing: .04em;
-      transition: .25s ease;
-    }
-
-    .start-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(20,184,166,.25);
-    }
-
-    /* GENERIC SECTIONS */
-
-    section {
-      padding: 110px 0;
-    }
-
-    .section-number {
-      font-size: .8rem;
-      letter-spacing: .25em;
-      color: #5eead4;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-size: clamp(2rem, 5vw, 4rem);
-      margin-bottom: 20px;
-    }
-
-    .section-copy {
-      color: #9da8bb;
-      max-width: 760px;
-      margin-bottom: 50px;
-    }
-
-    /* PIPELINE */
-
-    .pipeline {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 12px;
-      margin-top: 40px;
-    }
-
-    .pipeline-stage {
-      padding: 24px 14px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 15px;
-      background: #0e131e;
-      transition: .3s ease;
-    }
-
-    .pipeline-stage:hover {
-      border-color: #2dd4bf;
-      transform: translateY(-7px);
-    }
-
-    .pipeline-stage span {
-      display: block;
-      color: #5eead4;
-      font-size: .75rem;
-      margin-bottom: 12px;
-    }
-
-    .pipeline-stage h3 {
-      font-size: .95rem;
-    }
-
-    /* DATA SECTION */
-
-    .scale-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-
-    .scale-card {
-      padding: 30px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, #111827, #0b0f17);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .scale-card small {
-      color: #8995a9;
-    }
-
-    .scale-card strong {
-      display: block;
-      font-size: 2.2rem;
-      margin: 12px 0;
-      color: #5eead4;
-    }
-
-    .scale-card p {
-      color: #7f899c;
-      font-size: .85rem;
-    }
-
-    /* COMPUTE */
-
-    .compute-display {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 35px;
-      align-items: center;
-    }
-
-    .mega-number {
-      font-size: clamp(3rem, 8vw, 7rem);
-      color: #5eead4;
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    .mega-label {
-      color: #8d98aa;
-      margin-top: 10px;
-    }
-
-    .gpu-grid {
-      display: grid;
-      grid-template-columns: repeat(10, 1fr);
-      gap: 6px;
-    }
-
-    .gpu {
-      aspect-ratio: 1;
-      background: #14b8a6;
-      border-radius: 3px;
-      opacity: .65;
-      animation: pulse 2.4s infinite alternate;
-    }
-
-    @keyframes pulse {
-      from {
-        opacity: .3;
-        transform: scale(.92);
-      }
-
-      to {
-        opacity: .9;
-        transform: scale(1);
-      }
-    }
-
-    /* ENERGY */
-
-    .energy-box {
-      padding: 45px;
-      background: #0c111b;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .energy-bar {
-      height: 22px;
-      background: #1c2431;
-      border-radius: 20px;
-      overflow: hidden;
-      margin: 25px 0 15px;
-    }
-
-    .energy-fill {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, #22c55e, #eab308, #ef4444);
-      transition: width 2s ease;
-    }
-
-    .energy-box.visible .energy-fill {
-      width: 92%;
-    }
-
-    .energy-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 30px;
-    }
-
-    .energy-stat {
-      background: #111827;
-      padding: 20px;
-      border-radius: 13px;
-    }
-
-    .energy-stat strong {
-      color: #5eead4;
-      display: block;
-      font-size: 1.5rem;
-    }
-
-    /* COST TIMELINE */
-
-    .cost-timeline {
-      position: relative;
-      margin-top: 60px;
-    }
-
-    .cost-item {
-      padding: 30px;
-      margin-bottom: 18px;
-      border-left: 3px solid #14b8a6;
-      background: rgba(255,255,255,.035);
-      border-radius: 0 15px 15px 0;
-    }
-
-    .cost-item .year {
-      color: #5eead4;
-      font-weight: 800;
-      font-size: .8rem;
-    }
-
-    .cost-item h3 {
-      margin: 4px 0;
-      font-size: 1.35rem;
-    }
-
-    .cost-item strong {
-      font-size: 1.8rem;
-    }
-
-    /* MODEL TABLE */
-
-    .model-table {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 800px;
-    }
-
-    th,
-    td {
-      padding: 18px;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      text-align: left;
-    }
-
-    th {
-      color: #5eead4;
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-    }
-
-    td {
-      color: #b7c0cf;
-    }
-
-    /* TAKEAWAY */
-
-    .takeaway {
-      background:
-        linear-gradient(135deg, rgba(20,184,166,.08), rgba(37,99,235,.08));
-    }
-
-    .takeaway-card {
-      max-width: 900px;
-      margin: auto;
-      padding: 50px;
-      border: 1px solid rgba(94,234,212,.2);
-      border-radius: 22px;
-      background: rgba(9,14,22,.8);
-    }
-
-    .takeaway-card h2 {
-      font-size: 2.6rem;
-      margin-bottom: 25px;
-    }
-
-    .takeaway-card p {
-      color: #b0bacb;
-      margin-bottom: 18px;
-      font-size: 1.05rem;
-    }
-
-    /* BUTTONS */
-
-    .resource-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-top: 35px;
-    }
-
-    .secondary-button {
-      display: inline-block;
-      padding: 13px 20px;
-      border: 1px solid #2dd4bf;
-      border-radius: 9px;
-      color: #5eead4;
-      text-decoration: none;
-      font-weight: 700;
-    }
-
-    .secondary-button:hover {
-      background: rgba(45,212,191,.08);
-    }
-
-    /* FOOTER */
-
-    footer {
-      padding: 45px 0;
-      border-top: 1px solid rgba(255,255,255,.07);
-      color: #7d8798;
-      font-size: .85rem;
-    }
-
-    .footer-inner {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    /* REVEAL */
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity .8s ease, transform .8s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* RESPONSIVE */
-
-    @media(max-width: 900px) {
-      .hero-stats,
-      .scale-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .pipeline {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .compute-display {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media(max-width: 600px) {
-      section {
-        padding: 75px 0;
-      }
-
-      .hero-stats,
-      .scale-grid,
-      .energy-stats {
-        grid-template-columns: 1fr;
-      }
-
-      .pipeline {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .takeaway-card {
-        padding: 30px;
-      }
-    }
+    a{color:inherit}
+    button,a{font:inherit}
+    .progress{position:fixed;left:0;top:0;width:100%;height:3px;background:transparent;z-index:100}
+    .progress > span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));box-shadow:0 0 18px rgba(255,178,62,.7)}
+    .nav{position:fixed;top:18px;left:50%;transform:translateX(-50%);width:min(calc(100% - 28px),var(--max));z-index:90;display:flex;justify-content:space-between;align-items:center;padding:11px 14px 11px 18px;border:1px solid var(--line);border-radius:999px;background:rgba(7,9,20,.74);backdrop-filter:blur(18px);box-shadow:0 10px 40px rgba(0,0,0,.2)}
+    .brand{font-weight:800;letter-spacing:.04em;font-size:.86rem;text-transform:uppercase}
+    .brand b{color:var(--accent)}
+    .navlinks{display:flex;gap:8px;align-items:center}
+    .navlinks a{text-decoration:none;color:var(--muted);font-size:.83rem;padding:8px 11px;border-radius:999px}
+    .navlinks a:hover{color:white;background:rgba(255,255,255,.06)}
+    .navlinks .research{color:#111;background:var(--accent);font-weight:800}
+    .wrap{width:min(calc(100% - 36px),var(--max));margin:0 auto}
+    .hero{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;padding:130px 0 70px;position:relative}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:.78rem;font-weight:750;letter-spacing:.1em;text-transform:uppercase;background:rgba(255,255,255,.03)}
+    .eyebrow::before{content:"";width:7px;height:7px;background:var(--accent);border-radius:50%;box-shadow:0 0 16px rgba(255,178,62,.8)}
+    h1{font-size:clamp(3.5rem,9vw,7.7rem);line-height:.83;letter-spacing:-.065em;margin:24px 0 24px;max-width:760px}
+    h1 span{display:block;color:var(--accent);font-size:.52em;letter-spacing:-.045em;margin-top:14px}
+    .lede{font-size:clamp(1.05rem,1.6vw,1.3rem);max-width:680px;color:#c7cee2;margin:0 0 32px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;border-radius:14px;padding:13px 17px;border:1px solid var(--line);font-weight:800;font-size:.9rem;background:rgba(255,255,255,.04);transition:.2s ease}
+    .btn.primary{background:var(--accent);color:#16120a;border-color:transparent}
+    .btn:hover{transform:translateY(-2px)}
+    .console{border:1px solid var(--line);border-radius:26px;background:linear-gradient(180deg,rgba(23,29,53,.93),rgba(11,14,28,.93));box-shadow:var(--shadow);overflow:hidden;position:relative}
+    .console::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.025),transparent 52%);pointer-events:none}
+    .console-top{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--line);color:var(--muted);font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}
+    .lights{display:flex;gap:6px}.lights i{width:8px;height:8px;border-radius:50%;background:#38405b}.lights i:nth-child(1){background:var(--accent)}
+    .console-body{padding:26px}
+    .metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .metric{padding:18px;border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:18px;min-height:128px;display:flex;flex-direction:column;justify-content:space-between}
+    .metric small{color:var(--muted);text-transform:uppercase;letter-spacing:.09em;font-size:.67rem;font-weight:800}
+    .metric strong{font-size:clamp(1.55rem,3vw,2.4rem);line-height:1;letter-spacing:-.04em}
+    .metric strong em{font-style:normal;color:var(--accent)}
+    .terminal{margin-top:14px;border-radius:17px;background:#050711;border:1px solid rgba(255,255,255,.08);padding:16px;font:700 .78rem/1.75 ui-monospace,SFMono-Regular,Menlo,monospace;color:#9da8c7}
+    .terminal b{color:var(--good)}.cursor{display:inline-block;width:8px;height:14px;background:var(--accent);vertical-align:-2px;animation:blink 1s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+    section{padding:105px 0;scroll-margin-top:95px}
+    .section-head{max-width:820px;margin-bottom:45px}
+    .kicker{color:var(--accent);text-transform:uppercase;letter-spacing:.14em;font-weight:900;font-size:.76rem}
+    h2{font-size:clamp(2.5rem,5vw,5.2rem);line-height:.96;letter-spacing:-.05em;margin:11px 0 16px}
+    .section-head p{font-size:1.05rem;color:var(--muted);max-width:720px}
+    .pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;position:relative}
+    .stage{min-height:230px;padding:18px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.018));position:relative;transition:.35s ease;overflow:hidden}
+    .stage::before{content:"";position:absolute;left:0;top:0;width:100%;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:.5s ease}
+    .stage.active{transform:translateY(-8px);border-color:rgba(255,178,62,.5);box-shadow:0 20px 45px rgba(0,0,0,.24)}
+    .stage.active::before{transform:scaleX(1)}
+    .stage-num{font:800 .72rem ui-monospace,monospace;color:var(--accent);letter-spacing:.08em}
+    .stage h3{font-size:1.02rem;line-height:1.15;margin:47px 0 10px}
+    .stage p{font-size:.82rem;color:var(--muted);margin:0}
+    .run-controls{display:flex;align-items:center;gap:16px;margin-top:24px;flex-wrap:wrap}.run-controls button{cursor:pointer;border:0;background:var(--accent);font-weight:900;border-radius:12px;padding:12px 16px;color:#151009}.run-status{color:var(--muted);font:700 .78rem ui-monospace,monospace}
+    .data-layout,.compute-layout,.cost-layout{display:grid;grid-template-columns:.86fr 1.14fr;gap:42px;align-items:center}
+    .big-number{font-size:clamp(5rem,14vw,10rem);font-weight:950;line-height:.78;letter-spacing:-.08em;color:var(--accent)}
+    .big-number span{font-size:.22em;letter-spacing:-.02em;color:white;display:block;margin-top:20px;line-height:1.05}
+    .scale-track{border-left:1px solid var(--line);padding-left:30px}
+    .scale-row{display:grid;grid-template-columns:135px 1fr 80px;gap:16px;align-items:center;margin:19px 0}
+    .scale-row label{font-weight:800;font-size:.9rem}.scale-row .bar{height:12px;background:rgba(255,255,255,.07);border-radius:999px;overflow:hidden}.scale-row .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cool),var(--accent));border-radius:inherit;transition:1.2s cubic-bezier(.2,.75,.2,1)}.scale-row b{font:800 .8rem ui-monospace,monospace;text-align:right;color:#d8def0}
+    .compute-visual{min-height:480px;border:1px solid var(--line);border-radius:26px;background:radial-gradient(circle at center,rgba(93,120,255,.13),transparent 54%),rgba(255,255,255,.02);display:grid;place-items:center;position:relative;overflow:hidden}.chip{width:190px;height:190px;border-radius:34px;border:2px solid var(--cool);display:grid;place-items:center;box-shadow:0 0 70px rgba(93,120,255,.18),inset 0 0 35px rgba(93,120,255,.1);font-weight:950;text-align:center;line-height:1.05;position:relative;z-index:2}.chip strong{font-size:2.8rem}.chip span{display:block;color:var(--muted);font-size:.72rem;margin-top:8px;letter-spacing:.06em}.orbit{position:absolute;border:1px dashed rgba(255,255,255,.12);border-radius:50%;animation:spin 18s linear infinite}.o1{width:300px;height:300px}.o2{width:430px;height:430px;animation-direction:reverse;animation-duration:26s}.node{position:absolute;width:11px;height:11px;background:var(--accent);border-radius:50%;box-shadow:0 0 20px rgba(255,178,62,.7);top:50%;left:-5px}.o2 .node{top:18%;left:auto;right:8%}@keyframes spin{to{transform:rotate(360deg)}}
+    .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.fact{border:1px solid var(--line);border-radius:17px;padding:16px;background:rgba(255,255,255,.025)}.fact strong{display:block;font-size:1.35rem;color:var(--accent)}.fact span{font-size:.76rem;color:var(--muted)}
+    .energy-meter{border:1px solid var(--line);border-radius:26px;padding:28px;background:linear-gradient(160deg,rgba(255,178,62,.08),rgba(255,255,255,.02))}.meter-wrap{height:24px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden;margin:22px 0 10px}.meter-fill{height:100%;width:0;background:linear-gradient(90deg,var(--good),var(--accent));border-radius:inherit;transition:1.5s cubic-bezier(.2,.75,.2,1)}.meter-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:.75rem}.energy-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}.energy-card{border:1px solid var(--line);border-radius:18px;padding:17px;background:rgba(0,0,0,.12)}.energy-card strong{font-size:1.55rem;display:block}.energy-card small{color:var(--muted)}
+    .timeline{position:relative;padding-left:24px}.timeline::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--cool),var(--accent))}.tl{position:relative;margin:0 0 24px;padding:18px 20px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.025)}.tl::before{content:"";position:absolute;left:-23px;top:29px;width:13px;height:13px;background:var(--bg);border:3px solid var(--accent);border-radius:50%}.tl small{color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.tl strong{font-size:1.9rem;display:block;margin-top:3px}.tl em{font-style:normal;color:var(--accent)}
+    .comparison{overflow-x:auto;border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.018)}table{width:100%;border-collapse:collapse;min-width:880px}th,td{padding:17px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:.85rem}th{color:var(--muted);font-size:.69rem;text-transform:uppercase;letter-spacing:.09em;background:rgba(255,255,255,.025)}td:first-child{font-weight:850}tr:hover td{background:rgba(255,255,255,.02)}
+    .takeaway{border:1px solid rgba(255,178,62,.26);border-radius:32px;padding:clamp(28px,6vw,70px);background:radial-gradient(circle at 85% 10%,rgba(255,178,62,.12),transparent 28%),linear-gradient(145deg,#12172b,#0b0e1b);box-shadow:var(--shadow);position:relative;overflow:hidden}.quote-mark{font-size:7rem;color:rgba(255,178,62,.16);position:absolute;right:30px;top:6px;line-height:1}.takeaway h2{font-size:clamp(2.5rem,5vw,4.8rem);max-width:840px}.takeaway .copy{max-width:850px;font-size:1.08rem;color:#ccd3e7}.takeaway .copy p:first-child{font-size:1.4rem;color:white;font-weight:850}.signature{margin-top:30px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}.signature b{color:white}
+    .sources{font-size:.82rem;color:var(--muted)}.sources ol{padding-left:22px}.sources li{margin:9px 0}.source-note{padding:15px 17px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.025);margin-bottom:20px}
+    footer{padding:45px 0 70px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem}.footer-row{display:flex;justify-content:space-between;gap:18px;align-items:center;flex-wrap:wrap}
+    .reveal{opacity:0;transform:translateY(20px);transition:.75s ease}.reveal.show{opacity:1;transform:none}
+    @media (max-width:900px){.navlinks a:not(.research){display:none}.hero,.data-layout,.compute-layout,.cost-layout{grid-template-columns:1fr}.hero{gap:35px}.pipeline{grid-template-columns:repeat(2,1fr)}.metric-grid{grid-template-columns:1fr 1fr}.energy-cards,.facts{grid-template-columns:1fr}.compute-visual{min-height:390px}.scale-row{grid-template-columns:100px 1fr 65px}}
+    @media (max-width:560px){.wrap{width:min(calc(100% - 24px),var(--max))}.nav{top:10px}.hero{padding-top:112px}.pipeline{grid-template-columns:1fr}.metric-grid{grid-template-columns:1fr}.console-body{padding:17px}.scale-track{padding-left:16px}.scale-row{grid-template-columns:1fr}.scale-row b{text-align:left}.orbit{display:none}.compute-visual{min-height:300px}.chip{width:160px;height:160px}.energy-cards{grid-template-columns:1fr}.takeaway{border-radius:24px}.hero-actions .btn{width:100%;justify-content:center}}
+    @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
   </style>
 </head>
-
 <body>
-
-  <nav>
-    <div class="nav-inner">
-      <div class="logo">SHELBY STEWARD</div>
-      <a href="index.html" class="back-link">← Back to Portfolio</a>
+  <div class="progress"><span id="progressBar"></span></div>
+  <nav class="nav" aria-label="Artifact navigation">
+    <div class="brand">Shelby Steward <b>/ AI Portfolio</b></div>
+    <div class="navlinks">
+      <a href="#pipeline">Pipeline</a><a href="#resources">Resources</a><a href="#takeaway">Takeaway</a>
+      <a class="research" href="inside-the-machine-research.pptx">Original Research ↗</a>
     </div>
   </nav>
 
-
-  <!-- HERO -->
-
-  <header class="hero">
-    <div class="container hero-content">
-
-      <div class="eyebrow">Interactive AI Research Artifact</div>
-
-      <h1>Inside the Machine</h1>
-
-      <p class="hero-sub">
-        What does it actually take to build generative AI?
-        Follow a model from raw data to deployment and explore
-        the resources hidden behind a single AI response.
-      </p>
-
-      <div class="hero-stats">
-
-        <div class="hero-stat">
-          <strong>13T+</strong>
-          <span>Training Tokens</span>
-        </div>
-
-        <div class="hero-stat">
-          <strong>25,000</strong>
-          <span>GPUs</span>
-        </div>
-
-        <div class="hero-stat">
-          <strong>~100</strong>
-          <span>Training Days</span>
-        </div>
-
-        <div class="hero-stat">
-          <strong>$100M+</strong>
-          <span>Estimated Cost</span>
-        </div>
-
-      </div>
-
-      <a href="#pipeline" class="start-button">
-        START THE TRAINING RUN →
-      </a>
-
-    </div>
-  </header>
-
-
-  <!-- TRAINING PIPELINE -->
-
-  <section id="pipeline">
-
-    <div class="container reveal">
-
-      <div class="section-number">01 / TRAIN THE MODEL</div>
-
-      <h2 class="section-title">
-        From Raw Data to Deployment
-      </h2>
-
-      <p class="section-copy">
-        Generative AI does not emerge from one training step.
-        It moves through a sequence of stages, each with its own
-        technical requirements, costs, and opportunities for refinement.
-      </p>
-
-      <div class="pipeline">
-
-        <div class="pipeline-stage">
-          <span>01</span>
-          <h3>Data Collection</h3>
-        </div>
-
-        <div class="pipeline-stage">
-          <span>02</span>
-          <h3>Preprocessing</h3>
-        </div>
-
-        <div class="pipeline-stage">
-          <span>03</span>
-          <h3>Pretraining</h3>
-        </div>
-
-        <div class="pipeline-stage">
-          <span>04</span>
-          <h3>Fine-Tuning & RLHF</h3>
-        </div>
-
-        <div class="pipeline-stage">
-          <span>05</span>
-          <h3>Evaluation & Safety</h3>
-        </div>
-
-        <div class="pipeline-stage">
-          <span>06</span>
-          <h3>Deployment</h3>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- DATA -->
-
-  <section>
-
-    <div class="container reveal">
-
-      <div class="section-number">02 / FEED IT</div>
-
-      <h2 class="section-title">
-        The Scale of Training Data
-      </h2>
-
-      <p class="section-copy">
-        The volume of information used to train language models has increased
-        dramatically. Larger datasets expand what models can learn, but data
-        quality, diversity, licensing, and filtering remain just as important
-        as raw scale.
-      </p>
-
-      <div class="scale-grid">
-
-        <div class="scale-card">
-          <small>GPT-3 · 2020</small>
-          <strong>~300B</strong>
-          <p>tokens</p>
-        </div>
-
-        <div class="scale-card">
-          <small>LLaMA 2 · 2023</small>
-          <strong>~2T</strong>
-          <p>tokens</p>
-        </div>
-
-        <div class="scale-card">
-          <small>GPT-4 · 2023</small>
-          <strong>~13T</strong>
-          <p>estimated tokens</p>
-        </div>
-
-        <div class="scale-card">
-          <small>LLaMA 3.1 / 4</small>
-          <strong>15T–30T+</strong>
-          <p>tokens</p>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- COMPUTE -->
-
-  <section>
-
-    <div class="container reveal">
-
-      <div class="section-number">03 / POWER IT</div>
-
-      <h2 class="section-title">
-        Compute at an Extraordinary Scale
-      </h2>
-
-      <div class="compute-display">
-
+  <main>
+    <div class="wrap">
+      <section class="hero" id="top">
         <div>
-          <div class="mega-number">2.1 × 10²⁵</div>
-          <div class="mega-label">
-            estimated FLOPs used to pretrain GPT-4
+          <div class="eyebrow">Interactive AI Systems Artifact</div>
+          <h1>INSIDE<br>THE MACHINE<span>What does it actually take to train generative AI?</span></h1>
+          <p class="lede">A model may answer in seconds, but getting it to that point can require trillions of tokens, tens of thousands of GPUs, data-center-scale power, months of training, and a nine-figure budget.</p>
+          <div class="hero-actions">
+            <a class="btn primary" id="startTraining" href="#pipeline">Start the training run →</a>
+            <a class="btn" href="inside-the-machine-research.pptx">View research presentation</a>
           </div>
-
-          <p class="section-copy" style="margin-top:30px;">
-            GPT-4 has been estimated to have trained on roughly
-            25,000 NVIDIA A100 GPUs operating for approximately
-            90 to 100 days.
-          </p>
         </div>
-
-        <div>
-          <div class="gpu-grid" id="gpuGrid"></div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-
-  <!-- ENERGY -->
-
-  <section>
-
-    <div class="container">
-
-      <div class="energy-box reveal">
-
-        <div class="section-number">04 / POWER THE HARDWARE</div>
-
-        <h2 class="section-title">
-          AI Has a Physical Footprint
-        </h2>
-
-        <p class="section-copy">
-          Training thousands of GPUs continuously for weeks or months
-          requires data-center-scale electricity. Energy demand,
-          emissions, infrastructure, and geographic power availability
-          have become significant constraints in frontier AI development.
-        </p>
-
-        <div class="energy-bar">
-          <div class="energy-fill"></div>
-        </div>
-
-        <div class="energy-stats">
-
-          <div class="energy-stat">
-            <strong>1.29 GWh</strong>
-            <span>Estimated GPT-3 training energy</span>
+        <aside class="console reveal" aria-label="Training run summary">
+          <div class="console-top"><span>Training Run / Frontier Scale</span><span class="lights"><i></i><i></i><i></i></span></div>
+          <div class="console-body">
+            <div class="metric-grid">
+              <div class="metric"><small>Data scale</small><strong><em>13T+</em><br>tokens</strong></div>
+              <div class="metric"><small>GPU fleet</small><strong><em>25K</em><br>A100s</strong></div>
+              <div class="metric"><small>Wall time</small><strong><em>90–100</em><br>days</strong></div>
+              <div class="metric"><small>Est. cost</small><strong><em>$78–100M+</em></strong></div>
+            </div>
+            <div class="terminal" id="terminal">booting training environment...<br><b>✓</b> research dataset loaded<br><b>✓</b> compute cluster mapped<br><b>✓</b> resource profile ready<br><span class="cursor"></span></div>
           </div>
+        </aside>
+      </section>
+    </div>
 
-          <div class="energy-stat">
-            <strong>552 t</strong>
-            <span>Estimated GPT-3 CO₂ emissions</span>
+    <section id="pipeline">
+      <div class="wrap">
+        <div class="section-head reveal"><div class="kicker">01 / The Training Pipeline</div><h2>Six stages. One model.</h2><p>Training is not one giant step. It is a loop of collection, preparation, learning, alignment, evaluation, and deployment—each with its own demands and failure points.</p></div>
+        <div class="pipeline" id="pipelineGrid">
+          <article class="stage"><div class="stage-num">01</div><h3>Data Collection</h3><p>Scrape, license, and assemble text, code, image, and other corpora.</p></article>
+          <article class="stage"><div class="stage-num">02</div><h3>Preprocessing</h3><p>Clean, deduplicate, filter for quality and safety, then tokenize.</p></article>
+          <article class="stage"><div class="stage-num">03</div><h3>Pretraining</h3><p>Learn statistical patterns across massive token sequences.</p></article>
+          <article class="stage"><div class="stage-num">04</div><h3>Fine-Tuning / RLHF</h3><p>Shape behavior toward instructions and human preferences.</p></article>
+          <article class="stage"><div class="stage-num">05</div><h3>Evaluation & Safety</h3><p>Benchmark performance and red-team for risk, bias, and failure.</p></article>
+          <article class="stage"><div class="stage-num">06</div><h3>Deployment</h3><p>Optimize inference and serve the model to users at scale.</p></article>
+        </div>
+        <div class="run-controls"><button id="runPipeline">Run the pipeline</button><span class="run-status" id="runStatus">READY // iteration may loop back before deployment</span></div>
+      </div>
+    </section>
+
+    <section id="resources">
+      <div class="wrap">
+        <div class="section-head reveal"><div class="kicker">02 / Resource One — Data</div><h2>Feed the model.</h2><p>Dataset scale has expanded dramatically. More data can increase capability, but quality, diversity, licensing, and filtering determine whether scale is actually useful.</p></div>
+        <div class="data-layout">
+          <div class="reveal"><div class="big-number">13T+<span>tokens associated with GPT-4 pretraining estimates</span></div></div>
+          <div class="scale-track reveal" id="dataScale">
+            <div class="scale-row"><label>GPT-3</label><div class="bar"><i data-width="18"></i></div><b>~300B</b></div>
+            <div class="scale-row"><label>LLaMA 2</label><div class="bar"><i data-width="34"></i></div><b>~2T</b></div>
+            <div class="scale-row"><label>GPT-4</label><div class="bar"><i data-width="64"></i></div><b>~13T</b></div>
+            <div class="scale-row"><label>LLaMA 3.1 / 4</label><div class="bar"><i data-width="100"></i></div><b>15T–30T+</b></div>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <div class="energy-stat">
-            <strong>~30 GWh</strong>
-            <span>Estimated LLaMA 3.1 training energy</span>
+    <section>
+      <div class="wrap">
+        <div class="section-head reveal"><div class="kicker">03 / Resource Two — Compute</div><h2>Make 25,000 GPUs act like one machine.</h2><p>Training compute is commonly expressed in floating-point operations. At frontier scale, raw capability gains require extraordinary parallel infrastructure—and the returns do not grow forever at the same rate.</p></div>
+        <div class="compute-layout">
+          <div class="compute-visual reveal">
+            <div class="orbit o2"><span class="node"></span></div><div class="orbit o1"><span class="node"></span></div>
+            <div class="chip"><div><strong>25K</strong><span>NVIDIA A100 GPUs<br>estimated for GPT-4</span></div></div>
           </div>
-
+          <div class="reveal">
+            <div class="big-number" style="font-size:clamp(4rem,10vw,7.5rem)">2.1×10²⁵<span>estimated FLOPs to pretrain GPT-4</span></div>
+            <div class="facts"><div class="fact"><strong>~90–100</strong><span>days of pretraining</span></div><div class="fact"><strong>$63M+</strong><span>estimated hardware-side pretraining cost in the original analysis</span></div><div class="fact"><strong>4–5×</strong><span>annual compute growth rate cited in the research</span></div></div>
+          </div>
         </div>
-
       </div>
+    </section>
 
-    </div>
-  </section>
-
-
-  <!-- COST -->
-
-  <section>
-
-    <div class="container reveal">
-
-      <div class="section-number">05 / PAY FOR IT</div>
-
-      <h2 class="section-title">
-        The Cost of Frontier AI
-      </h2>
-
-      <p class="section-copy">
-        As model scale increases, compute costs rise rapidly.
-        Training frontier models has moved from millions of dollars
-        into the tens or hundreds of millions.
-      </p>
-
-      <div class="cost-timeline">
-
-        <div class="cost-item">
-          <div class="year">2020</div>
-          <h3>GPT-3</h3>
-          <strong>$0.5M–$4.6M</strong>
+    <section>
+      <div class="wrap">
+        <div class="section-head reveal"><div class="kicker">04 / Resource Three — Energy</div><h2>AI has a physical footprint.</h2><p>Behind an apparently instant response sits power-hungry infrastructure. Training turns electricity, cooling, hardware, and data-center capacity into model capability.</p></div>
+        <div class="energy-meter reveal" id="energyBlock">
+          <div style="display:flex;justify-content:space-between;gap:18px;align-items:end;flex-wrap:wrap"><div><div class="kicker" style="color:var(--good)">Energy Scale</div><h3 style="font-size:2rem;margin:5px 0 0">From gigawatt-hours to data-center constraints</h3></div><div style="color:var(--muted);font:700 .8rem ui-monospace,monospace">RESOURCE LOAD // HIGH</div></div>
+          <div class="meter-wrap"><div class="meter-fill" id="energyFill"></div></div><div class="meter-labels"><span>single training run</span><span>frontier-scale infrastructure</span></div>
+          <div class="energy-cards"><div class="energy-card"><strong>1.29 GWh</strong><small>estimated GPT-3 training energy</small></div><div class="energy-card"><strong>552 t CO₂</strong><small>estimated GPT-3 training emissions</small></div><div class="energy-card"><strong>~30 GWh</strong><small>estimated LLaMA 3.1 training energy in the research</small></div></div>
         </div>
+      </div>
+    </section>
 
-        <div class="cost-item">
-          <div class="year">2023</div>
-          <h3>GPT-4</h3>
-          <strong>$78M–$100M+</strong>
+    <section>
+      <div class="wrap">
+        <div class="section-head reveal"><div class="kicker">05 / Resource Four — Time & Dollars</div><h2>Then pay the bill.</h2><p>Time and money are not separate from compute—they are what compute looks like on a schedule and a budget. Larger GPU fleets can shorten wall-clock time, but they do not make the total GPU-hour bill disappear.</p></div>
+        <div class="cost-layout">
+          <div class="timeline reveal"><div class="tl"><small>2020 / GPT-3</small><strong>$0.5M–$4.6M</strong><span>estimated training cost range</span></div><div class="tl"><small>2023 / GPT-4</small><strong><em>$78M–$100M+</em></strong><span>estimated training cost range</span></div><div class="tl"><small>2023 / Gemini Ultra</small><strong>~$191M</strong><span>estimate included in the research</span></div><div class="tl"><small>Frontier trajectory</small><strong>approaching $1B</strong><span>industry comments cited in the research anticipated multi-billion-dollar future training runs</span></div></div>
+          <div class="reveal"><div class="big-number" style="font-size:clamp(4rem,9vw,7rem)">$100M+<span>One training run can resemble a major capital project—not a software compile.</span></div></div>
         </div>
+      </div>
+    </section>
 
-        <div class="cost-item">
-          <div class="year">2023</div>
-          <h3>Gemini Ultra</h3>
-          <strong>~$191M</strong>
+    <section>
+      <div class="wrap">
+        <div class="section-head reveal"><div class="kicker">06 / Model Comparison</div><h2>The scale is not evenly disclosed.</h2><p>Public reporting varies by company and model. The table preserves the approximate figures assembled in the original research rather than pretending every system is equally transparent.</p></div>
+        <div class="comparison reveal">
+          <table>
+            <thead><tr><th>Model</th><th>Compute</th><th>Estimated Cost</th><th>Energy / Emissions</th><th>Data Scale</th></tr></thead>
+            <tbody>
+              <tr><td>GPT-3</td><td>~3.1×10²³ FLOPs</td><td>$0.5M–$4.6M</td><td>1.29 GWh / 552 t CO₂</td><td>~300B tokens</td></tr>
+              <tr><td>LLaMA 2 70B</td><td>~1.7M A100 GPU-hrs</td><td>Not disclosed</td><td>539 t CO₂, reported offset</td><td>~2T tokens</td></tr>
+              <tr><td>GPT-4</td><td>~2.1×10²⁵ FLOPs; 25K A100s</td><td>$78M–$100M+</td><td>Not disclosed</td><td>~13T tokens</td></tr>
+              <tr><td>Claude 3.5 Sonnet</td><td>Not disclosed</td><td>Tens of millions</td><td>Not disclosed</td><td>Not disclosed</td></tr>
+              <tr><td>LLaMA 4 Scout + Maverick</td><td>7.38M H100 GPU-hrs</td><td>Not disclosed</td><td>5.17 GWh / ~2,000 t CO₂*</td><td>~30T+ tokens</td></tr>
+            </tbody>
+          </table>
         </div>
-
-        <div class="cost-item">
-          <div class="year">FRONTIER SCALE</div>
-          <h3>Next-Generation Models</h3>
-          <strong>Approaching Billion-Dollar Training Runs</strong>
-        </div>
-
+        <p style="color:var(--muted);font-size:.75rem;margin-top:12px">*Location-based estimate before renewable-energy offsets; the original research notes a market-based net figure reported as zero.</p>
       </div>
+    </section>
 
-    </div>
-  </section>
-
-
-  <!-- MODEL COMPARISON -->
-
-  <section>
-
-    <div class="container reveal">
-
-      <div class="section-number">06 / COMPARE</div>
-
-      <h2 class="section-title">
-        Four Models. Four Resource Profiles.
-      </h2>
-
-      <p class="section-copy">
-        Public disclosure varies significantly across AI developers,
-        making direct comparisons imperfect. Available estimates still
-        reveal the rapid escalation of resource requirements.
-      </p>
-
-      <div class="model-table">
-
-        <table>
-
-          <thead>
-            <tr>
-              <th>Model</th>
-              <th>Compute</th>
-              <th>Estimated Cost</th>
-              <th>Energy / Emissions</th>
-              <th>Data Scale</th>
-            </tr>
-          </thead>
-
-          <tbody>
-
-            <tr>
-              <td>GPT-3</td>
-              <td>~3.1 × 10²³ FLOPs</td>
-              <td>$0.5M–$4.6M</td>
-              <td>1.29 GWh / 552 t CO₂</td>
-              <td>~300B tokens</td>
-            </tr>
-
-            <tr>
-              <td>LLaMA 2 70B</td>
-              <td>~1.7M GPU-hours</td>
-              <td>Not disclosed</td>
-              <td>539 t CO₂</td>
-              <td>~2T tokens</td>
-            </tr>
-
-            <tr>
-              <td>GPT-4</td>
-              <td>~2.1 × 10²⁵ FLOPs</td>
-              <td>$78M–$100M+</td>
-              <td>Not disclosed</td>
-              <td>~13T tokens</td>
-            </tr>
-
-            <tr>
-              <td>LLaMA 4 Scout + Maverick</td>
-              <td>7.38M GPU-hours</td>
-              <td>Not disclosed</td>
-              <td>5.17 GWh</td>
-              <td>~30T+ tokens</td>
-            </tr>
-
-          </tbody>
-
-        </table>
-
+    <section id="takeaway">
+      <div class="wrap">
+        <div class="takeaway reveal"><div class="quote-mark">“</div><div class="kicker">07 / Shelby's Takeaway</div><h2>AI isn't intangible.</h2><div class="copy"><p>A prompt goes in and an answer appears seconds later. The infrastructure behind that moment is anything but instant.</p><p>Studying the training process changed how I think about generative AI. Behind a model response is an enormous physical and financial system involving data, GPUs, electricity, human feedback, engineering time, evaluation, and millions of dollars.</p><p>What stood out to me most was not simply how expensive AI is to build, but how tightly every resource is connected. More data demands more compute. More compute demands more energy. Hardware, energy, and time drive cost. And none of those resources guarantee a stronger model unless the underlying data, training strategy, alignment, and evaluation are effective.</p><p>For me, understanding AI means looking beyond the interface. The real system begins long before the first user ever types a prompt.</p></div><div class="signature"><b>Shelby Steward</b> · M.S. Artificial Intelligence — Data Analytics Portfolio Artifact</div></div>
       </div>
+    </section>
 
-    </div>
-  </section>
-
-
-  <!-- TAKEAWAY -->
-
-  <section class="takeaway">
-
-    <div class="container">
-
-      <div class="takeaway-card reveal">
-
-        <div class="section-number">07 / MY TAKEAWAY</div>
-
-        <h2>
-          AI Isn't Intangible.
-        </h2>
-
-        <p>
-          When we interact with a generative AI model, it can feel almost
-          weightless: a prompt goes in, and an answer appears seconds later.
-          Studying the training process changed that perspective for me.
-        </p>
-
-        <p>
-          Behind that response is an enormous physical and financial
-          infrastructure involving data, GPUs, electricity, human feedback,
-          engineering time, and millions of dollars.
-        </p>
-
-        <p>
-          What stood out to me most was not simply how expensive AI is to build,
-          but how interconnected every resource is. More data requires more
-          compute. More compute requires more energy. More energy and hardware
-          increase cost.
-        </p>
-
-        <p>
-          None of those resources guarantee a better model unless the data,
-          training strategy, evaluation, and alignment are effective.
-          Understanding those tradeoffs gave me a very different appreciation
-          for what actually happens before a model ever receives its first
-          user prompt.
-        </p>
-
-        <div class="resource-links">
-
-          <a href="inside-the-machine-research.pptx"
-             class="secondary-button"
-             target="_blank">
-            View Original Research Presentation
-          </a>
-
-          <a href="index.html"
-             class="secondary-button">
-            Return to Portfolio
-          </a>
-
-        </div>
-
+    <section class="sources">
+      <div class="wrap">
+        <div class="section-head reveal"><div class="kicker">Research Notes</div><h2 style="font-size:clamp(2.2rem,4vw,4rem)">Sources & limitations</h2></div>
+        <div class="source-note">Figures are approximate and reflect the sources and estimates assembled in the original assignment. Frontier-model developers do not disclose every element of training data, compute, energy use, or cost, so comparisons should be read as best-available public estimates rather than exact accounting.</div>
+        <ol>
+          <li>OpenAI (2023), GPT-4 reporting supplemented by independent analyses and Epoch AI.</li>
+          <li>Brown, T. et al. (2020), <em>Language Models are Few-Shot Learners</em>, plus energy/emissions estimates cited in the original research.</li>
+          <li>Touvron, H. et al. (2023), <em>Llama 2: Open Foundation and Fine-Tuned Chat Models</em>, Meta AI.</li>
+          <li>Meta AI (2025), Llama 4 model card and <em>The Llama 4 Herd</em> preprint.</li>
+          <li>CudoCompute (2026), training-cost estimates citing Stanford AI Index data.</li>
+          <li>TechCrunch (2025), reporting on Anthropic training costs and Dario Amodei's frontier-cost projections.</li>
+          <li>Stanford HAI, AI Index Reports (2025–2026).</li>
+        </ol>
       </div>
-
-    </div>
-  </section>
-
-
-  <footer>
-
-    <div class="container footer-inner">
-
-      <div>
-        © 2026 Shelby Steward
-      </div>
-
-      <div>
-        M.S. Artificial Intelligence – Data Analytics
-      </div>
-
-    </div>
-
-  </footer>
-
+    </section>
+  </main>
+  <footer><div class="wrap footer-row"><span>Designed as an interactive extension of the “Anatomy of an AI Model” research presentation.</span><a href="#top">Back to top ↑</a></div></footer>
 
   <script>
+    const progress=document.getElementById('progressBar');
+    addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;progress.style.width=(h?scrollY/h*100:0)+'%'});
+    const revealObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.13});
+    document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+    const scaleObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.querySelectorAll('.bar i').forEach(b=>b.style.width=b.dataset.width+'%')}),{threshold:.35});
+    scaleObs.observe(document.getElementById('dataScale'));
+    const energyObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)document.getElementById('energyFill').style.width='88%'}),{threshold:.35});
+    energyObs.observe(document.getElementById('energyBlock'));
+    const runBtn=document.getElementById('runPipeline'), stages=[...document.querySelectorAll('.stage')], status=document.getElementById('runStatus');
+    const startTraining=document.getElementById('startTraining');
+    let running=false;
 
-    // Build GPU visualization
-
-    const gpuGrid = document.getElementById("gpuGrid");
-
-    for (let i = 0; i < 100; i++) {
-
-      const gpu = document.createElement("div");
-
-      gpu.classList.add("gpu");
-
-      gpu.style.animationDelay =
-        `${Math.random() * 2}s`;
-
-      gpuGrid.appendChild(gpu);
+    async function runTrainingPipeline(){
+      if(running)return;
+      running=true;
+      runBtn.textContent='Training…';
+      stages.forEach(s=>s.classList.remove('active'));
+      const labels=['COLLECTING DATA','PREPROCESSING','PRETRAINING','ALIGNING','EVALUATING','DEPLOYING'];
+      for(let i=0;i<stages.length;i++){
+        if(i)stages[i-1].classList.remove('active');
+        stages[i].classList.add('active');
+        status.textContent='RUNNING // '+labels[i];
+        await new Promise(r=>setTimeout(r,620));
+      }
+      status.textContent='COMPLETE // model deployed; evaluation can trigger another iteration';
+      runBtn.textContent='Run again';
+      running=false;
     }
 
+    runBtn.addEventListener('click',runTrainingPipeline);
 
-    // Scroll reveal animation
-
-    const observer = new IntersectionObserver(
-      entries => {
-
-        entries.forEach(entry => {
-
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.15
-      }
-    );
-
-
-    document
-      .querySelectorAll(".reveal")
-      .forEach(element => observer.observe(element));
-
+    startTraining.addEventListener('click',event=>{
+      event.preventDefault();
+      const pipelineSection=document.getElementById('pipeline');
+      pipelineSection.scrollIntoView({behavior:'smooth',block:'start'});
+      setTimeout(runTrainingPipeline,700);
+    });
   </script>
-
 </body>
 </html>
