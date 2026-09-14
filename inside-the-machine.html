@@ -14,8 +14,8 @@
       --text:#f6f7fb;
       --muted:#aab2ca;
       --line:rgba(255,255,255,.11);
-      --accent:#ffb23e;
-      --accent2:#ffd17a;
+      --accent:#20c7b7;
+      --accent2:#78eadf;
       --cool:#5d78ff;
       --good:#78e4b1;
       --max:1180px;
@@ -121,7 +121,7 @@
           <h1>INSIDE<br>THE MACHINE<span>What does it actually take to train generative AI?</span></h1>
           <p class="lede">A model may answer in seconds, but getting it to that point can require trillions of tokens, tens of thousands of GPUs, data-center-scale power, months of training, and a nine-figure budget.</p>
           <div class="hero-actions">
-            <button class="btn primary" id="startTraining" type="button">Start the training run →</button>
+            <a class="btn primary" id="startTraining" href="inside-the-machine.html#pipeline">Start the training run →</a>
             <a class="btn" href="inside-the-machine-research.pptx">View research presentation</a>
           </div>
         </div>
@@ -262,7 +262,6 @@
     const runBtn=document.getElementById('runPipeline');
     const stages=[...document.querySelectorAll('.stage')];
     const status=document.getElementById('runStatus');
-    const startTraining=document.getElementById('startTraining');
     let running=false;
 
     async function runTrainingPipeline(){
@@ -286,14 +285,11 @@
       runBtn.addEventListener('click',runTrainingPipeline);
     }
 
-    if(startTraining){
-      startTraining.addEventListener('click',()=>{
-        const pipelineSection=document.getElementById('pipeline');
-        if(!pipelineSection) return;
-        const navOffset=105;
-        const top=pipelineSection.getBoundingClientRect().top + window.pageYOffset - navOffset;
-        window.scrollTo({top,behavior:'smooth'});
-        setTimeout(runTrainingPipeline,850);
+    // If the page was opened from the hero button with #pipeline in the URL,
+    // start the animation after the browser has jumped to that section.
+    if(window.location.hash === '#pipeline'){
+      window.addEventListener('load',()=>{
+        setTimeout(runTrainingPipeline,500);
       });
     }
   </script>
