@@ -329,6 +329,74 @@
       margin-bottom: 0;
     }
 
+    /* Artifact 8: Inside the Machine preview */
+    .inside-machine-preview {
+      width: 100%;
+      height: 220px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(circle at 22% 22%, rgba(45, 212, 191, 0.18), transparent 28%),
+        radial-gradient(circle at 82% 78%, rgba(59, 130, 246, 0.16), transparent 34%),
+        linear-gradient(135deg, #081018 0%, #101827 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.2rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .inside-machine-preview::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 26px 26px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.8), transparent);
+      pointer-events: none;
+    }
+
+    .inside-machine-chip {
+      width: 92px;
+      height: 92px;
+      border: 2px solid #5eead4;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.7rem;
+      letter-spacing: 0.04em;
+      color: #5eead4;
+      box-shadow: 0 0 30px rgba(94, 234, 212, 0.18);
+      position: relative;
+      z-index: 1;
+    }
+
+    .inside-machine-stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.45rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .inside-machine-stats span {
+      padding: 0.4rem 0.62rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.06);
+      color: #f5f5f5;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
     .lightbox {
       position: fixed;
       inset: 0;
@@ -995,6 +1063,53 @@
             </a>
           </div>
         </div>
+
+        <!-- ARTIFACT 8 -->
+        <div class="container">
+          <div class="project-row">
+            <a
+              class="card project-horizontal"
+              href="inside-the-machine.html"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Inside the Machine: The Real Cost of Training Generative AI">
+
+              <div
+                class="inside-machine-preview"
+                role="img"
+                aria-label="Inside the Machine interactive AI training artifact preview">
+                <div class="inside-machine-chip">AI</div>
+                <div class="inside-machine-stats">
+                  <span>13T+ Tokens</span>
+                  <span>25K GPUs</span>
+                  <span>~100 Days</span>
+                  <span>$100M+</span>
+                </div>
+              </div>
+
+              <div class="project-horizontal-copy">
+                <div class="meta">Artifact 8</div>
+                <h3>Inside the Machine: The Real Cost of Training Generative AI</h3>
+
+                <p>
+                  An interactive exploration of what it actually takes to train and deploy
+                  generative AI. This artifact transforms technical research into a visual
+                  experience examining the data, compute, energy, time, and financial
+                  resources required to build frontier AI systems.
+                </p>
+
+                <div class="tag-wrap">
+                  <span class="tag">Generative AI</span>
+                  <span class="tag">Model Training</span>
+                  <span class="tag">Data Analysis</span>
+                  <span class="tag">Technical Communication</span>
+                  <span class="tag">Interactive Web Design</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
     </section>
 
     <section id="education">
