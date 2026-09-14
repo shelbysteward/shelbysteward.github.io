@@ -53,7 +53,7 @@
     h1 span{display:block;color:var(--accent);font-size:.52em;letter-spacing:-.045em;margin-top:14px}
     .lede{font-size:clamp(1.05rem,1.6vw,1.3rem);max-width:680px;color:#c7cee2;margin:0 0 32px}
     .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;border-radius:14px;padding:13px 17px;border:1px solid var(--line);font-weight:800;font-size:.9rem;background:rgba(255,255,255,.04);transition:.2s ease}
+    .btn{display:inline-flex;cursor:pointer;align-items:center;gap:10px;text-decoration:none;border-radius:14px;padding:13px 17px;border:1px solid var(--line);font-weight:800;font-size:.9rem;background:rgba(255,255,255,.04);transition:.2s ease}
     .btn.primary{background:var(--accent);color:#16120a;border-color:transparent}
     .btn:hover{transform:translateY(-2px)}
     .console{border:1px solid var(--line);border-radius:26px;background:linear-gradient(180deg,rgba(23,29,53,.93),rgba(11,14,28,.93));box-shadow:var(--shadow);overflow:hidden;position:relative}
@@ -121,7 +121,7 @@
           <h1>INSIDE<br>THE MACHINE<span>What does it actually take to train generative AI?</span></h1>
           <p class="lede">A model may answer in seconds, but getting it to that point can require trillions of tokens, tens of thousands of GPUs, data-center-scale power, months of training, and a nine-figure budget.</p>
           <div class="hero-actions">
-            <a class="btn primary" id="startTraining" href="#pipeline">Start the training run →</a>
+            <button class="btn primary" id="startTraining" type="button">Start the training run →</button>
             <a class="btn" href="inside-the-machine-research.pptx">View research presentation</a>
           </div>
         </div>
@@ -259,35 +259,43 @@
     scaleObs.observe(document.getElementById('dataScale'));
     const energyObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)document.getElementById('energyFill').style.width='88%'}),{threshold:.35});
     energyObs.observe(document.getElementById('energyBlock'));
-    const runBtn=document.getElementById('runPipeline'), stages=[...document.querySelectorAll('.stage')], status=document.getElementById('runStatus');
+    const runBtn=document.getElementById('runPipeline');
+    const stages=[...document.querySelectorAll('.stage')];
+    const status=document.getElementById('runStatus');
     const startTraining=document.getElementById('startTraining');
     let running=false;
 
     async function runTrainingPipeline(){
       if(running)return;
       running=true;
-      runBtn.textContent='Training…';
+      if(runBtn) runBtn.textContent='Training…';
       stages.forEach(s=>s.classList.remove('active'));
       const labels=['COLLECTING DATA','PREPROCESSING','PRETRAINING','ALIGNING','EVALUATING','DEPLOYING'];
       for(let i=0;i<stages.length;i++){
         if(i)stages[i-1].classList.remove('active');
         stages[i].classList.add('active');
-        status.textContent='RUNNING // '+labels[i];
+        if(status) status.textContent='RUNNING // '+labels[i];
         await new Promise(r=>setTimeout(r,620));
       }
-      status.textContent='COMPLETE // model deployed; evaluation can trigger another iteration';
-      runBtn.textContent='Run again';
+      if(status) status.textContent='COMPLETE // model deployed; evaluation can trigger another iteration';
+      if(runBtn) runBtn.textContent='Run again';
       running=false;
     }
 
-    runBtn.addEventListener('click',runTrainingPipeline);
+    if(runBtn){
+      runBtn.addEventListener('click',runTrainingPipeline);
+    }
 
-    startTraining.addEventListener('click',event=>{
-      event.preventDefault();
-      const pipelineSection=document.getElementById('pipeline');
-      pipelineSection.scrollIntoView({behavior:'smooth',block:'start'});
-      setTimeout(runTrainingPipeline,700);
-    });
+    if(startTraining){
+      startTraining.addEventListener('click',()=>{
+        const pipelineSection=document.getElementById('pipeline');
+        if(!pipelineSection) return;
+        const navOffset=105;
+        const top=pipelineSection.getBoundingClientRect().top + window.pageYOffset - navOffset;
+        window.scrollTo({top,behavior:'smooth'});
+        setTimeout(runTrainingPipeline,850);
+      });
+    }
   </script>
 </body>
 </html>
