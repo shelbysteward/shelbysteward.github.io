@@ -402,6 +402,101 @@
       font-weight: 700;
     }
 
+
+    /* Artifact 9: Explainable AI preview */
+    .xai-preview {
+      width: 100%;
+      height: 220px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(20, 200, 201, 0.22), transparent 28%),
+        radial-gradient(circle at 85% 25%, rgba(152, 104, 247, 0.20), transparent 30%),
+        radial-gradient(circle at 80% 85%, rgba(238, 79, 145, 0.15), transparent 28%),
+        linear-gradient(135deg, #08111c 0%, #101827 50%, #151126 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      padding: 1rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .xai-preview::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 25px 25px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.8), transparent);
+      pointer-events: none;
+    }
+
+    .xai-preview-label {
+      color: #a6a6a6;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .xai-black-box {
+      width: 68px;
+      height: 68px;
+      border-radius: 18px;
+      border: 2px solid #14c8c9;
+      background: rgba(20, 200, 201, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 0 28px rgba(20, 200, 201, 0.18), inset 0 0 20px rgba(20, 200, 201, 0.05);
+    }
+
+    .xai-black-box span {
+      color: #14c8c9;
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+    }
+
+    .xai-model-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .xai-model-row span {
+      padding: 0.32rem 0.58rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .xai-gpt { color: #14c8c9; border: 1px solid rgba(20, 200, 201, 0.45); }
+    .xai-claude { color: #ff8a3d; border: 1px solid rgba(255, 138, 61, 0.45); }
+    .xai-gemini { color: #4287ff; border: 1px solid rgba(66, 135, 255, 0.45); }
+    .xai-llama { color: #9868f7; border: 1px solid rgba(152, 104, 247, 0.45); }
+
+    .xai-preview-line {
+      color: #d9d9d9;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      position: relative;
+      z-index: 1;
+    }
+
     .lightbox {
       position: fixed;
       inset: 0;
@@ -1108,6 +1203,53 @@
                   <span class="tag">Model Training</span>
                   <span class="tag">Data Analysis</span>
                   <span class="tag">Technical Communication</span>
+                  <span class="tag">Interactive Web Design</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- ARTIFACT 9 -->
+        <div class="container">
+          <div class="project-row">
+            <a
+              class="card project-horizontal"
+              href="explainable-ai.html"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Open Inside the Black Box: Explainable AI, Validation and Trust">
+
+              <div
+                class="xai-preview"
+                role="img"
+                aria-label="Inside the Black Box interactive explainable AI artifact preview">
+                <div class="xai-preview-label">EXPLAINABLE AI</div>
+                <div class="xai-black-box"><span>AI</span></div>
+                <div class="xai-model-row">
+                  <span class="xai-gpt">GPT</span>
+                  <span class="xai-claude">Claude</span>
+                  <span class="xai-gemini">Gemini</span>
+                  <span class="xai-llama">Llama</span>
+                </div>
+                <div class="xai-preview-line">Explainability • Validation • Trust</div>
+              </div>
+
+              <div class="project-horizontal-copy">
+                <div class="meta">Artifact 9</div>
+                <h3>Inside the Black Box: Explainable AI, Validation &amp; Trust</h3>
+                <p>
+                  An interactive exploration of explainable artificial intelligence examining why
+                  advanced AI models can be difficult to interpret, how leading AI organizations
+                  approach transparency, and how validation techniques and performance metrics
+                  contribute to reliable and accountable AI systems.
+                </p>
+                <div class="tag-wrap">
+                  <span class="tag">Explainable AI</span>
+                  <span class="tag">Model Validation</span>
+                  <span class="tag">AI Transparency</span>
+                  <span class="tag">Performance Metrics</span>
                   <span class="tag">Interactive Web Design</span>
                 </div>
               </div>
