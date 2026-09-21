@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inside the Black Box | Explainable AI, Validation & Trust</title>
+<meta name="description" content="An interactive exploration of explainable AI, validation, model transparency, and reliability across GPT, Claude, Gemini, and Llama.">
+<style>
+:root{--bg:#07101a;--panel:#101b29;--panel2:#142235;--text:#f6f8fb;--muted:#b8c4d3;--border:#2a3a50;--teal:#18c7c8;--blue:#4389ff;--purple:#9b6cff;--orange:#ff8a3d;--pink:#ef4f91;--green:#32c97b;--yellow:#e6bd45;--max:1180px;--shadow:0 24px 70px rgba(0,0,0,.32)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:radial-gradient(circle at 10% 0%,rgba(24,199,200,.13),transparent 22%),radial-gradient(circle at 90% 18%,rgba(155,108,255,.13),transparent 24%),linear-gradient(180deg,#050b12,#0a1320 55%,#07101a);color:var(--text);line-height:1.6}a{color:inherit}.wrap{width:min(var(--max),calc(100% - 2rem));margin:auto}.nav{position:sticky;top:0;z-index:50;background:rgba(5,11,18,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}.navin{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.8rem 0}.brand{font-weight:900;text-decoration:none}.navlinks{display:flex;gap:.35rem;flex-wrap:wrap}.navlinks a,.navlinks button{border:0;background:transparent;color:var(--muted);text-decoration:none;padding:.55rem .7rem;border-radius:999px;cursor:pointer;font:inherit}.navlinks a:hover,.navlinks button:hover{background:rgba(255,255,255,.06);color:#fff}.hero{padding:5.5rem 0 3rem}.eyebrow{font-size:.78rem;letter-spacing:.18em;font-weight:900;color:var(--teal)}h1{font-size:clamp(2.7rem,6vw,5.6rem);line-height:.95;letter-spacing:-.05em;margin:.8rem 0 1.2rem;max-width:900px}.gradient{background:linear-gradient(90deg,var(--teal),var(--blue),var(--purple),var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}.lead{font-size:1.08rem;color:var(--muted);max-width:760px}.rainbow{height:5px;border-radius:99px;background:linear-gradient(90deg,var(--teal),var(--blue),var(--purple),var(--pink),var(--orange),var(--green));margin-top:2rem}.heroStats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:1.3rem}.stat,.card,.detail,.metricbox,.takeaway{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow)}.stat{padding:1rem}.stat b{display:block;color:var(--c);font-size:1.1rem}.stat span{color:var(--muted);font-size:.86rem}section{padding:2.2rem 0}.sectionhead{display:flex;gap:.85rem;align-items:flex-start;margin-bottom:1.25rem}.num{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--c);font-weight:900;flex:none}.sectionhead h2{margin:0;font-size:clamp(1.55rem,3vw,2.25rem)}.sectionhead p{margin:.25rem 0 0;color:var(--muted);max-width:780px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}.card{padding:1.2rem;border-color:color-mix(in srgb,var(--c) 50%,var(--border));background:linear-gradient(180deg,color-mix(in srgb,var(--c) 11%,var(--panel)),var(--panel));}.card h3{color:var(--c);margin:.2rem 0 .55rem}.card p{margin:0;color:var(--muted);font-size:.92rem}.selector{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}.selector button,.pipeline button{min-height:62px;border:1px solid var(--c);background:color-mix(in srgb,var(--c) 8%,var(--panel));color:#fff;border-radius:15px;padding:.75rem;font:inherit;font-weight:800;cursor:pointer;transition:.2s}.selector button:hover,.selector button.active,.pipeline button:hover,.pipeline button.active{transform:translateY(-2px);background:color-mix(in srgb,var(--c) 20%,var(--panel));box-shadow:inset 4px 0 0 var(--c)}.detail{margin-top:1rem;padding:1.35rem}.detail h3{margin:0 0 .5rem}.detail p{color:var(--muted);margin:.3rem 0}.detail ul{color:var(--muted);padding-left:1.2rem}.pipeline{display:grid;grid-template-columns:repeat(6,1fr);gap:.6rem}.pipeline button{min-height:88px;font-size:.86rem}.arrow{color:var(--muted);font-size:.75rem;display:block;margin-bottom:.3rem}.metriclab{display:grid;grid-template-columns:.8fr 1.2fr;gap:1rem}.metriclist{display:grid;gap:.55rem}.metriclist button{border:1px solid var(--border);background:var(--panel);color:#fff;border-radius:13px;padding:.8rem 1rem;text-align:left;font:inherit;cursor:pointer}.metriclist button.active{border-color:var(--green);background:rgba(50,201,123,.11)}.metricbox{padding:1.5rem}.metricbox .big{font-size:2rem;font-weight:900;color:var(--green)}.metricbox p{color:var(--muted)}.toolkit{display:flex;flex-wrap:wrap;gap:.65rem}.chip{padding:.65rem .85rem;border:1px solid var(--border);border-radius:999px;background:rgba(255,255,255,.04);color:var(--muted);font-size:.88rem}.takeaway{padding:1.5rem;background:linear-gradient(120deg,rgba(24,199,200,.12),rgba(155,108,255,.11),rgba(239,79,145,.08))}.takeaway h2{margin:.5rem 0}.takeaway p{color:var(--muted);max-width:900px}.sources{font-size:.9rem}.sources a{color:#b8d6ff}.sources li{margin:.55rem 0;color:var(--muted)}footer{padding:2.5rem 0 4rem;color:var(--muted);text-align:center}.exportbar{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.4rem}.btn{border:1px solid var(--border);background:rgba(255,255,255,.05);color:#fff;border-radius:13px;padding:.8rem 1rem;font:inherit;font-weight:800;cursor:pointer;text-decoration:none}.btn.primary{background:#fff;color:#07101a}.reflection{border-left:4px solid var(--purple);padding-left:1.2rem;color:var(--muted)}.note{font-size:.82rem;color:var(--muted);margin-top:1rem}
+@media(max-width:900px){.grid4,.heroStats{grid-template-columns:repeat(2,1fr)}.grid2,.metriclab{grid-template-columns:1fr}.pipeline{grid-template-columns:repeat(3,1fr)}}@media(max-width:620px){.navlinks a{display:none}.hero{padding-top:3.5rem}.grid4,.heroStats,.selector,.pipeline{grid-template-columns:1fr}h1{font-size:2.8rem}}
+@media print{.nav,.exportbar{display:none!important}body{background:#07101a!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}.hero{padding-top:1rem}section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<nav class="nav"><div class="wrap navin"><a class="brand" href="index.html">← Shelby Steward Portfolio</a><div class="navlinks"><a href="#why">Why XAI</a><a href="#models">Models</a><a href="#validation">Validation</a><a href="#metrics">Metrics</a><a href="#sources">Sources</a></div></div></nav>
+
+<header class="hero"><div class="wrap">
+<div class="eyebrow">ARTIFACT 9 • MODEL DEVELOPMENT</div>
+<h1>Inside the <span class="gradient">Black Box</span></h1>
+<p class="lead">An interactive exploration of explainable AI, the challenge of understanding frontier language models, and the evidence researchers use to evaluate reliability, accountability, and trust.</p>
+<div class="rainbow"></div>
+<div class="heroStats">
+<div class="stat" style="--c:var(--teal)"><b>4 Models</b><span>GPT • Claude • Gemini • Llama</span></div>
+<div class="stat" style="--c:var(--orange)"><b>6 Stages</b><span>Validation pipeline</span></div>
+<div class="stat" style="--c:var(--green)"><b>8 Metrics</b><span>Performance & reliability</span></div>
+<div class="stat" style="--c:var(--purple)"><b>1 Goal</b><span>Evidence-based trust</span></div>
+</div>
+<div class="exportbar"><button class="btn primary" onclick="window.print()">Save Full Artifact as PDF</button><a class="btn" href="#models">Start Exploring</a></div>
+<p class="note">Tip: Use “Save Full Artifact as PDF” to create a single, submission-ready copy from your browser.</p>
+</div></header>
+
+<main>
+<section id="why"><div class="wrap">
+<div class="sectionhead"><span class="num" style="--c:var(--teal)">1</span><div><h2>What is Explainable AI?</h2><p>Explainable AI (XAI) is a collection of methods and practices intended to make AI behavior more understandable to people. For large language models, the challenge is not simply explaining an answer—it is determining whether an explanation actually reflects the internal process that produced it.</p></div></div>
+<div class="grid4">
+<div class="card" style="--c:var(--green)"><h3>Trust</h3><p>Users need evidence for when model outputs deserve confidence and when they require verification.</p></div>
+<div class="card" style="--c:var(--blue)"><h3>Accountability</h3><p>Transparent evaluation and documentation help organizations investigate failures and establish responsibility.</p></div>
+<div class="card" style="--c:var(--orange)"><h3>Debugging</h3><p>Interpretability can reveal patterns, representations, or pathways associated with unexpected behavior.</p></div>
+<div class="card" style="--c:var(--pink)"><h3>Responsible Use</h3><p>Testing, oversight, documentation, and monitoring help translate technical performance into safer deployment decisions.</p></div>
+</div>
+</div></section>
+
+<section><div class="wrap">
+<div class="sectionhead"><span class="num" style="--c:var(--pink)">2</span><div><h2>Why the “Black Box” Problem Persists</h2><p>Modern language models learn distributed internal representations rather than a small set of human-written rules. Click a challenge to examine why that complicates explanation.</p></div></div>
+<div class="selector" id="challengeButtons">
+<button style="--c:var(--blue)" data-key="scale">Scale & Complexity</button><button style="--c:var(--pink)" data-key="emergence">Emergent Representations</button><button style="--c:var(--orange)" data-key="faithfulness">Explanation ≠ Mechanism</button><button style="--c:var(--purple)" data-key="governance">Governance & Auditability</button>
+</div><div class="detail" id="challengeDetail"></div>
+</div></section>
+
+<section id="models"><div class="wrap">
+<div class="sectionhead"><span class="num" style="--c:var(--purple)">3</span><div><h2>Explore the Models</h2><p>The organizations behind GPT, Claude, Gemini, and Llama use overlapping but distinct approaches to documentation, interpretability, safety evaluation, and external scrutiny.</p></div></div>
+<div class="selector" id="modelButtons">
+<button style="--c:var(--teal)" data-key="gpt">GPT<br><small>OpenAI</small></button><button style="--c:var(--orange)" data-key="claude">Claude<br><small>Anthropic</small></button><button style="--c:var(--blue)" data-key="gemini">Gemini<br><small>Google DeepMind</small></button><button style="--c:var(--purple)" data-key="llama">Llama<br><small>Meta</small></button>
+</div><div class="detail" id="modelDetail"></div>
+</div></section>
+
+<section><div class="wrap">
+<div class="sectionhead"><span class="num" style="--c:var(--blue)">4</span><div><h2>Current Explainability Toolkit</h2><p>No single technique “solves” interpretability. Researchers combine behavioral evidence, internal analysis, causal interventions, documentation, and human review.</p></div></div>
+<div class="toolkit">
+<span class="chip">Model & System Cards</span><span class="chip">Sparse Autoencoders</span><span class="chip">Feature / Activation Analysis</span><span class="chip">Circuit Tracing</span><span class="chip">Attribution Graphs</span><span class="chip">Causal Interventions</span><span class="chip">Chain-of-Thought Monitoring</span><span class="chip">Natural-Language Activation Explanations</span><span class="chip">Red Teaming</span><span class="chip">Human Evaluation</span><span class="chip">Continuous Monitoring</span>
+</div>
+</div></section>
+
+<section id="validation"><div class="wrap">
+<div class="sectionhead"><span class="num" style="--c:var(--orange)">5</span><div><h2>Validation Pipeline</h2><p>Reliability is better treated as a body of evidence than as a single benchmark score. Select a stage to see what it contributes.</p></div></div>
+<div class="pipeline" id="pipeline">
+<button style="--c:var(--teal)" data-key="data"><span class="arrow">01 →</span>Test Data</button><button style="--c:var(--blue)" data-key="bench"><span class="arrow">02 →</span>Benchmarks</button><button style="--c:var(--purple)" data-key="human"><span class="arrow">03 →</span>Human Evaluation</button><button style="--c:var(--pink)" data-key="red"><span class="arrow">04 →</span>Red Teaming</button><button style="--c:var(--orange)" data-key="error"><span class="arrow">05 →</span>Error Analysis</button><button style="--c:var(--green)" data-key="monitor"><span class="arrow">06</span>Monitoring</button>
+</div><div class="detail" id="validationDetail"></div>
+</div></section>
+
+<section id="metrics"><div class="wrap">
+<div class="sectionhead"><span class="num" style="--c:var(--green)">6</span><div><h2>Performance Metrics Lab</h2><p>Different metrics answer different questions. Select one to see what it measures and why relying on it alone can be misleading.</p></div></div>
+<div class="metriclab"><div class="metriclist" id="metricButtons"></div><div class="metricbox" id="metricDetail"></div></div>
+</div></section>
+
+<section><div class="wrap">
+<div class="takeaway"><div class="rainbow"></div><h2><span style="color:var(--teal)">Explainability</span> + <span style="color:var(--orange)">Validation</span> + <span style="color:var(--green)">Monitoring</span> = Stronger Evidence for Trust</h2><p>A model does not become trustworthy because it can produce a convincing explanation. Stronger accountability comes from combining interpretability research with repeatable evaluations, adversarial testing, human judgment, documentation, and monitoring after deployment.</p></div>
+</div></section>
+
+<section id="sources"><div class="wrap sources">
+<div class="sectionhead"><span class="num" style="--c:var(--yellow)">7</span><div><h2>Research Sources</h2><p>Primary-source materials used to support the model-specific portions of this artifact. Accessed September 2026.</p></div></div>
+<ul>
+<li><a href="https://openai.com/index/evaluating-chain-of-thought-monitorability/" target="_blank" rel="noreferrer">OpenAI — Evaluating chain-of-thought monitorability</a></li>
+<li><a href="https://openai.com/index/chain-of-thought-monitoring/" target="_blank" rel="noreferrer">OpenAI — Detecting misbehavior in frontier reasoning models</a></li>
+<li><a href="https://www.anthropic.com/research/open-source-circuit-tracing" target="_blank" rel="noreferrer">Anthropic — Open-sourcing circuit tracing tools</a></li>
+<li><a href="https://www.anthropic.com/research/natural-language-autoencoders" target="_blank" rel="noreferrer">Anthropic — Natural Language Autoencoders</a></li>
+<li><a href="https://deepmind.google/models/model-cards/" target="_blank" rel="noreferrer">Google DeepMind — Gemini model cards</a></li>
+<li><a href="https://ai.meta.com/blog/llama-4-multimodal-intelligence/" target="_blank" rel="noreferrer">Meta — The Llama 4 herd</a></li>
+<li><a href="https://ai.meta.com/llama/responsible-use-guide/" target="_blank" rel="noreferrer">Meta — Developer Use Guide for Llama</a></li>
+</ul>
+</div></section>
+</main>
+<footer><div class="wrap">Artifact 9 • Shelby Steward • M.S. Artificial Intelligence – Data Analytics Portfolio</div></footer>
+
+<script>
+const challenges={
+scale:{title:"Scale & Complexity",text:"Frontier language models contain enormous networks of interacting learned representations. A behavior may depend on distributed activity across many components, so there may be no single human-readable rule that explains an output."},
+emergence:{title:"Emergent Representations",text:"Models learn internal features and strategies from training rather than receiving an explicit program for every capability. Researchers can identify interpretable patterns, but mapping those patterns at frontier scale remains difficult."},
+faithfulness:{title:"Explanation ≠ Mechanism",text:"A fluent step-by-step explanation is still generated text. It should not automatically be treated as a faithful record of the internal computation that produced an answer. This is why researchers study activations, causal interventions, circuits, and monitorability in addition to model-generated rationales."},
+governance:{title:"Governance & Auditability",text:"Organizations need evidence that can support review: documented limitations, repeatable evaluations, safety testing, human oversight, and post-deployment monitoring. Explainability is therefore both a technical research problem and an accountability problem."}
+};
+const models={
+gpt:{title:"GPT · OpenAI",color:"#18c7c8",items:["System cards document evaluation areas, risks, and mitigations.","OpenAI studies chain-of-thought monitorability as a possible signal for detecting misbehavior in reasoning models.","Its research cautions that monitorability can be fragile and should not be treated as perfect transparency."],source:"OpenAI research and system-card materials."},
+claude:{title:"Claude · Anthropic",color:"#ff8a3d",items:["Anthropic has invested heavily in mechanistic interpretability.","Sparse autoencoders are used to identify more interpretable features in model activations.","Circuit tracing and attribution graphs aim to reveal portions of the computational path from input to output.","Natural Language Autoencoders translate activations into text, but Anthropic explicitly notes that these explanations can be wrong and require corroboration."],source:"Anthropic interpretability research."},
+gemini:{title:"Gemini · Google DeepMind",color:"#4389ff",items:["Google DeepMind publishes model cards describing evaluation, intended use, limitations, safety performance, and mitigations.","Gemini evaluations include automated safety testing and specialist human red teaming.","Model cards also document evaluation limitations and changes in methodology, which matter when comparing scores across releases."],source:"Google DeepMind Gemini model cards."},
+llama:{title:"Llama · Meta",color:"#9b6cff",items:["Meta publishes model cards and makes Llama weights available for external development and research.","Llama releases are evaluated with benchmarks, human evaluation, systematic testing, and adversarial probing.","Meta also provides system-level tools such as Llama Guard, Prompt Guard, and CyberSecEval to support downstream safety testing."],source:"Meta Llama release and responsible-use materials."}
+};
+const validation={
+data:["Test Data","Representative held-out data checks whether performance extends beyond familiar examples. Dataset coverage matters because a model can look strong while still failing on underrepresented cases."],
+bench:["Benchmarks","Standardized tasks make model versions easier to compare. Benchmark scores are useful evidence, but they can be narrow, become saturated, or fail to represent real deployment conditions."],
+human:["Human Evaluation","Human raters can assess qualities that are difficult to capture automatically, such as usefulness, clarity, factual quality, instruction following, and nuanced failure modes."],
+red:["Red Teaming","Adversarial testers deliberately search for unsafe behavior, jailbreaks, misuse pathways, bias, and unexpected edge cases. Red teaming asks how a system behaves when someone actively tries to make it fail."],
+error:["Error Analysis","Failures are categorized and investigated rather than collapsed into one aggregate score. This helps reveal recurring patterns and guides targeted improvements."],
+monitor:["Monitoring","Deployment creates new conditions that pre-release testing cannot fully anticipate. Ongoing monitoring helps identify drift, new failure patterns, misuse, and regressions after updates."]
+};
+const metrics={
+"Accuracy / Pass Rate":["How often is the task completed correctly?","Best for tasks with clearly defined correct answers. It can hide class imbalance or the severity of different errors."],
+"Precision":["When the system predicts a positive result, how often is it correct?","Important when false positives are costly."],
+"Recall":["Of the relevant positive cases, how many does the system identify?","Important when missing a positive case is costly."],
+"F1 Score":["How well does the system balance precision and recall?","Useful when both false positives and false negatives matter, but it does not capture every operational cost."],
+"Calibration":["Does stated confidence correspond with actual correctness?","A well-calibrated system should be less confident when it is more likely to be wrong."],
+"Robustness":["Does performance hold under perturbations, unusual wording, adversarial inputs, or distribution shifts?","Strong average performance does not guarantee stable behavior under changed conditions."],
+"Safety / Refusal":["Does the model avoid harmful assistance while still answering benign requests?","Safety evaluation must consider both harmful compliance and unnecessary refusal."],
+"Human Rubric":["How do people judge qualities such as usefulness, relevance, clarity, factual quality, and instruction following?","Human evaluation captures open-ended quality but can introduce rater subjectivity and inconsistency."]
+};
+function setupButtons(containerId,data,detailId,render){
+ const box=document.getElementById(containerId),detail=document.getElementById(detailId);
+ box.querySelectorAll("button").forEach(btn=>btn.addEventListener("click",()=>{box.querySelectorAll("button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");render(detail,data[btn.dataset.key]);}));
+ const first=box.querySelector("button");if(first)first.click();
+}
+setupButtons("challengeButtons",challenges,"challengeDetail",(el,x)=>el.innerHTML=`<h3>${x.title}</h3><p>${x.text}</p>`);
+setupButtons("modelButtons",models,"modelDetail",(el,x)=>el.innerHTML=`<h3 style="color:${x.color}">${x.title}</h3><ul>${x.items.map(i=>`<li>${i}</li>`).join("")}</ul><p><strong>Evidence base:</strong> ${x.source}</p>`);
+setupButtons("pipeline",validation,"validationDetail",(el,x)=>el.innerHTML=`<h3>${x[0]}</h3><p>${x[1]}</p>`);
+const metricButtons=document.getElementById("metricButtons");
+Object.keys(metrics).forEach((k,i)=>{const b=document.createElement("button");b.textContent=k;b.onclick=()=>{metricButtons.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.getElementById("metricDetail").innerHTML=`<div class="big">${k}</div><h3>${metrics[k][0]}</h3><p>${metrics[k][1]}</p><p><strong>Key principle:</strong> No single metric proves that an AI system is reliable.</p>`};metricButtons.appendChild(b);if(i===0)b.click()});
+</script>
+</body>
+</html>
