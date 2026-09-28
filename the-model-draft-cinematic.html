@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Model Draft | Shelby Steward</title>
+<meta name="description" content="A cinematic model-selection case study comparing ModernBERT, DINOv2, SigLIP 2, and TabPFN.">
+<style>
+:root{
+  --bg:#060914; --panel:#0d1323; --ink:#f8fafc; --muted:#aab6c8;
+  --cyan:#38d9f2; --purple:#9b7bff; --coral:#ff7167; --gold:#ffc857; --green:#50d890;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}
+button{font:inherit}
+#film{position:relative;width:100vw;height:100vh;background:
+ radial-gradient(circle at 20% 10%,rgba(56,217,242,.09),transparent 28%),
+ radial-gradient(circle at 85% 80%,rgba(155,123,255,.08),transparent 32%),var(--bg)}
+#film:before{content:"";position:absolute;inset:0;background-image:
+ linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+ background-size:42px 42px;pointer-events:none}
+.scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:6vh 6vw;opacity:0;transform:scale(1.025);pointer-events:none;transition:opacity .7s ease,transform .8s ease}
+.scene.active{opacity:1;transform:scale(1);pointer-events:auto}
+.frame{width:min(1180px,100%);position:relative;z-index:2}
+.eyebrow{font-size:clamp(.7rem,1.2vw,.9rem);letter-spacing:.22em;font-weight:900;color:var(--cyan);margin-bottom:1rem}
+.big{font-size:clamp(3rem,8vw,7.4rem);line-height:.88;letter-spacing:-.065em;margin:0;font-weight:950;max-width:1050px}
+.big.serif{font-family:Georgia,serif;font-weight:700}
+.lead{font-size:clamp(1rem,2vw,1.45rem);color:var(--muted);max-width:760px;margin-top:1.4rem}
+.center{text-align:center;margin-inline:auto}
+.center .lead{margin-inline:auto}
+.accent{color:var(--cyan)}
+.purple{color:var(--purple)} .coral{color:var(--coral)} .gold{color:var(--gold)}
+.rule{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);margin:2rem 0}
+.counter{font-family:monospace;font-size:.8rem;color:#66748b;letter-spacing:.15em}
+.draft-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-top:2.2rem}
+.draft{background:rgba(13,19,35,.9);border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:1.25rem;min-height:245px;position:relative;overflow:hidden}
+.draft:before{content:"";position:absolute;left:0;top:0;right:0;height:5px;background:var(--c)}
+.draft .num{font-family:Georgia,serif;font-size:3.4rem;color:var(--c);opacity:.9}
+.draft h3{margin:.2rem 0;font-size:1.2rem}
+.draft small{color:var(--muted)}
+.draft .stat{margin-top:1rem;font-weight:900;font-size:1.05rem}
+.duel{display:grid;grid-template-columns:1fr auto 1fr;gap:2rem;align-items:center;margin-top:2.5rem}
+.metric{border:1px solid rgba(255,255,255,.14);background:var(--panel);border-radius:22px;padding:2rem;text-align:center}
+.metric .value{font-size:clamp(3.2rem,7vw,6rem);font-weight:950}
+.vs{font-weight:950;color:#66748b;font-size:1.2rem}
+.warning{margin:2rem auto 0;max-width:900px;border:1px solid rgba(255,200,87,.35);background:rgba(255,200,87,.08);border-radius:14px;padding:1rem 1.2rem;color:#ffe5a4;text-align:center}
+.scenario{display:grid;grid-template-columns:.85fr 1.15fr;gap:3rem;align-items:center}
+.ticket{border:1px solid rgba(255,255,255,.15);background:linear-gradient(180deg,#11192b,#0a1020);border-radius:24px;padding:2rem;box-shadow:0 30px 70px rgba(0,0,0,.35)}
+.ticket .code{font-family:monospace;color:#74839a;font-size:.8rem}
+.ticket h2{font-size:clamp(2rem,4vw,4rem);line-height:1;margin:.7rem 0}
+.route{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;margin-top:1.4rem}
+.route span{padding:.55rem .75rem;border:1px solid rgba(255,255,255,.16);border-radius:999px;font-size:.78rem;font-weight:900}
+.route b{color:var(--cyan)}
+.pick{border-left:5px solid var(--pick);padding-left:1.5rem}
+.pick .picked{font-size:clamp(3rem,6vw,6rem);font-weight:950;line-height:.9;color:var(--pick);letter-spacing:-.055em}
+.pick p{color:var(--muted);font-size:1.05rem;max-width:600px}
+.triad{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:2rem}
+.triad div{border:1px solid rgba(255,255,255,.14);background:var(--panel);border-radius:18px;padding:1.4rem;text-align:center}
+.triad b{display:block;font-size:1.15rem;margin-bottom:.4rem}
+.triad span{color:var(--muted);font-size:.88rem}
+.flow{display:flex;align-items:center;justify-content:center;gap:.7rem;flex-wrap:wrap;margin-top:2.2rem}
+.flow span{padding:.8rem 1rem;border:1px solid rgba(255,255,255,.18);border-radius:12px;font-weight:900}
+.flow i{color:#607087;font-style:normal}
+.flow .final{background:white;color:#09101c}
+.refs{max-height:62vh;overflow:auto;padding-right:1rem}
+.refs p{color:var(--muted);font-size:clamp(.76rem,1.1vw,.94rem);padding-left:1.5rem;text-indent:-1.5rem;margin:.8rem 0}
+.controls{position:fixed;z-index:50;left:0;right:0;bottom:0;padding:1rem 1.2rem;background:linear-gradient(transparent,rgba(6,9,20,.96) 40%);display:flex;align-items:center;gap:.8rem}
+.ctrl{border:1px solid rgba(255,255,255,.16);background:rgba(13,19,35,.9);color:white;border-radius:999px;padding:.65rem .9rem;cursor:pointer}
+.ctrl:hover{background:#182239}
+.progress{height:4px;background:rgba(255,255,255,.12);flex:1;border-radius:99px;overflow:hidden}
+.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--coral),var(--gold));transition:width .2s linear}
+.time{font-family:monospace;font-size:.75rem;color:var(--muted);min-width:90px;text-align:right}
+.cite{position:absolute;left:6vw;right:6vw;bottom:5.2rem;text-align:center;color:#74839a;font-size:.72rem;z-index:3}
+.flash{animation:flash 1.2s ease both}
+@keyframes flash{0%{opacity:0;letter-spacing:.4em}100%{opacity:1;letter-spacing:-.065em}}
+@media(max-width:850px){.draft-grid{grid-template-columns:1fr 1fr}.scenario{grid-template-columns:1fr}.duel{grid-template-columns:1fr}.vs{display:none}.triad{grid-template-columns:1fr}.scene{padding:4vh 5vw 12vh}.cite{bottom:6.2rem}}
+@media(max-width:520px){.draft-grid{grid-template-columns:1fr 1fr}.draft{min-height:180px;padding:.9rem}.draft .num{font-size:2rem}.big{font-size:3rem}.controls{gap:.4rem}.ctrl{padding:.55rem .7rem}}
+
+/* --- CINEMATIC ENHANCEMENTS --- */
+body{cursor:default}
+#film{perspective:1200px}
+#film::after{
+  content:"";position:absolute;inset:0;z-index:10;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(0,0,0,.42),transparent 11%,transparent 87%,rgba(0,0,0,.48));
+  mix-blend-mode:multiply
+}
+.scene{filter:blur(8px);transform:scale(1.055) translateY(8px)}
+.scene.active{filter:blur(0);transform:scale(1) translateY(0)}
+.scene.exit-left{opacity:0;transform:translateX(-4vw) scale(.985);filter:blur(7px)}
+.scene.enter-right{animation:cinemaIn .8s cubic-bezier(.2,.75,.2,1) both}
+@keyframes cinemaIn{0%{opacity:0;transform:translateX(4vw) scale(1.035);filter:blur(9px)}100%{opacity:1;transform:none;filter:none}}
+@keyframes rise{0%{opacity:0;transform:translateY(22px)}100%{opacity:1;transform:none}}
+.scene.active .eyebrow,.scene.active .lead,.scene.active .draft,.scene.active .ticket,.scene.active .pick,.scene.active .metric,.scene.active .triad>div,.scene.active .flow span{
+  animation:rise .65s ease both
+}
+.scene.active .lead{animation-delay:.16s}
+.scene.active .draft:nth-child(1),.scene.active .triad>div:nth-child(1){animation-delay:.12s}
+.scene.active .draft:nth-child(2),.scene.active .triad>div:nth-child(2){animation-delay:.24s}
+.scene.active .draft:nth-child(3),.scene.active .triad>div:nth-child(3){animation-delay:.36s}
+.scene.active .draft:nth-child(4){animation-delay:.48s}
+.scene.active .pick{animation-delay:.22s}
+.scene.active .flow span:nth-of-type(1){animation-delay:.05s}
+.scene.active .flow span:nth-of-type(2){animation-delay:.14s}
+.scene.active .flow span:nth-of-type(3){animation-delay:.23s}
+.scene.active .flow span:nth-of-type(4){animation-delay:.32s}
+.scene.active .flow span:nth-of-type(5){animation-delay:.41s}
+
+.opening-lockup{position:relative;padding:3rem 0}
+.opening-lockup::before,.opening-lockup::after{
+  content:"";position:absolute;left:50%;width:min(820px,80vw);height:1px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);transform:translateX(-50%);
+  animation:scanline 2.6s ease-in-out infinite
+}
+.opening-lockup::before{top:0}.opening-lockup::after{bottom:0;animation-delay:1.3s}
+@keyframes scanline{0%,100%{opacity:.15;transform:translateX(-50%) scaleX(.65)}50%{opacity:.85;transform:translateX(-50%) scaleX(1)}}
+.opening-code{font-family:monospace;color:#687892;letter-spacing:.18em;font-size:.72rem;margin-bottom:1rem}
+.opening-title{position:relative;text-shadow:0 0 55px rgba(56,217,242,.10)}
+.opening-title .word{display:inline-block;animation:titlePunch .9s cubic-bezier(.16,.85,.25,1) both}
+.opening-title .word:nth-child(2){animation-delay:.13s}
+.opening-title .word:nth-child(3){animation-delay:.26s}
+.opening-title .word:nth-child(4){animation-delay:.39s}
+@keyframes titlePunch{0%{opacity:0;transform:translateY(35px) rotateX(-35deg);filter:blur(8px)}100%{opacity:1;transform:none;filter:none}}
+
+.countdown-wrap{text-align:center}
+.countdown-label{font-family:monospace;letter-spacing:.22em;color:#75849a;font-size:.78rem;margin-bottom:1.4rem}
+.countdown-num{font-size:min(30vw,15rem);font-weight:950;line-height:.8;letter-spacing:-.08em;color:white;text-shadow:0 0 80px rgba(56,217,242,.2)}
+.countdown-num.pulse{animation:countPulse .82s cubic-bezier(.2,.8,.2,1)}
+@keyframes countPulse{0%{opacity:0;transform:scale(1.55);filter:blur(12px)}35%{opacity:1}100%{transform:scale(1);filter:none}}
+.countdown-sub{margin-top:1.7rem;color:var(--muted);font-weight:800;letter-spacing:.1em}
+
+.draft-stage{position:relative}
+.draft-stage::before{content:"DRAFT BOARD";position:absolute;right:0;top:-1.4rem;font-family:monospace;color:#4e5b70;font-size:.68rem;letter-spacing:.18em}
+.draft.selected{border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 0 45px color-mix(in srgb,var(--c) 24%,transparent);transform:translateY(-5px)}
+.draft.selected::after{content:"SELECTED";position:absolute;right:-34px;top:20px;width:130px;text-align:center;transform:rotate(36deg);background:var(--c);color:#06101b;font-size:.58rem;font-weight:950;letter-spacing:.12em;padding:.28rem}
+.selection-overlay{position:absolute;inset:0;z-index:35;display:none;place-items:center;background:rgba(3,6,14,.84);backdrop-filter:blur(8px);pointer-events:none}
+.selection-overlay.show{display:grid;animation:overlayIn 1.8s ease both}
+@keyframes overlayIn{0%{opacity:0}15%,75%{opacity:1}100%{opacity:0}}
+.selection-stamp{border:2px solid var(--sel);padding:1.2rem 2rem;text-align:center;transform:rotate(-2deg);box-shadow:0 0 50px color-mix(in srgb,var(--sel) 28%,transparent)}
+.selection-stamp small{display:block;font-family:monospace;letter-spacing:.2em;color:#b8c2d2}
+.selection-stamp b{display:block;font-size:clamp(2.2rem,6vw,5.2rem);line-height:1;color:var(--sel);margin:.5rem 0}
+.selection-stamp span{font-weight:900;letter-spacing:.1em}
+
+.transition-flash{position:fixed;inset:0;z-index:60;background:white;opacity:0;pointer-events:none}
+.transition-flash.fire{animation:flashFrame .42s ease}
+@keyframes flashFrame{0%{opacity:0}35%{opacity:.13}100%{opacity:0}}
+.corner-code{position:fixed;z-index:25;right:1.2rem;top:1rem;font-family:monospace;font-size:.62rem;letter-spacing:.15em;color:#536178}
+.scene-index{position:fixed;z-index:25;left:1.2rem;top:1rem;font-family:monospace;font-size:.62rem;color:#536178}
+.scan{position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(56,217,242,.35),transparent);top:-2px;z-index:12;pointer-events:none;animation:verticalScan 8s linear infinite}
+@keyframes verticalScan{0%{top:0;opacity:0}8%{opacity:1}92%{opacity:.3}100%{top:100%;opacity:0}}
+
+</style>
+</head>
+<body>
+<div id="film">
+
+<section class="scene active" data-duration="6500">
+<div class="frame center opening-lockup">
+<div class="opening-code">ARTIFACT 10 // MODEL DEVELOPMENT // DRAFT PROTOCOL INITIALIZED</div>
+<div class="eyebrow">THE MODEL DRAFT</div>
+<h1 class="big serif opening-title"><span class="word">Four</span> <span class="word">models.</span><br><span class="word">Four different</span> <span class="word">jobs.</span></h1>
+<p class="lead">One deployment decision—and one question that sounds simple until the evidence is examined.</p>
+</div>
+</section>
+
+<section class="scene" data-duration="6000">
+<div class="frame center">
+<div class="eyebrow">THE WRONG QUESTION</div>
+<h1 class="big">“Which model is <span class="accent">best?</span>”</h1>
+<div class="rule"></div>
+<p class="lead">Model selection is not a popularity contest, a parameter contest, or a single benchmark leaderboard.</p>
+</div>
+</section>
+
+<section class="scene countdown-scene" data-duration="4200">
+<div class="frame countdown-wrap">
+<div class="countdown-label">DRAFT BOARD LOCKS IN</div>
+<div class="countdown-num" id="countNum">3</div>
+<div class="countdown-sub">ANALYZE THE PROBLEM. NOT THE HYPE.</div>
+</div>
+</section>
+
+<section class="scene" data-duration="8500">
+<div class="frame draft-stage">
+<div class="eyebrow">MEET THE CANDIDATES</div>
+<h1 class="big" style="font-size:clamp(2.8rem,5vw,5rem)">The 2026 model draft board.</h1>
+<div class="draft-grid">
+<div class="draft" style="--c:var(--cyan)"><div class="num">01</div><h3>ModernBERT-base</h3><small>LANGUAGE SPECIALIST</small><div class="stat">149M parameters</div><small>8,192-token native context</small></div>
+<div class="draft" style="--c:var(--coral)"><div class="num">02</div><h3>DINOv2 ViT-S/14</h3><small>VISION SPECIALIST</small><div class="stat">21M parameters</div><small>81.1% ImageNet linear probe</small></div>
+<div class="draft" style="--c:var(--purple)"><div class="num">03</div><h3>SigLIP 2 B/16</h3><small>MULTIMODAL SPECIALIST</small><div class="stat">86M parameters</div><small>78.2% ImageNet zero-shot</small></div>
+<div class="draft" style="--c:var(--gold)"><div class="num">04</div><h3>TabPFN</h3><small>TABULAR SPECIALIST</small><div class="stat">Foundation model</div><small>2.8 s published classification comparison*</small></div>
+</div>
+</div>
+<div class="cite">(Warner et al., 2024; Oquab et al., 2023; Tschannen et al., 2025; Hollmann et al., 2025)</div>
+</section>
+
+<section class="scene" data-duration="8000">
+<div class="frame center">
+<div class="eyebrow" style="color:var(--gold)">CONTEXT CHECK</div>
+<h1 class="big flash">WAIT.</h1>
+<div class="duel">
+<div class="metric"><div class="value coral">81.1%</div><b>DINOv2</b><br><small>ImageNet linear probe</small></div>
+<div class="vs">≠</div>
+<div class="metric"><div class="value purple">78.2%</div><b>SigLIP 2</b><br><small>ImageNet zero-shot</small></div>
+</div>
+<div class="warning">Different evaluation settings answer different questions. These percentages should not be treated as a universal head-to-head accuracy ranking.</div>
+</div>
+<div class="cite">(Oquab et al., 2023; Tschannen et al., 2025)</div>
+</section>
+
+<section class="scene" data-duration="8000">
+<div class="frame scenario">
+<div class="ticket"><div class="code">INCOMING SCENARIO // OPS-01</div><h2>Customer messages are backing up.</h2><p>Classify and route incoming communications without requiring open-ended generation.</p><div class="route"><span>TEXT</span><i>→</i><span>CLASSIFICATION</span><i>→</i><span>ENCODER</span></div></div>
+<div class="pick" data-selection="ModernBERT" data-color="#38d9f2" style="--pick:var(--cyan)"><div class="eyebrow">MODEL FIT</div><div class="picked">ModernBERT</div><p>Language understanding is the actual requirement. An encoder focuses capability on classification and retrieval instead of paying for generation the workflow does not need.</p></div>
+</div>
+<div class="cite">(Warner et al., 2024)</div>
+</section>
+
+<section class="scene" data-duration="7500">
+<div class="frame scenario">
+<div class="ticket"><div class="code">INCOMING SCENARIO // OPS-02</div><h2>Inspection images are accumulating.</h2><p>Extract reusable visual representations for similarity and downstream analysis.</p><div class="route"><span>IMAGE</span><i>→</i><span>FEATURES</span><i>→</i><span>VISION</span></div></div>
+<div class="pick" data-selection="DINOv2" data-color="#ff7167" style="--pick:var(--coral)"><div class="eyebrow">MODEL FIT</div><div class="picked">DINOv2</div><p>Self-supervised visual features make DINOv2 useful as a compact backbone when the core signal is contained in images.</p></div>
+</div>
+<div class="cite">(Oquab et al., 2023)</div>
+</section>
+
+<section class="scene" data-duration="7500">
+<div class="frame scenario">
+<div class="ticket"><div class="code">INCOMING SCENARIO // OPS-03</div><h2>Search photographs using plain language.</h2><p>Match a description such as “visible front-end damage” to relevant images.</p><div class="route"><span>IMAGE</span><i>+</i><span>TEXT</span><i>→</i><span>ALIGNMENT</span></div></div>
+<div class="pick" data-selection="SigLIP 2" data-color="#9b7bff" style="--pick:var(--purple)"><div class="eyebrow">MODEL FIT</div><div class="picked">SigLIP 2</div><p>This problem requires a shared semantic space between visual and linguistic information—not a single-modality model.</p></div>
+</div>
+<div class="cite">(Tschannen et al., 2025)</div>
+</section>
+
+<section class="scene" data-duration="7500">
+<div class="frame scenario">
+<div class="ticket"><div class="code">INCOMING SCENARIO // OPS-04</div><h2>Predict outcomes from historical records.</h2><p>Learn from structured fields such as time, distance, location, availability, and outcomes.</p><div class="route"><span>ROWS</span><i>+</i><span>COLUMNS</span><i>→</i><span>PREDICTION</span></div></div>
+<div class="pick" data-selection="TabPFN" data-color="#ffc857" style="--pick:var(--gold)"><div class="eyebrow">MODEL FIT</div><div class="picked">TabPFN</div><p>For supported small-data tabular settings, the model applies foundation-model ideas directly to structured prediction.</p></div>
+</div>
+<div class="cite">(Hollmann et al., 2025)</div>
+</section>
+
+<section class="scene" data-duration="7500">
+<div class="frame center">
+<div class="eyebrow">THE REAL TRADE-OFF</div>
+<h1 class="big" style="font-size:clamp(2.8rem,6vw,5.8rem)">There was never<br>one winner.</h1>
+<div class="triad">
+<div><b class="accent">PERFORMANCE</b><span>Does it solve the actual task?</span></div>
+<div><b class="purple">EFFICIENCY</b><span>What resources does that performance require?</span></div>
+<div><b class="gold">EXPLAINABILITY</b><span>Can people understand and justify the result?</span></div>
+</div>
+</div>
+</section>
+
+<section class="scene" data-duration="7500">
+<div class="frame center">
+<div class="eyebrow">MODEL-SELECTION FRAMEWORK</div>
+<h1 class="big serif" style="font-size:clamp(2.8rem,6vw,5.8rem)">The model is the<br><span class="accent">last</span> decision.</h1>
+<div class="flow"><span>PROBLEM</span><i>→</i><span>DATA</span><i>→</i><span>CONSTRAINTS</span><i>→</i><span>EVIDENCE</span><i>→</i><span class="final">MODEL</span></div>
+<p class="lead">Effective AI engineering begins by defining what the system must accomplish, what resources are available, and what level of explanation the decision requires.</p>
+</div>
+</section>
+
+<section class="scene" data-duration="9000">
+<div class="frame">
+<div class="eyebrow">RESEARCH BASE // APA 7</div>
+<h1 class="big" style="font-size:clamp(2.3rem,4vw,4rem)">References</h1>
+<div class="refs">
+<p>Hollmann, N., Müller, S., Purucker, L., Krishnakumar, A., Körfer, M., Hoo, S. B., Schirrmeister, R. T., &amp; Hutter, F. (2025). Accurate predictions on small data with a tabular foundation model. <em>Nature, 637</em>, 319–326. https://doi.org/10.1038/s41586-024-08328-6</p>
+<p>Oquab, M., Darcet, T., Moutakanni, T., et al. (2023). DINOv2: Learning robust visual features without supervision. <em>arXiv</em>. https://doi.org/10.48550/arXiv.2304.07193</p>
+<p>Tschannen, M., Gritsenko, A., Wang, X., et al. (2025). SigLIP 2: Multilingual vision-language encoders with improved semantic understanding, localization, and dense features. <em>arXiv</em>. https://doi.org/10.48550/arXiv.2502.14786</p>
+<p>Warner, B., Chaffin, A., Clavié, B., et al. (2024). Smarter, better, faster, longer: A modern bidirectional encoder for fast, memory efficient, and long context finetuning and inference. <em>arXiv</em>. https://doi.org/10.48550/arXiv.2412.13663</p>
+</div>
+<p class="lead">Shelby Steward · M.S. Artificial Intelligence – Data Analytics</p>
+</div>
+</section>
+
+</div>
+
+
+<div class="scan"></div>
+<div class="scene-index" id="sceneIndex">SCENE 01</div>
+<div class="corner-code">SOUND // OFF &nbsp; • &nbsp; CINEMATIC MODE</div>
+<div class="transition-flash" id="transitionFlash"></div>
+<div class="selection-overlay" id="selectionOverlay">
+  <div class="selection-stamp" id="selectionStamp" style="--sel:#38d9f2">
+    <small>MODEL SELECTION CONFIRMED</small>
+    <b id="selectionName">ModernBERT</b>
+    <span>FIT > HYPE</span>
+  </div>
+</div>
+
+<div class="controls">
+<button class="ctrl" id="prev" aria-label="Previous scene">‹</button>
+<button class="ctrl" id="play" aria-label="Pause or play">❚❚</button>
+<button class="ctrl" id="next" aria-label="Next scene">›</button>
+<div class="progress"><div id="bar"></div></div>
+<div class="time" id="time">00:00 / 01:22</div>
+<button class="ctrl" id="replay">↻ Replay</button>
+</div>
+
+<script>
+const scenes=[...document.querySelectorAll(".scene")];
+const total=scenes.reduce((a,s)=>a+Number(s.dataset.duration),0);
+let idx=0,playing=true,sceneStart=performance.now(),elapsedBefore=0,timer=null;
+let countdownTimer=null, selectionTimer=null;
+
+function fmt(ms){const s=Math.floor(ms/1000),m=Math.floor(s/60),r=s%60;return String(m).padStart(2,"0")+":"+String(r).padStart(2,"0")}
+function cumulative(i){return scenes.slice(0,i).reduce((a,s)=>a+Number(s.dataset.duration),0)}
+function flashTransition(){
+ const f=document.getElementById("transitionFlash");
+ f.classList.remove("fire"); void f.offsetWidth; f.classList.add("fire");
+}
+function runCountdown(scene){
+ clearInterval(countdownTimer);
+ if(!scene.classList.contains("countdown-scene")) return;
+ const el=document.getElementById("countNum"); let n=3; el.textContent=n;
+ el.classList.remove("pulse"); void el.offsetWidth; el.classList.add("pulse");
+ countdownTimer=setInterval(()=>{n--; if(n>0){el.textContent=n;el.classList.remove("pulse");void el.offsetWidth;el.classList.add("pulse")}
+ else{el.textContent="LOCK";el.classList.remove("pulse");void el.offsetWidth;el.classList.add("pulse");clearInterval(countdownTimer)}},950);
+}
+function runSelection(scene){
+ clearTimeout(selectionTimer);
+ const pick=scene.querySelector(".pick[data-selection]");
+ if(!pick)return;
+ selectionTimer=setTimeout(()=>{
+   if(!scene.classList.contains("active"))return;
+   const ov=document.getElementById("selectionOverlay");
+   document.getElementById("selectionName").textContent=pick.dataset.selection;
+   document.getElementById("selectionStamp").style.setProperty("--sel",pick.dataset.color);
+   ov.classList.remove("show");void ov.offsetWidth;ov.classList.add("show");
+   setTimeout(()=>ov.classList.remove("show"),1750);
+ },3900);
+}
+function show(i,reset=true){
+ const old=scenes[idx];
+ idx=Math.max(0,Math.min(i,scenes.length-1));
+ scenes.forEach((s,n)=>{s.classList.remove("active","exit-left","enter-right"); if(n===idx){s.classList.add("active","enter-right")}});
+ if(old && old!==scenes[idx]) old.classList.add("exit-left");
+ flashTransition();
+ document.getElementById("sceneIndex").textContent="SCENE "+String(idx+1).padStart(2,"0")+" / "+String(scenes.length).padStart(2,"0");
+ if(reset){elapsedBefore=cumulative(idx);sceneStart=performance.now()}
+ runCountdown(scenes[idx]); runSelection(scenes[idx]); schedule();
+}
+function schedule(){
+ clearTimeout(timer);
+ if(!playing)return;
+ const dur=Number(scenes[idx].dataset.duration);
+ timer=setTimeout(()=>{if(idx<scenes.length-1)show(idx+1);else{playing=false;document.getElementById("play").textContent="▶"}},dur);
+}
+function tick(now){
+ let current=elapsedBefore;
+ if(playing)current+=Math.min(now-sceneStart,Number(scenes[idx].dataset.duration));
+ document.getElementById("bar").style.width=Math.min(100,current/total*100)+"%";
+ document.getElementById("time").textContent=fmt(current)+" / "+fmt(total);
+ requestAnimationFrame(tick);
+}
+document.getElementById("play").onclick=()=>{
+ playing=!playing;
+ document.getElementById("play").textContent=playing?"❚❚":"▶";
+ if(playing){sceneStart=performance.now();schedule();runCountdown(scenes[idx]);runSelection(scenes[idx])}
+ else{elapsedBefore+=Math.min(performance.now()-sceneStart,Number(scenes[idx].dataset.duration));clearTimeout(timer);clearInterval(countdownTimer);clearTimeout(selectionTimer)}
+};
+document.getElementById("next").onclick=()=>show(Math.min(idx+1,scenes.length-1));
+document.getElementById("prev").onclick=()=>show(Math.max(idx-1,0));
+document.getElementById("replay").onclick=()=>{playing=true;document.getElementById("play").textContent="❚❚";elapsedBefore=0;show(0)};
+document.addEventListener("keydown",e=>{if(e.key==="ArrowRight")document.getElementById("next").click();if(e.key==="ArrowLeft")document.getElementById("prev").click();if(e.key===" "){e.preventDefault();document.getElementById("play").click()}});
+document.getElementById("sceneIndex").textContent="SCENE 01 / "+String(scenes.length).padStart(2,"0");
+runCountdown(scenes[0]);runSelection(scenes[0]);schedule();requestAnimationFrame(tick);
+</script>
+</body>
+</html>
