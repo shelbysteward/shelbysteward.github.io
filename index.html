@@ -654,6 +654,33 @@
         width: 100%;
       }
     }
+
+    /* Artifact 10: The Model Draft cinematic preview */
+    .model-draft-preview {
+      width: 100%; height: 220px; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      background:
+        radial-gradient(circle at 18% 22%, rgba(56,217,242,.16), transparent 28%),
+        radial-gradient(circle at 82% 78%, rgba(155,123,255,.14), transparent 30%),
+        linear-gradient(135deg,#060914,#10182a);
+      position:relative; overflow:hidden; display:grid; place-items:center;
+    }
+    .model-draft-preview::before {
+      content:""; position:absolute; inset:0;
+      background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+      background-size:28px 28px;
+    }
+    .draft-preview-content { position:relative; z-index:1; text-align:center; padding:1rem; }
+    .draft-preview-kicker { color:#38d9f2; font-size:.62rem; font-weight:900; letter-spacing:.18em; }
+    .draft-preview-title { font-family:Georgia,serif; font-size:1.65rem; line-height:1; margin:.55rem 0 .8rem; color:#fff; }
+    .draft-play {
+      width:54px;height:54px;border-radius:50%;margin:auto;display:grid;place-items:center;
+      background:#fff;color:#07101d;font-size:1.15rem;font-weight:900;
+      box-shadow:0 0 0 8px rgba(255,255,255,.06),0 12px 30px rgba(0,0,0,.35);
+    }
+    .draft-preview-flow { color:#aab6c8; font-size:.58rem; font-weight:800; letter-spacing:.05em; margin-top:.9rem; }
+
   </style>
 </head>
 <body>
@@ -1251,6 +1278,47 @@
                   <span class="tag">AI Transparency</span>
                   <span class="tag">Performance Metrics</span>
                   <span class="tag">Interactive Web Design</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+
+        <!-- ARTIFACT 10 -->
+        <div class="container">
+          <div class="project-row">
+            <a class="card project-horizontal"
+               href="the-model-draft-cinematic.html"
+               target="_blank"
+               rel="noreferrer"
+               aria-label="Play The Model Draft interactive case study">
+
+              <div class="model-draft-preview" role="img" aria-label="The Model Draft cinematic AI model-selection artifact preview">
+                <div class="draft-preview-content">
+                  <div class="draft-preview-kicker">ARTIFACT 10 // CINEMATIC DRAFT EXPERIENCE</div>
+                  <div class="draft-preview-title">THE MODEL DRAFT</div>
+                  <div class="draft-play">▶</div>
+                  <div class="draft-preview-flow">PROBLEM → DATA → CONSTRAINTS → EVIDENCE → MODEL</div>
+                </div>
+              </div>
+
+              <div class="project-horizontal-copy">
+                <div class="meta">Artifact 10</div>
+                <h3>The Model Draft: Choosing the Right Pre-Trained Model</h3>
+                <p>
+                  A self-playing cinematic case study that reframes pre-trained model selection as an
+                  engineering decision rather than a benchmark contest. Four models are evaluated across
+                  language, vision, multimodal, and tabular scenarios to show how performance, efficiency,
+                  explainability, and data modality shape the final choice.
+                </p>
+                <div class="tag-wrap">
+                  <span class="tag">Pre-Trained Models</span>
+                  <span class="tag">Model Selection</span>
+                  <span class="tag">Decision Support</span>
+                  <span class="tag">Explainability</span>
+                  <span class="tag">Motion Design</span>
+                  <span class="tag">Interactive Case Study</span>
                 </div>
               </div>
             </a>
