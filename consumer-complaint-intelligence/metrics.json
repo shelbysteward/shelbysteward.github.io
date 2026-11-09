@@ -1,0 +1,117 @@
+{
+  "original_rows": 28841,
+  "analyzed_rows": 4999,
+  "unique_narratives": 4971,
+  "prediction_train_rows": 3901,
+  "prediction_test_rows": 971,
+  "predictive_accuracy": 0.6725,
+  "predictive_macro_f1": 0.5551,
+  "predictive_weighted_f1": 0.663,
+  "majority_class_baseline_accuracy": 0.3522,
+  "sentiment_counts": {
+    "Neutral": 2161,
+    "Positive": 1744,
+    "Negative": 1094
+  },
+  "topic_keywords": {
+    "1": "card, account, called, credit, credit card, told, payment, said",
+    "2": "dispute, merchant, evidence, charge, refund, transaction, billing, provided",
+    "3": "reporting, account, credit reporting, inaccurate, consumer, reported, information, credit",
+    "4": "report, fraudulent, credit report, identity, theft, credit, identity theft, accounts",
+    "5": "late, late payment, entries, payment, payment entries, usc, unlawful, unfair unlawful",
+    "6": "american, american express, express, amex, points, offer, rewards, membership",
+    "7": "wells, fargo, wells fargo, fargo credit, card, credit card, fargo bank, called wells"
+  },
+  "topic_counts": {
+    "1": 1715,
+    "2": 1105,
+    "3": 861,
+    "4": 634,
+    "5": 178,
+    "6": 319,
+    "7": 187
+  },
+  "cluster_counts": {
+    "1": 948,
+    "2": 1538,
+    "3": 875,
+    "4": 747,
+    "5": 257,
+    "6": 634
+  },
+  "predictive_classification_report": {
+    "Advertising and marketing, including promotional offers": {
+      "precision": 0.6333333333333333,
+      "recall": 0.475,
+      "f1-score": 0.5428571428571428,
+      "support": 40.0
+    },
+    "Closing your account": {
+      "precision": 0.6486486486486487,
+      "recall": 0.5783132530120482,
+      "f1-score": 0.6114649681528662,
+      "support": 83.0
+    },
+    "Fees or interest": {
+      "precision": 0.6220472440944882,
+      "recall": 0.6991150442477876,
+      "f1-score": 0.6583333333333333,
+      "support": 113.0
+    },
+    "Getting a credit card": {
+      "precision": 0.6595744680851063,
+      "recall": 0.6813186813186813,
+      "f1-score": 0.6702702702702703,
+      "support": 91.0
+    },
+    "Incorrect information on your report": {
+      "precision": 0.6862745098039216,
+      "recall": 0.7,
+      "f1-score": 0.693069306930693,
+      "support": 50.0
+    },
+    "Other features, terms, or problems": {
+      "precision": 0.46153846153846156,
+      "recall": 0.384,
+      "f1-score": 0.4192139737991266,
+      "support": 125.0
+    },
+    "Problem when making payments": {
+      "precision": 0.38596491228070173,
+      "recall": 0.3728813559322034,
+      "f1-score": 0.3793103448275862,
+      "support": 59.0
+    },
+    "Problem with a company's investigation into an existing problem": {
+      "precision": 0.2857142857142857,
+      "recall": 0.16666666666666666,
+      "f1-score": 0.21052631578947367,
+      "support": 24.0
+    },
+    "Problem with a purchase shown on your statement": {
+      "precision": 0.839572192513369,
+      "recall": 0.9181286549707602,
+      "f1-score": 0.8770949720670391,
+      "support": 342.0
+    },
+    "Trouble using your card": {
+      "precision": 0.4782608695652174,
+      "recall": 0.5,
+      "f1-score": 0.4888888888888889,
+      "support": 44.0
+    },
+    "accuracy": 0.6725025746652935,
+    "macro avg": {
+      "precision": 0.5700928925577534,
+      "recall": 0.5475423656148147,
+      "f1-score": 0.5551029516916419,
+      "support": 971.0
+    },
+    "weighted avg": {
+      "precision": 0.6583893515079741,
+      "recall": 0.6725025746652935,
+      "f1-score": 0.6630451955566157,
+      "support": 971.0
+    }
+  }
+}
