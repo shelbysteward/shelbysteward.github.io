@@ -1,20 +1,394 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Consumer Complaint Intelligence: interactive NLP and machine learning case study by Shelby Steward"><title>Consumer Complaint Intelligence | Shelby Steward</title><style>
-:root{--bg:#091321;--panel:#12243a;--panel2:#182f48;--ink:#edf5ff;--muted:#b2c4d7;--accent:#5dd7ce;--blue:#7caaff;--line:#30475f}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}a{color:var(--accent)}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #ffdf78;outline-offset:3px}.wrap{max-width:1160px;margin:auto;padding:0 24px}header{border-bottom:1px solid var(--line);padding:20px 0;background:#0c1a2a}header .wrap{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}header a{text-decoration:none;font-weight:650}.eyebrow{letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-size:.77rem;font-weight:800}.hero{padding:78px 0 54px;background:radial-gradient(circle at 85% 0%,#173b53,transparent 55%)}h1{font-size:clamp(2.3rem,6vw,4.7rem);line-height:1.07;letter-spacing:-.045em;max-width:850px;margin:16px 0 22px}h2{font-size:clamp(1.7rem,3vw,2.35rem);line-height:1.2;letter-spacing:-.025em}h3{margin:0 0 8px;font-size:1.1rem}.lead{max-width:780px;color:#c7d7e7;font-size:1.14rem}.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}.chip{border:1px solid #426178;border-radius:30px;padding:5px 12px;color:#d6e9f4;font-size:.85rem}.cta{display:inline-block;border-radius:9px;background:var(--accent);color:#07252c;padding:11px 17px;font-weight:800;text-decoration:none;margin:18px 12px 0 0}.cta.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}section{padding:50px 0;border-top:1px solid #213448}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.metric,.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}.metric strong{display:block;font-size:clamp(1.6rem,3vw,2.4rem);color:var(--accent);line-height:1.3}.metric span,.muted{color:var(--muted)}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}.panel p{color:var(--muted)}.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}.tabs button,.sortbtn{border:1px solid #49637a;background:var(--panel2);color:var(--ink);padding:9px 14px;border-radius:8px}.tabs button[aria-pressed=true]{background:var(--accent);color:#05252a;font-weight:800}.bars{display:grid;gap:14px}.barline{display:grid;grid-template-columns:minmax(135px,260px) 1fr 65px;align-items:center;gap:12px;font-size:.9rem}.track{height:17px;background:#263e55;border-radius:8px;overflow:hidden}.fill{height:100%;background:var(--accent);border-radius:8px;transition:width .3s}.barline:nth-child(3n+2) .fill{background:var(--blue)}.barline:nth-child(3n) .fill{background:#c4a1f8}.selector{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:9px;width:100%;max-width:420px;margin-bottom:15px}.big{font-size:2.6rem;font-weight:850;color:var(--accent)}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.88rem}th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left}th{color:var(--accent)}td{color:#dce8f5}.note{border-left:4px solid var(--accent);padding:12px 18px;background:#153044;color:#d8e9f4;border-radius:0 8px 8px 0}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.steps .card span{color:var(--accent);font-size:.85rem;font-weight:750}.foot{padding:32px 0;color:var(--muted);border-top:1px solid var(--line)}.small{font-size:.86rem}.pill{color:var(--accent);font-weight:700}.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:.83rem;color:var(--muted);margin:15px 0}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}.stack{height:30px;display:flex;border-radius:6px;overflow:hidden}.stack div{height:100%} @media(max-width:800px){.metrics,.steps{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}@media(max-width:500px){.metrics,.steps{grid-template-columns:1fr}.barline{grid-template-columns:100px 1fr 46px;font-size:.77rem}.wrap{padding:0 16px}}
-</style></head><body><header><div class="wrap"><a href="https://shelbysteward.github.io/">← Shelby Steward · Portfolio</a><span class="eyebrow">Applied AI & Data Analytics</span></div></header><main><div class="hero"><div class="wrap"><div class="eyebrow">Interactive case study · Python · Natural Language Processing</div><h1>Consumer Complaint Intelligence</h1><p class="lead">Turning thousands of financial-service complaints into interpretable patterns using natural language processing, unsupervised learning, and predictive classification.</p><div class="chips"><span class="chip">Python</span><span class="chip">TF-IDF</span><span class="chip">TextBlob</span><span class="chip">NMF Topic Modeling</span><span class="chip">K-Means</span><span class="chip">scikit-learn</span></div><a class="cta" href="#explore">Explore the findings ↓</a><a class="cta secondary" href="notebooks/04-narrative-nlp.ipynb">View Python notebook</a></div></div>
-<section><div class="wrap"><div class="metrics"><div class="metric"><strong>93,626</strong><span>Original credit card complaints</span></div><div class="metric"><strong>28,841</strong><span>Records with usable narratives</span></div><div class="metric"><strong>4,999</strong><span>Narratives analyzed</span></div><div class="metric"><strong>67.25%</strong><span>Held-out classification accuracy</span></div></div><p class="small muted">Source: CFPB complaint data and executed Python analysis. Narrative coverage: 30.8% of the original dataset. Results are exploratory, not population-wide estimates.</p></div></section>
-<section><div class="wrap"><div class="eyebrow">The challenge</div><h2>From standardized labels to authentic consumer language</h2><div class="grid2"><div class="panel"><h3>Initial analysis</h3><p>The first stages cleaned 93,626 credit card complaint records and analyzed standardized Issue/Sub-issue descriptions. The preprocessing reduced word counts by 40.24%, but only 55 unique descriptions remained.</p><p>Early classifiers scored 100% because the model inputs included information derived from the target Issue labels: <strong>target leakage</strong>, not real-world predictive success.</p></div><div class="panel"><h3>Improved analysis</h3><p>To strengthen the analysis, the team recovered 28,841 actual consumer narratives from historical CFPB archives. A reproducible sample of 5,000 yielded 4,999 usable narratives.</p><p>The new analysis tested sentiment, seven NMF topics, six text clusters, and a held-out issue classifier—without relying on the standardized issue description as predictive text.</p></div></div></div></section>
-<section id="explore"><div class="wrap"><div class="eyebrow">Explore the evidence</div><h2>Interactive analysis</h2><p class="muted">Select a view to examine actual aggregate outputs from the executed narrative-analysis notebook.</p><div class="tabs" role="group" aria-label="Choose analysis"><button type="button" data-tab="sentiment" aria-pressed="true">Sentiment</button><button type="button" data-tab="topics" aria-pressed="false">Topics</button><button type="button" data-tab="clusters" aria-pressed="false">Clusters</button><button type="button" data-tab="model" aria-pressed="false">Classification</button></div><div id="chart" class="panel" aria-live="polite"></div></div></section>
-<section><div class="wrap"><div class="eyebrow">Project progression</div><h2>An end-to-end analytical approach</h2><div class="steps"><div class="card"><span>01 · Data selection</span><h3>Define the question</h3><p class="muted">Compared potential datasets and selected CFPB consumer complaints for business-relevant analysis.</p></div><div class="card"><span>02 · Preprocessing</span><h3>Prepare the data</h3><p class="muted">Applied tokenization, stop-word removal, lemmatization, and validation across 93,626 records.</p></div><div class="card"><span>03 · Machine learning</span><h3>Identify limitations</h3><p class="muted">Applied TF-IDF, classifiers, and K-Means; recognized misleading perfect scores caused by target leakage.</p></div><div class="card"><span>04 · Narrative NLP</span><h3>Improve the evidence</h3><p class="muted">Analyzed actual narratives with sentiment, NMF, clustering, and predictive classification.</p></div></div></div></section>
-<section><div class="wrap"><div class="eyebrow">Business interpretation</div><h2>What organizations can learn</h2><div class="grid2"><div class="panel"><h3>Complaint triage and routing</h3><p>Predictive classification could assist intake teams in routing disputes, reporting concerns, and account problems. With 67.25% accuracy, it should support—not replace—human judgment.</p></div><div class="panel"><h3>Emerging operational pain points</h3><p>Topic and cluster patterns highlight disputes, refunds, payments, fraud, and credit reporting as areas for closer review. The results do not establish trends over time.</p></div><div class="panel"><h3>Interpret sentiment carefully</h3><p>Positive wording in a complaint does not mean a positive customer experience. Lexicon polarity can miss context, mixed experiences, and the severity of unresolved issues.</p></div><div class="panel"><h3>Monitor model quality</h3><p>Company names influenced some topics and clusters. Real deployments would need category-level error review, privacy protections, model monitoring, and periodic validation.</p></div></div><p class="note"><strong>Methodological integrity:</strong> Only about 30.8% of the original complaints had usable narratives, and the modeling used a sample. These results are exploratory. They should not be generalized to every consumer or used to make automated decisions about individual complaints.</p></div></section>
-<section><div class="wrap"><div class="eyebrow">Technical implementation</div><h2>Technical leadership & analytical delivery</h2><p>Python notebooks document preprocessing, feature extraction, topic modeling, clustering, and supervised evaluation. The published results contain aggregate metrics and summaries; raw consumer narratives are intentionally excluded from this public portfolio package.</p><div class="grid2"><div class="panel"><h3>Analytical leadership</h3><p>Led the technical analysis and business interpretation, developing and executing Python workflows for text preparation, feature engineering, sentiment analysis, NMF topic modeling, clustering, and supervised classification. Evaluated model performance and limitations, identified target leakage in early experiments, and translated quantitative results into practical decision-support insights.</p></div><div class="panel"><h3>Research collaboration & data provenance</h3><p>Developed in collaboration with a four-person research team using publicly available Consumer Financial Protection Bureau data. My work focused on Python implementation, analytical evaluation, and interpretation of operational implications. Collaborators supported research coordination, data-quality assessment, and methodological review; Stephen Bloom sourced and matched the historical narrative archives that enabled the expanded analysis.</p></div></div><p><a href="notebooks/02-data-preprocessing.ipynb">Preprocessing notebook</a> · <a href="notebooks/03-classification-and-clustering.ipynb">Classification and clustering notebook</a> · <a href="notebooks/04-narrative-nlp.ipynb">Narrative NLP notebook</a> · <a href="metrics.json">Aggregate metrics JSON</a></p><p class="small muted">Original source: <a href="https://www.consumerfinance.gov/data-research/consumer-complaints/">CFPB Consumer Complaint Database</a>. AI assistance was disclosed in the academic reports for research, organization, and editorial support.</p></div></section></main><footer class="foot"><div class="wrap">© 2026 Shelby Steward · Applied analytics portfolio · <a href="https://shelbysteward.github.io/">Return to portfolio</a></div></footer>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Consumer Complaint Intelligence: interactive NLP and machine learning case study by Shelby Steward">
+<title>Consumer Complaint Intelligence | Shelby Steward</title>
+<style>
+:root{--bg:#091321;--panel:#12243a;--panel2:#182f48;--ink:#edf5ff;--muted:#b2c4d7;--accent:#5dd7ce;--blue:#7caaff;--line:#30475f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid #ffdf78;outline-offset:3px}
+.wrap{max-width:1160px;margin:auto;padding:0 24px}
+header{border-bottom:1px solid var(--line);padding:20px 0;background:#0c1a2a}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+header a{text-decoration:none;font-weight:650}
+.eyebrow{letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-size:.77rem;font-weight:800}
+.hero{padding:78px 0 54px;background:radial-gradient(circle at 85% 0%,#173b53,transparent 55%)}
+h1{font-size:clamp(2.3rem,6vw,4.7rem);line-height:1.07;letter-spacing:-.045em;max-width:850px;margin:16px 0 22px}
+h2{font-size:clamp(1.7rem,3vw,2.35rem);line-height:1.2;letter-spacing:-.025em}
+h3{margin:0 0 8px;font-size:1.1rem}
+.lead{max-width:780px;color:#c7d7e7;font-size:1.14rem}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.chip{border:1px solid #426178;border-radius:30px;padding:5px 12px;color:#d6e9f4;font-size:.85rem}
+.cta{display:inline-block;border-radius:9px;background:var(--accent);color:#07252c;padding:11px 17px;font-weight:800;text-decoration:none;margin:18px 12px 0 0}
+.cta.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}
+section{padding:50px 0;border-top:1px solid #213448}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.metric,.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+.metric strong{display:block;font-size:clamp(1.6rem,3vw,2.4rem);color:var(--accent);line-height:1.3}
+.metric span,.muted{color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px}
+.panel p{color:var(--muted)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.tabs button,.sortbtn{border:1px solid #49637a;background:var(--panel2);color:var(--ink);padding:9px 14px;border-radius:8px}
+.tabs button[aria-pressed=true]{background:var(--accent);color:#05252a;font-weight:800}
+.bars{display:grid;gap:14px}
+.barline{display:grid;grid-template-columns:minmax(135px,260px) 1fr 65px;align-items:center;gap:12px;font-size:.9rem}
+.track{height:17px;background:#263e55;border-radius:8px;overflow:hidden}
+.fill{height:100%;background:var(--accent);border-radius:8px;transition:width .3s}
+.barline:nth-child(3n+2) .fill{background:var(--blue)}
+.barline:nth-child(3n) .fill{background:#c4a1f8}
+.selector{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:9px;width:100%;max-width:420px;margin-bottom:15px}
+.big{font-size:2.6rem;font-weight:850;color:var(--accent)}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{padding:12px 10px;border-bottom:1px solid var(--line);text-align:left}
+th{color:var(--accent)}
+td{color:#dce8f5}
+.note{border-left:4px solid var(--accent);padding:12px 18px;background:#153044;color:#d8e9f4;border-radius:0 8px 8px 0}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.steps .card span{color:var(--accent);font-size:.85rem;font-weight:750}
+.foot{padding:32px 0;color:var(--muted);border-top:1px solid var(--line)}
+.small{font-size:.86rem}
+.pill{color:var(--accent);font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:.83rem;color:var(--muted);margin:15px 0}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
+.stack{height:30px;display:flex;border-radius:6px;overflow:hidden}
+.stack div{height:100%}
+@media(max-width:800px){
+.metrics,.steps{grid-template-columns:repeat(2,1fr)}
+.grid2{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+.metrics,.steps{grid-template-columns:1fr}
+.barline{grid-template-columns:100px 1fr 46px;font-size:.77rem}
+.wrap{padding:0 16px}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<a href="https://shelbysteward.github.io/">← Shelby Steward · Portfolio</a>
+<span class="eyebrow">Applied AI &amp; Data Analytics</span>
+</div>
+</header>
+<main>
+<div class="hero">
+<div class="wrap">
+<div class="eyebrow">Interactive case study · Python · Natural Language Processing</div>
+<h1>Consumer Complaint Intelligence</h1>
+<p class="lead">Turning thousands of financial-service complaints into interpretable patterns using natural language processing, unsupervised learning, and predictive classification.</p>
+<div class="chips">
+<span class="chip">Python</span>
+<span class="chip">TF-IDF</span>
+<span class="chip">TextBlob</span>
+<span class="chip">NMF Topic Modeling</span>
+<span class="chip">K-Means</span>
+<span class="chip">scikit-learn</span>
+</div>
+<a class="cta" href="#explore">Explore the findings ↓</a>
+<a class="cta secondary" href="https://github.com/shelbysteward/shelbysteward.github.io/blob/main/consumer-complaint-intelligence/notebooks/04-narrative-nlp.ipynb" target="_blank" rel="noopener noreferrer">View Python notebook</a>
+</div>
+</div>
+
+<section>
+<div class="wrap">
+<div class="metrics">
+<div class="metric"><strong>93,626</strong><span>Original credit card complaints</span></div>
+<div class="metric"><strong>28,841</strong><span>Records with usable narratives</span></div>
+<div class="metric"><strong>4,999</strong><span>Narratives analyzed</span></div>
+<div class="metric"><strong>67.25%</strong><span>Held-out classification accuracy</span></div>
+</div>
+<p class="small muted">Source: CFPB complaint data and executed Python analysis. Narrative coverage: 30.8% of the original dataset. Results are exploratory, not population-wide estimates.</p>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<div class="eyebrow">The challenge</div>
+<h2>From standardized labels to authentic consumer language</h2>
+<div class="grid2">
+<div class="panel">
+<h3>Initial analysis</h3>
+<p>The first stages cleaned 93,626 credit card complaint records and analyzed standardized Issue/Sub-issue descriptions. The preprocessing reduced word counts by 40.24%, but only 55 unique descriptions remained.</p>
+<p>Early classifiers scored 100% because the model inputs included information derived from the target Issue labels: <strong>target leakage</strong>, not real-world predictive success.</p>
+</div>
+<div class="panel">
+<h3>Improved analysis</h3>
+<p>To strengthen the analysis, the team recovered 28,841 actual consumer narratives from historical CFPB archives. A reproducible sample of 5,000 yielded 4,999 usable narratives.</p>
+<p>The new analysis tested sentiment, seven NMF topics, six text clusters, and a held-out issue classifier—without relying on the standardized issue description as predictive text.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="explore">
+<div class="wrap">
+<div class="eyebrow">Explore the evidence</div>
+<h2>Interactive analysis</h2>
+<p class="muted">Select a view to examine actual aggregate outputs from the executed narrative-analysis notebook.</p>
+<div class="tabs" role="group" aria-label="Choose analysis">
+<button type="button" data-tab="sentiment" aria-pressed="true">Sentiment</button>
+<button type="button" data-tab="topics" aria-pressed="false">Topics</button>
+<button type="button" data-tab="clusters" aria-pressed="false">Clusters</button>
+<button type="button" data-tab="model" aria-pressed="false">Classification</button>
+</div>
+<div id="chart" class="panel" aria-live="polite"></div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<div class="eyebrow">Project progression</div>
+<h2>An end-to-end analytical approach</h2>
+<div class="steps">
+<div class="card">
+<span>01 · Data selection</span>
+<h3>Define the question</h3>
+<p class="muted">Compared potential datasets and selected CFPB consumer complaints for business-relevant analysis.</p>
+</div>
+<div class="card">
+<span>02 · Preprocessing</span>
+<h3>Prepare the data</h3>
+<p class="muted">Applied tokenization, stop-word removal, lemmatization, and validation across 93,626 records.</p>
+</div>
+<div class="card">
+<span>03 · Machine learning</span>
+<h3>Identify limitations</h3>
+<p class="muted">Applied TF-IDF, classifiers, and K-Means; recognized misleading perfect scores caused by target leakage.</p>
+</div>
+<div class="card">
+<span>04 · Narrative NLP</span>
+<h3>Improve the evidence</h3>
+<p class="muted">Analyzed actual narratives with sentiment, NMF, clustering, and predictive classification.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<div class="eyebrow">Business interpretation</div>
+<h2>What organizations can learn</h2>
+<div class="grid2">
+<div class="panel">
+<h3>Complaint triage and routing</h3>
+<p>Predictive classification could assist intake teams in routing disputes, reporting concerns, and account problems. With 67.25% accuracy, it should support—not replace—human judgment.</p>
+</div>
+<div class="panel">
+<h3>Emerging operational pain points</h3>
+<p>Topic and cluster patterns highlight disputes, refunds, payments, fraud, and credit reporting as areas for closer review. The results do not establish trends over time.</p>
+</div>
+<div class="panel">
+<h3>Interpret sentiment carefully</h3>
+<p>Positive wording in a complaint does not mean a positive customer experience. Lexicon polarity can miss context, mixed experiences, and the severity of unresolved issues.</p>
+</div>
+<div class="panel">
+<h3>Monitor model quality</h3>
+<p>Company names influenced some topics and clusters. Real deployments would need category-level error review, privacy protections, model monitoring, and periodic validation.</p>
+</div>
+</div>
+<p class="note"><strong>Methodological integrity:</strong> Only about 30.8% of the original complaints had usable narratives, and the modeling used a sample. These results are exploratory. They should not be generalized to every consumer or used to make automated decisions about individual complaints.</p>
+</div>
+</section>
+
+<section>
+<div class="wrap">
+<div class="eyebrow">Technical implementation</div>
+<h2>Technical leadership &amp; analytical delivery</h2>
+<p>Python notebooks document preprocessing, feature extraction, topic modeling, clustering, and supervised evaluation. The published results contain aggregate metrics and summaries; raw consumer narratives are intentionally excluded from this public portfolio package.</p>
+<div class="grid2">
+<div class="panel">
+<h3>Analytical leadership</h3>
+<p>Led the technical analysis and business interpretation, developing and executing Python workflows for text preparation, feature engineering, sentiment analysis, NMF topic modeling, clustering, and supervised classification. Evaluated model performance and limitations, identified target leakage in early experiments, and translated quantitative results into practical decision-support insights.</p>
+</div>
+<div class="panel">
+<h3>Research collaboration &amp; data provenance</h3>
+<p>Developed in collaboration with a four-person research team using publicly available Consumer Financial Protection Bureau data. My work focused on Python implementation, analytical evaluation, and interpretation of operational implications. Collaborators supported research coordination, data-quality assessment, and methodological review; Stephen Bloom sourced and matched the historical narrative archives that enabled the expanded analysis.</p>
+</div>
+</div>
+<p>
+<a href="https://github.com/shelbysteward/shelbysteward.github.io/blob/main/consumer-complaint-intelligence/notebooks/02-data-preprocessing.ipynb" target="_blank" rel="noopener noreferrer">Preprocessing notebook</a> ·
+<a href="https://github.com/shelbysteward/shelbysteward.github.io/blob/main/consumer-complaint-intelligence/notebooks/03-classification-and-clustering.ipynb" target="_blank" rel="noopener noreferrer">Classification and clustering notebook</a> ·
+<a href="https://github.com/shelbysteward/shelbysteward.github.io/blob/main/consumer-complaint-intelligence/notebooks/04-narrative-nlp.ipynb" target="_blank" rel="noopener noreferrer">Narrative NLP notebook</a> ·
+<a href="metrics.json">Aggregate metrics JSON</a>
+</p>
+<p class="small muted">Original source: <a href="https://www.consumerfinance.gov/data-research/consumer-complaints/">CFPB Consumer Complaint Database</a>. AI assistance was disclosed in the academic reports for research, organization, and editorial support.</p>
+</div>
+</section>
+</main>
+
+<footer class="foot">
+<div class="wrap">© 2026 Shelby Steward · Applied analytics portfolio · <a href="https://shelbysteward.github.io/">Return to portfolio</a></div>
+</footer>
+
 <script>
-const M={"original_rows": 28841, "analyzed_rows": 4999, "unique_narratives": 4971, "prediction_train_rows": 3901, "prediction_test_rows": 971, "predictive_accuracy": 0.6725, "predictive_macro_f1": 0.5551, "predictive_weighted_f1": 0.663, "majority_class_baseline_accuracy": 0.3522, "sentiment_counts": {"Neutral": 2161, "Positive": 1744, "Negative": 1094}, "topic_keywords": {"1": "card, account, called, credit, credit card, told, payment, said", "2": "dispute, merchant, evidence, charge, refund, transaction, billing, provided", "3": "reporting, account, credit reporting, inaccurate, consumer, reported, information, credit", "4": "report, fraudulent, credit report, identity, theft, credit, identity theft, accounts", "5": "late, late payment, entries, payment, payment entries, usc, unlawful, unfair unlawful", "6": "american, american express, express, amex, points, offer, rewards, membership", "7": "wells, fargo, wells fargo, fargo credit, card, credit card, fargo bank, called wells"}, "topic_counts": {"1": 1715, "2": 1105, "3": 861, "4": 634, "5": 178, "6": 319, "7": 187}, "cluster_counts": {"1": 948, "2": 1538, "3": 875, "4": 747, "5": 257, "6": 634}, "predictive_classification_report": {"Advertising and marketing, including promotional offers": {"precision": 0.6333333333333333, "recall": 0.475, "f1-score": 0.5428571428571428, "support": 40.0}, "Closing your account": {"precision": 0.6486486486486487, "recall": 0.5783132530120482, "f1-score": 0.6114649681528662, "support": 83.0}, "Fees or interest": {"precision": 0.6220472440944882, "recall": 0.6991150442477876, "f1-score": 0.6583333333333333, "support": 113.0}, "Getting a credit card": {"precision": 0.6595744680851063, "recall": 0.6813186813186813, "f1-score": 0.6702702702702703, "support": 91.0}, "Incorrect information on your report": {"precision": 0.6862745098039216, "recall": 0.7, "f1-score": 0.693069306930693, "support": 50.0}, "Other features, terms, or problems": {"precision": 0.46153846153846156, "recall": 0.384, "f1-score": 0.4192139737991266, "support": 125.0}, "Problem when making payments": {"precision": 0.38596491228070173, "recall": 0.3728813559322034, "f1-score": 0.3793103448275862, "support": 59.0}, "Problem with a company's investigation into an existing problem": {"precision": 0.2857142857142857, "recall": 0.16666666666666666, "f1-score": 0.21052631578947367, "support": 24.0}, "Problem with a purchase shown on your statement": {"precision": 0.839572192513369, "recall": 0.9181286549707602, "f1-score": 0.8770949720670391, "support": 342.0}, "Trouble using your card": {"precision": 0.4782608695652174, "recall": 0.5, "f1-score": 0.4888888888888889, "support": 44.0}, "accuracy": 0.6725025746652935, "macro avg": {"precision": 0.5700928925577534, "recall": 0.5475423656148147, "f1-score": 0.5551029516916419, "support": 971.0}, "weighted avg": {"precision": 0.6583893515079741, "recall": 0.6725025746652935, "f1-score": 0.6630451955566157, "support": 971.0}}};
-const topics=['Account servicing','Merchant disputes & refunds','Credit reporting','Fraud & identity theft','Late payments','American Express terminology','Wells Fargo terminology'];
-const clusters=['Reporting, late payments & accounts','General card/account servicing','Merchant disputes & refunds','Promotional balances & payments','American Express terminology','Fraud & Bank of America terminology'];
+const M={
+"original_rows":28841,
+"analyzed_rows":4999,
+"unique_narratives":4971,
+"prediction_train_rows":3901,
+"prediction_test_rows":971,
+"predictive_accuracy":0.6725,
+"predictive_macro_f1":0.5551,
+"predictive_weighted_f1":0.663,
+"majority_class_baseline_accuracy":0.3522,
+"sentiment_counts":{"Neutral":2161,"Positive":1744,"Negative":1094},
+"topic_keywords":{
+"1":"card, account, called, credit, credit card, told, payment, said",
+"2":"dispute, merchant, evidence, charge, refund, transaction, billing, provided",
+"3":"reporting, account, credit reporting, inaccurate, consumer, reported, information, credit",
+"4":"report, fraudulent, credit report, identity, theft, credit, identity theft, accounts",
+"5":"late, late payment, entries, payment, payment entries, usc, unlawful, unfair unlawful",
+"6":"american, american express, express, amex, points, offer, rewards, membership",
+"7":"wells, fargo, wells fargo, fargo credit, card, credit card, fargo bank, called wells"
+},
+"topic_counts":{"1":1715,"2":1105,"3":861,"4":634,"5":178,"6":319,"7":187},
+"cluster_counts":{"1":948,"2":1538,"3":875,"4":747,"5":257,"6":634},
+"predictive_classification_report":{
+"Advertising and marketing, including promotional offers":{"precision":0.6333333333333333,"recall":0.475,"f1-score":0.5428571428571428,"support":40},
+"Closing your account":{"precision":0.6486486486486487,"recall":0.5783132530120482,"f1-score":0.6114649681528662,"support":83},
+"Fees or interest":{"precision":0.6220472440944882,"recall":0.6991150442477876,"f1-score":0.6583333333333333,"support":113},
+"Getting a credit card":{"precision":0.6595744680851063,"recall":0.6813186813186813,"f1-score":0.6702702702702703,"support":91},
+"Incorrect information on your report":{"precision":0.6862745098039216,"recall":0.7,"f1-score":0.693069306930693,"support":50},
+"Other features, terms, or problems":{"precision":0.46153846153846156,"recall":0.384,"f1-score":0.4192139737991266,"support":125},
+"Problem when making payments":{"precision":0.38596491228070173,"recall":0.3728813559322034,"f1-score":0.3793103448275862,"support":59},
+"Problem with a company's investigation into an existing problem":{"precision":0.2857142857142857,"recall":0.16666666666666666,"f1-score":0.21052631578947367,"support":24},
+"Problem with a purchase shown on your statement":{"precision":0.839572192513369,"recall":0.9181286549707602,"f1-score":0.8770949720670391,"support":342},
+"Trouble using your card":{"precision":0.4782608695652174,"recall":0.5,"f1-score":0.4888888888888889,"support":44},
+"accuracy":0.6725025746652935,
+"macro avg":{"precision":0.5700928925577534,"recall":0.5475423656148147,"f1-score":0.5551029516916419,"support":971},
+"weighted avg":{"precision":0.6583893515079741,"recall":0.6725025746652935,"f1-score":0.6630451955566157,"support":971}
+}
+};
+
+const topics=[
+'Account servicing',
+'Merchant disputes & refunds',
+'Credit reporting',
+'Fraud & identity theft',
+'Late payments',
+'American Express terminology',
+'Wells Fargo terminology'
+];
+
+const clusters=[
+'Reporting, late payments & accounts',
+'General card/account servicing',
+'Merchant disputes & refunds',
+'Promotional balances & payments',
+'American Express terminology',
+'Fraud & Bank of America terminology'
+];
+
 const sentimentColors=['#ffb18e','#91b9ed','#5dd7ce'];
 const chart=document.getElementById('chart');
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function bars(rows,max){return '<div class="bars">'+rows.map(([label,value],i)=>`<div class="barline"><span>${esc(label)}</span><div class="track" role="img" aria-label="${esc(label)}: ${value.toLocaleString()}"><div class="fill" style="width:${(value/max*100).toFixed(2)}%"></div></div><strong>${value.toLocaleString()}</strong></div>`).join('')+'</div>'}
-function render(tab){document.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.tab===tab)));if(tab==='sentiment'){let rows=['Negative','Neutral','Positive'].map(x=>[x,M.sentiment_counts[x]]);chart.innerHTML='<h3>Sentiment distribution · 4,999 narratives</h3>'+bars(rows,Math.max(...rows.map(x=>x[1])))+'<p>TextBlob classified 21.9% as negative, 43.2% neutral, and 34.9% positive. These labels describe word polarity, not satisfaction or complaint outcomes.</p>'}else if(tab==='topics'){let rows=topics.map((x,i)=>[x,M.topic_counts[i+1]]);chart.innerHTML='<h3>Seven NMF topics · narrative counts</h3>'+bars(rows,1715)+'<p class="small">Topic labels are interpretations of representative terms; company-specific topics may reflect repeated names rather than distinct customer issues.</p><label for="topicpick">Inspect topic keywords</label><br><select class="selector" id="topicpick">'+topics.map((x,i)=>`<option value="${i}">${esc(x)}</option>`).join('')+'</select><div id="topicdetail" class="note"></div>';const sel=document.getElementById('topicpick');function update(){let i=+sel.value;document.getElementById('topicdetail').innerHTML=`<strong>${esc(topics[i])}</strong> · ${M.topic_counts[i+1].toLocaleString()} narratives<br>Representative terms: ${esc(M.topic_keywords[i+1])}`};sel.onchange=update;update()}else if(tab==='clusters'){let rows=clusters.map((x,i)=>[x,M.cluster_counts[i+1]]);chart.innerHTML='<h3>Six MiniBatch K-Means clusters</h3>'+bars(rows,1538)+'<p>Explore the polarity distribution within each cluster. Cluster themes are exploratory interpretations, not validated complaint categories.</p><label for="clusterpick">Choose a cluster</label><br><select class="selector" id="clusterpick">'+clusters.map((x,i)=>`<option value="${i}">Cluster ${i+1} · ${esc(x)}</option>`).join('')+'</select><div id="clusterdetail"></div>';let counts=[[284,367,297],[359,635,544],[178,396,301],[102,307,338],[43,145,69],[128,311,195]];const sel=document.getElementById('clusterpick');function update(){let i=+sel.value,c=counts[i],sum=c.reduce((a,b)=>a+b,0);document.getElementById('clusterdetail').innerHTML='<div class="stack" role="img" aria-label="Negative '+c[0]+', neutral '+c[1]+', positive '+c[2]+'">'+c.map((v,j)=>`<div style="width:${v/sum*100}%;background:${sentimentColors[j]}"></div>`).join('')+'</div><div class="legend">'+['Negative','Neutral','Positive'].map((x,j)=>`<span><span class="dot" style="background:${sentimentColors[j]}"></span>${x}: ${c[j]} (${(c[j]/sum*100).toFixed(1)}%)</span>`).join('')+'</div>'};sel.onchange=update;update()}else{let rep=Object.entries(M.predictive_classification_report).filter(([k,v])=>v&&typeof v==='object'&&'f1-score' in v&&k!=='macro avg'&&k!=='weighted avg');chart.innerHTML='<h3>Held-out issue classification</h3><div class="grid2"><div><div class="big">67.25%</div><span class="muted">Classifier accuracy</span></div><div><div class="big">35.22%</div><span class="muted">Majority-class baseline</span></div></div><p>Accuracy improved by 32.03 percentage points over the baseline. Macro F1: 0.5551; weighted F1: 0.6630. Holdout test: 971 records.</p><p class="small">Compare class-specific F1 to see where performance varied. The initial perfect classification scores reflected target leakage and are not comparable real-world predictive results.</p><div class="tablewrap"><table><thead><tr><th>Issue category</th><th>F1</th><th>Test cases</th></tr></thead><tbody>'+rep.sort((a,b)=>b[1]['f1-score']-a[1]['f1-score']).map(([name,v])=>`<tr><td>${esc(name)}</td><td>${v['f1-score'].toFixed(3)}</td><td>${v.support}</td></tr>`).join('')+'</tbody></table></div>'}}
-document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>render(b.dataset.tab)));render('sentiment');
-</script></body></html>
+
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#39;'
+}[c]));
+
+function bars(rows,max){
+return '<div class="bars">'+rows.map(([label,value],i)=>
+`<div class="barline"><span>${esc(label)}</span><div class="track" role="img" aria-label="${esc(label)}: ${value.toLocaleString()}"><div class="fill" style="width:${(value/max*100).toFixed(2)}%"></div></div><strong>${value.toLocaleString()}</strong></div>`
+).join('')+'</div>';
+}
+
+function render(tab){
+document.querySelectorAll('[data-tab]').forEach(b=>
+b.setAttribute('aria-pressed',String(b.dataset.tab===tab))
+);
+
+if(tab==='sentiment'){
+let rows=['Negative','Neutral','Positive'].map(x=>[x,M.sentiment_counts[x]]);
+chart.innerHTML=
+'<h3>Sentiment distribution · 4,999 narratives</h3>'+
+bars(rows,Math.max(...rows.map(x=>x[1])))+
+'<p>TextBlob classified 21.9% as negative, 43.2% neutral, and 34.9% positive. These labels describe word polarity, not satisfaction or complaint outcomes.</p>';
+}
+else if(tab==='topics'){
+let rows=topics.map((x,i)=>[x,M.topic_counts[i+1]]);
+chart.innerHTML=
+'<h3>Seven NMF topics · narrative counts</h3>'+
+bars(rows,1715)+
+'<p class="small">Topic labels are interpretations of representative terms; company-specific topics may reflect repeated names rather than distinct customer issues.</p>'+
+'<label for="topicpick">Inspect topic keywords</label><br>'+
+'<select class="selector" id="topicpick">'+topics.map((x,i)=>`<option value="${i}">${esc(x)}</option>`).join('')+'</select>'+
+'<div id="topicdetail" class="note"></div>';
+
+const sel=document.getElementById('topicpick');
+function update(){
+let i=+sel.value;
+document.getElementById('topicdetail').innerHTML=
+`<strong>${esc(topics[i])}</strong> · ${M.topic_counts[i+1].toLocaleString()} narratives<br>Representative terms: ${esc(M.topic_keywords[i+1])}`;
+}
+sel.onchange=update;
+update();
+}
+else if(tab==='clusters'){
+let rows=clusters.map((x,i)=>[x,M.cluster_counts[i+1]]);
+chart.innerHTML=
+'<h3>Six MiniBatch K-Means clusters</h3>'+
+bars(rows,1538)+
+'<p>Explore the polarity distribution within each cluster. Cluster themes are exploratory interpretations, not validated complaint categories.</p>'+
+'<label for="clusterpick">Choose a cluster</label><br>'+
+'<select class="selector" id="clusterpick">'+clusters.map((x,i)=>`<option value="${i}">Cluster ${i+1} · ${esc(x)}</option>`).join('')+'</select>'+
+'<div id="clusterdetail"></div>';
+
+let counts=[
+[284,367,297],
+[359,635,544],
+[178,396,301],
+[102,307,338],
+[43,145,69],
+[128,311,195]
+];
+
+const sel=document.getElementById('clusterpick');
+function update(){
+let i=+sel.value,c=counts[i],sum=c.reduce((a,b)=>a+b,0);
+document.getElementById('clusterdetail').innerHTML=
+'<div class="stack" role="img" aria-label="Negative '+c[0]+', neutral '+c[1]+', positive '+c[2]+'">'+
+c.map((v,j)=>`<div style="width:${v/sum*100}%;background:${sentimentColors[j]}"></div>`).join('')+
+'</div><div class="legend">'+
+['Negative','Neutral','Positive'].map((x,j)=>
+`<span><span class="dot" style="background:${sentimentColors[j]}"></span>${x}: ${c[j]} (${(c[j]/sum*100).toFixed(1)}%)</span>`
+).join('')+'</div>';
+}
+sel.onchange=update;
+update();
+}
+else{
+let rep=Object.entries(M.predictive_classification_report).filter(([k,v])=>
+v&&typeof v==='object'&&'f1-score' in v&&k!=='macro avg'&&k!=='weighted avg'
+);
+chart.innerHTML=
+'<h3>Held-out issue classification</h3>'+
+'<div class="grid2"><div><div class="big">67.25%</div><span class="muted">Classifier accuracy</span></div><div><div class="big">35.22%</div><span class="muted">Majority-class baseline</span></div></div>'+
+'<p>Accuracy improved by 32.03 percentage points over the baseline. Macro F1: 0.5551; weighted F1: 0.6630. Holdout test: 971 records.</p>'+
+'<p class="small">Compare class-specific F1 to see where performance varied. The initial perfect classification scores reflected target leakage and are not comparable real-world predictive results.</p>'+
+'<div class="tablewrap"><table><thead><tr><th>Issue category</th><th>F1</th><th>Test cases</th></tr></thead><tbody>'+
+rep.sort((a,b)=>b[1]['f1-score']-a[1]['f1-score']).map(([name,v])=>
+`<tr><td>${esc(name)}</td><td>${v['f1-score'].toFixed(3)}</td><td>${v.support}</td></tr>`
+).join('')+'</tbody></table></div>';
+}
+}
+
+document.querySelectorAll('[data-tab]').forEach(b=>
+b.addEventListener('click',()=>render(b.dataset.tab))
+);
+render('sentiment');
+</script>
+</body>
+</html>
